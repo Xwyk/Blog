@@ -113,7 +113,7 @@ class Comment
 
     /**
      * Return author
-     * @return string author
+     * @return User author
      */
     public function getAuthor()
     {
@@ -137,28 +137,18 @@ class Comment
 
     /**
      * Set author
-     * @param string newAuthor New author to set. This can be set once
+     * @param user newAuthor New author to set. This can be set once
      * @throws RangeException If newAuthor isn't bigger than 0
      * @throws Exception If newAuthor is already set
      * @throws InvalidArgumentException If newAuthor isn't a number
      */
-    public function setAuthor(int $newAuthor)
+    public function setAuthor(User $newAuthor)
     {
         // If id is already set, throw exception
         if (isset($this->author)){
             throw new Exception('Can\'t change author of an object once it was set');
         }
-        // If id is numeric and bigger than 0, attribute value, else throw exception
-        if (is_numeric($newAuthor)){
-            if ($newAuthor > 0){
-                $this->author = $newAuthor;
-            }
-            else{
-                throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
-            }
-        }else{
-            throw new InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
-        }
+        $this->author = $newAuthor;
     }
 
     /**
@@ -172,14 +162,7 @@ class Comment
         // If id is already set, throw exception
         if (isset($this->id))
             throw new Exception('Can\'t change id of an object once it was set');
-        // If id is numeric and bigger than 0, attribute value, else throw exception
-        if (is_numeric($newID))
-            if ($newID > 0)
-                $this->id = $newID;
-            else
-                throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
-        else
-            throw new InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
+        $this->id = $newID;
     }
 
     /**
@@ -189,7 +172,6 @@ class Comment
     protected function setCreationDate(string $newDate){
         if (is_null($newDate))
             $this->creationDate="";
-        
         else
             $this->creationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
         
@@ -220,14 +202,9 @@ class Comment
 		// If id is already set, throw exception
         if (isset($this->validatorId))
             throw new Exception('Can\'t change validator of an object once it was set');
-        // If id is numeric and bigger than 0, attribute value, else throw exception
-    	if (is_numeric($newValidatorId))
-    		if ($newValidatorId > 0)
-    			$this->validatorId = $newValidatorId;
-    		else
-    			throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
-    	else
-    		throw new InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
+		if ($newValidatorId <= 0)
+			throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
+		$this->validatorId = $newValidatorId;
 	}
 
 	/**

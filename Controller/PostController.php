@@ -14,8 +14,8 @@ class PostController extends Controller{
 			throw new OutOfRangeException("L'ID d'un article ne peut pas être négatif");
 		}
 		
-		$result = PostManager::getPostById($id);
-		$commentsList = self::getComments($id);
+		$post = PostManager::getPostById($id);
+		//$commentsList = self::getComments($id);
 
 		//View::render('post', 'post', ['comments'])
 		require __DIR__.'/../View/post/post.php';

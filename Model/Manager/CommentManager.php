@@ -31,7 +31,6 @@ class CommentManager extends Manager
 							:post);';
 					
 		$result = self::executeRequest($request, ['content' => $comment->getContent(), 
-												 'author' => $comment->getAuthor(),
 												 'post' => $comment->getPostId()]);
 		return $result;				    
 	}
