@@ -2,8 +2,6 @@
 
 namespace Blog\Controller;
 
-// require __DIR__.'/../Framework/Controller.php';
-
 use Blog\Framework\Controller;
 use Blog\Model\Manager\PostManager;
 use Blog\Model\Manager\CommentManager;
@@ -17,7 +15,7 @@ class PostController extends Controller{
 		}
 		
 		$result = PostManager::getPostById($id);
-		$commentsList = self::getComments($id)
+		$commentsList = self::getComments($id);
 
 		//View::render('post', 'post', ['comments'])
 		require __DIR__.'/../View/post/post.php';

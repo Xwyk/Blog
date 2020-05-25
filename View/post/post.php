@@ -1,10 +1,10 @@
 <?php
 // $id='bonjour';
-$title = $result['user']->getTitle();
-$content = $result['user']->getContent();
-$author = $result['author'];
-$creationDate = $result['user']->getCreationDate();
-$modificationDate = $result['user']->getModificationDate();
+$title = $result['post']->getTitle();
+$content = $result['post']->getContent();
+$author = $result['post']->getAuthor()->getPseudo();
+$creationDate = $result['post']->getCreationDate();
+$modificationDate = $result['post']->getModificationDate();
 if (!is_null($creationDate))
         $creationDate=$creationDate->format('Y-m-d H:i');
 else

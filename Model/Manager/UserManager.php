@@ -1,7 +1,5 @@
 <?php
 namespace Blog\Model\Manager;
-// require __DIR__.'/../../Framework/Manager.php';
-// require __DIR__.'/../Post.php';
 
 use Blog\Framework\Manager;
 use Blog\Model\User;
