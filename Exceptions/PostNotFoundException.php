@@ -3,12 +3,12 @@
 namespace Blog\Exceptions;
 
 class PostNotFoundException extends \Exception{
-	public $message = "Cet article n'existe pas";
+	public $message = "L'article demandé n'existe pas";
 
 	public $postId;
 
 	public function __construct($id){
-		$this->id = $id;
+		$this->postId = $id;
 		parent::__construct();
 	}
 }

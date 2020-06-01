@@ -1,4 +1,4 @@
-<div class="portfolio-modal" id="<?= $id ?>">
+<div class="portfolio-modal">
     <div class="modal-content">
         <div class="container">
             <div class="row">
