@@ -1,4 +1,4 @@
-<div class="portfolio-modal">
+<div class="portfolio-modal" >
     <div class="modal-content">
         <div class="container">
             <div class="row">
@@ -7,7 +7,7 @@
                         <h2><?= $post->getTitle() ?></h2>
                         <hr class="star-primary">
                         <!-- <img src="<?= $imagePath ?>" class="img-responsive img-centered" alt=""> -->
-                        <img src="../Common/themes/img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
+                        <img src="/Common/themes/img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
                         <p><?= $post->getContent() ?></p>
                         <ul class="list-inline item-details">
                             <li>Auteur:

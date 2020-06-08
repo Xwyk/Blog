@@ -3,13 +3,13 @@
 	    <div class="container">
 	        <div class="row">
 	            <div class="col-lg-4 col-lg-offset-4">
-	            	<form class="form-signin">
-						<img class="mb-4" src="./Signin Template for Bootstrap_files/bootstrap-solid.svg" alt="" width="72" height="72">
+	            	<form class="form-signin" action="/?action=login" method="post">
+						<img class="mb-4" src="/Signin Template for Bootstrap_files/bootstrap-solid.svg" alt="" width="72" height="72">
 						<h1 class="h3 mb-3 font-weight-normal">Authentification</h1>
 						<label for="inputEmail" class="sr-only">Adresse mail</label>
-						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" name="email">
 						<label for="inputPassword" class="sr-only">Mot de passe</label>
-						<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+						<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name="password">
 						<div class="checkbox mb-3">
 						<label>
 							<!-- <input type="checkbox" value="remember-me"> Remember me -->

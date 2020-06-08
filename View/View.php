@@ -10,7 +10,9 @@ class View
 	static public function render(string $view, array $parameters = null)
 	{
 		ob_start();
-		extract($parameters);
+		if (isset($parameters)) {
+			extract($parameters);
+		}
 		require __DIR__.'/content/'.$view.'.php';
 
 

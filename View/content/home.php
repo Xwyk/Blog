@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" src="../Common/themes/img/profile.png" alt="">
+                <img class="img-responsive" src="/Common/themes/img/profile.png" alt="">
                 <div class="intro-text">
                     <span class="name">Start Bootstrap</span>
                     <hr class="star-light">
@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                             <!-- <img src="<?= $imagePath ?>" class="img-responsive" alt=""> -->
-                            <img src="../Common/themes/img/portfolio/cabin.png" class="img-responsive" alt="">
+                            <img src=/Common/themes/img/portfolio/cabin.png" class="img-responsive" alt="">
                             <p><?= $article->getChapo() ?></p>
                         </a>
                     </div>
