@@ -15,6 +15,14 @@ class LoginController extends Controller{
 		UserManager::login($_POST['email'],$_POST['password']);
 
 	}
+	static public function logout()
+	{
+		if(!isset($_SESSION['user'])){
+			throw new Exception("Aucune session en cours", 1);
+		}
+		UserManager::logout();
+
+	}
 	static public function display(){
 		View::render('login');
 	}

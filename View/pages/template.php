@@ -1,3 +1,6 @@
+<?php
+// session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,9 +89,21 @@
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>About Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                        <h3>Accès membre</h3>
+                        <?php
+                            if (isset($_SESSION['user'])) {
+                        ?>
+                        <p>Accéder à son <a href="/?action=account">compte</a>.</p>
+                        <p><a href="/?action=logout">Déconnexion</a>.</p>
+                        <?php
+                            }
+                            else{
+                        ?>
+                        <p>Se <a href="/?action=login">connecter</a>.</p>
                     </div>
+                        <?php
+                            }
+                        ?>
                 </div>
             </div>
         </div>

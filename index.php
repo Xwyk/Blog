@@ -10,7 +10,7 @@ use Blog\Controller\LoginController;
 use Blog\Exceptions\PostNotFoundException;
 
 $action = $_GET['action'] ?? 'home';
-
+session_start();
 
 try{
 switch ($action) {
@@ -24,6 +24,18 @@ switch ($action) {
 
 		LoginController::display();
 		}
+
+		break;
+	case 'logout':
+			LoginController::logout();
+
+		break;
+	case 'account':
+		if(!isset($_SESSION['user'])){
+			throw new \Exception("Aucun utilisateur connecté", 1);
+			
+		}
+			var_dump($_SESSION['user']);
 
 		break;
 	case 'post':

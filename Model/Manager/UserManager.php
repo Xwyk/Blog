@@ -25,11 +25,18 @@ class UserManager extends Manager
 		$result=$user->fetch();
 		if (!is_array($result)) {
 		 	throw new \Exception("Aucun compte trouvé", 1);
-		 	
 		} 
 		$user = new User($result);
 		if (!password_verify($password,$user->getPassword())) {
 			throw new \Exception("Mot de passe incorrect", 1);
 		}
+		session_start();
+		$_SESSION['user']=$user;
+		header('location: /');
+	}
+	static public function logout()
+	{
+		session_destroy();
+		header('location: /');
 	}
 }
