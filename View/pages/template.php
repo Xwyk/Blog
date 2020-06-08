@@ -11,13 +11,13 @@
     <title>Freelancer - Start Bootstrap Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../Common/themes/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Common/themes/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
-    <link href="../Common/themes/css/freelancer.min.css" rel="stylesheet">
+    <link href="/Common/themes/css/freelancer.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../Common/themes/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/Common/themes/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 </head>
@@ -114,19 +114,19 @@
     <!-- <?= $posts ?> -->
 
     <!-- jQuery -->
-    <script src="../Common/themes/vendor/jquery/jquery.min.js"></script>
+    <script src="/Common/themes/vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../Common/themes/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Common/themes/vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="../Common/themes/js/jqBootstrapValidation.js"></script>
-    <script src="../Common/themes/js/contact_me.js"></script>
+    <script src="/Common/themes/js/jqBootstrapValidation.js"></script>
+    <script src="/Common/themes/js/contact_me.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="../Common/themes/js/freelancer.min.js"></script>
+    <script src="/Common/themes/js/freelancer.min.js"></script>
 </body>
 </html>
