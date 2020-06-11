@@ -5,7 +5,7 @@ namespace Blog\Controller;
 use Blog\Framework\Controller;
 use Blog\Model\Manager\PostManager;
 use Blog\Model\Manager\CommentManager;
-use Blog\View\View;
+use Blog\Framework\View;
 
 class PostController extends Controller{
 	
@@ -16,8 +16,6 @@ class PostController extends Controller{
 		}
 		
 		$post = PostManager::getPostById($id);
-		//$commentsList = self::getComments($id);
-
 		View::render('post',['post' => $post]);
 	}
 
@@ -25,9 +23,6 @@ class PostController extends Controller{
 
 	}
 
-	static protected function getComments(int $postId)
-	{
-		return CommentManager::getCommentsByPost($postId);
-	}
+	
 
 }

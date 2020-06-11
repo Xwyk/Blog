@@ -30,13 +30,36 @@ class UserManager extends Manager
 		if (!password_verify($password,$user->getPassword())) {
 			throw new \Exception("Mot de passe incorrect", 1);
 		}
-		session_start();
-		$_SESSION['user']=$user;
-		header('location: /');
+		return $user;
 	}
 	static public function logout()
 	{
 		session_destroy();
-		header('location: /');
+	}
+
+	static public function createFromArray(array $data)
+	{
+		return new User([
+					'id' => $data['userId'],
+					'pseudo' => $data['userPseudo'],
+					'first_name' => $data['userFirstName'],
+					'last_name' => $data['userLastName'],
+					'mail_address' => $data['userMailAddress']
+				]);
+	}
+
+	static public function add(User $user)
+	{
+		$request = 'INSERT INTO user (chapo, 
+									  title,
+									  content,
+									  author)
+					VALUES (:chapo, 
+							:title, 
+							:content, 
+							:author);';
+		var_dump($user);
+		// $result = self::executeRequest($request, []);
+		// return $result;				    
 	}
 }

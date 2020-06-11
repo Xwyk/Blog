@@ -42,4 +42,15 @@ class CommentManager extends Manager
 		$result = self::executeRequest($request, ['id'=>$comment->getId()]);
 		return $result;				    
 	}
+
+	static public function createFromArray(array $data)
+	{
+		return new Comment([
+   				'id' => $data['commentId'],
+				'creationDate' => $data['commentCreationDate'],
+				'content' => $data['commentContent'],
+				'author' => UserManager::createFromArray($data),
+				'isValid' => $data['commentValid']
+			]);
+	}
 }

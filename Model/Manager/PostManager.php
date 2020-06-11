@@ -33,20 +33,7 @@ class PostManager extends Manager
         $posts = self::executeRequest($request);
         $postsArray = [];
         while ($data = $posts->fetch()){
-   			$postsArray[] = new Post([
-   				'id' => $data['postId'],
-				'chapo' => $data['postChapo'],
-				'title' => $data['postTitle'],
-				'creation_date' => $data['postCreationDate'],
-				'modification_date' => $data['postModificationDate'],
-				'author' => new User([
-					'id' => $data['userId'],
-					'pseudo' => $data['userPseudo'],
-					'first_name' => $data['userFirstName'],
-					'last_name' => $data['userLastName'],
-					'mail_address' => $data['userMailAddress']
-				]),
-   			]);
+   			$postsArray[] = self::createFromArray($data);
         }
         	
         return $postsArray;
@@ -79,11 +66,11 @@ class PostManager extends Manager
 						   		   comment.author AS commentAuthor,
 						   		   comment.creation_date AS commentCreationDate,
 		   
-						   		   user.id AS authorId, 
-						   		   user.pseudo AS authorPseudo, 
-						   		   user.first_name AS authorFirstName, 
-						   		   user.last_name AS authorLastName, 
-						   		   user.mail_address AS authorMailAddress
+						   		   user.id AS userId, 
+						   		   user.pseudo AS userPseudo, 
+						   		   user.first_name AS userFirstName, 
+						   		   user.last_name AS userLastName, 
+						   		   user.mail_address AS userMailAddress
 						   
 							FROM comment 
 							INNER JOIN post
@@ -99,37 +86,10 @@ class PostManager extends Manager
 		}
 		$resultComments=[];
 		while ($data = $comments->fetch()){
-   			$resultComments[] = new Comment([
-   				'id' => $data['commentId'],
-				'creationDate' => $data['commentCreationDate'],
-				'content' => $data['commentContent'],
-				'author' => new User([
-					'id' => $data['authorId'],
-					'pseudo' => $data['authorPseudo'],
-					'first_name' => $data['authorFirstName'],
-					'last_name' => $data['authorLastName'],
-					'mail_address' => $data['authorMailAddress']
-				]),
-				'isValid' => $data['commentValid']
-   			]);
+   			$resultComments[] = CommentManager::createFromArray($data);
         }
 
-		$ret = new Post([
-				'id' => $resultPosts['postId'],
-				'chapo' => $resultPosts['postChapo'],
-				'title' => $resultPosts['postTitle'],
-				'content' => $resultPosts['postContent'],
-				'creation_date' => $resultPosts['postCreationDate'],
-				'modification_date' => $resultPosts['postModificationDate'],
-				'author' => new User([
-					'id' => $resultPosts['userId'],
-					'pseudo' => $resultPosts['userPseudo'],
-					'first_name' => $resultPosts['userFirstName'],
-					'last_name' => $resultPosts['userLastName'],
-					'mail_address' => $resultPosts['userMailAddress']
-				]),
-				'comments' => $resultComments
-			]);
+		$ret = self::createFromArray($resultPosts, $resultComments);
 		return $ret;
 	}
 
@@ -150,6 +110,20 @@ class PostManager extends Manager
 												 'author' => $post->getAuthor()]);
 		return $result;				    
 	}
+
+	static public function createFromArray(array $data, array $comments = null)
+	{
+		return new Post([
+   				'id' => $data['postId'],
+				'chapo' => $data['postChapo'],
+				'title' => $data['postTitle'],
+				'creation_date' => $data['postCreationDate'],
+				'modification_date' => $data['postModificationDate'],
+				'author' => UserManager::createFromArray($data),
+				'comments' => $comments
+   			]);
+	}
+	
 
 	static public function remove(Post $post)
 	{

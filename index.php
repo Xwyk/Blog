@@ -7,6 +7,7 @@ require __DIR__.'/config.local.php';
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
 use Blog\Controller\LoginController;
+use Blog\Controller\RegisterController;
 use Blog\Exceptions\PostNotFoundException;
 
 $action = $_GET['action'] ?? 'home';
@@ -18,17 +19,13 @@ switch ($action) {
 		HomeController::home();
 		break;
 	case 'login':
-		if(isset($_POST['email']) && isset($_POST['password'])){
 			LoginController::login();
-		} else{
-
-		LoginController::display();
-		}
-
 		break;
 	case 'logout':
 			LoginController::logout();
-
+		break;
+	case 'register':
+			RegisterController::display();
 		break;
 	case 'account':
 		if(!isset($_SESSION['user'])){
