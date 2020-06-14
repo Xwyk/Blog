@@ -1,5 +1,5 @@
 <?php
-// session_start();
+use Blog\Framework\Session;
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,7 +91,7 @@
                     <div class="footer-col col-md-4">
                         <h3>Accès membre</h3>
                         <?php
-                            if (isset($_SESSION['user'])) {
+                            if (Session::existAttribute('username')) {
                         ?>
                         <p>Accéder à son <a href="/?action=account">compte</a>.</p>
                         <p><a href="/?action=logout">Déconnexion</a>.</p>

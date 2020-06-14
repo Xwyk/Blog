@@ -4,6 +4,7 @@ namespace Blog\Controller;
 use Blog\Framework\Controller;
 use Blog\Model\Manager\UserManager;
 use Blog\Framework\View;
+use Blog\Framework\Session;
 
 class LoginController extends Controller{
 	
@@ -13,7 +14,7 @@ class LoginController extends Controller{
 			if(!isset($_POST['email']) || !isset($_POST['password'])){
 				throw new \Exception("Identifiant ou mot de passe non saisi", 1);
 			}
-			$_SESSION['user'] = UserManager::login($_POST['email'],$_POST['password']);
+			Session::addAttribute('username', UserManager::login($_POST['email'],$_POST['password'])->getPseudo());
 			self::redirect('/');
 		}catch(\Exception $e){
 			View::render('login', ['errors' => $e->getMessage()]);
@@ -23,13 +24,10 @@ class LoginController extends Controller{
 	}
 	static public function logout()
 	{
-		if(!isset($_SESSION['user'])){
-			throw new Exception("Aucune session en cours", 1);
+		if (Session::exists()) {
+			Session::stop();
 		}
-		UserManager::logout();
 		self::redirect('/');
-
-
 	}
 
 	static public function display()

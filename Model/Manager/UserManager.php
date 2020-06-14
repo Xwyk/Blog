@@ -32,10 +32,6 @@ class UserManager extends Manager
 		}
 		return $user;
 	}
-	static public function logout()
-	{
-		session_destroy();
-	}
 
 	static public function createFromArray(array $data)
 	{

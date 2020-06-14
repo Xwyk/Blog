@@ -9,9 +9,10 @@ use Blog\Controller\PostController;
 use Blog\Controller\LoginController;
 use Blog\Controller\RegisterController;
 use Blog\Exceptions\PostNotFoundException;
+use Blog\Framework\Session;
 
 $action = $_GET['action'] ?? 'home';
-session_start();
+Session::start();
 
 try{
 switch ($action) {
