@@ -10,12 +10,9 @@ use Blog\Framework\View;
 
 class HomeController extends Controller{
 	
-	static public function home()
+	public function home()
 	{
 		$articles = PostManager::getAllPosts();
-		View::render('home', ['articles' => $articles]);
-	}
-	static public function display(){
-
+		$this->render('home', ['articles' => $articles]);
 	}
 }

@@ -6,44 +6,31 @@ namespace Blog\Framework;
  * 
  */
 class Session
-
 {
-	static public function start()
+	public function __construct()
 	{	
-		session_start();
+		if(!isset($_SESSION)){
+			session_start();
+		}
 	}
 
-	static public function stop()
+	public function stop()
 	{	
 		session_destroy();
 	}
 
-	static public function exists()
-	{	
-		return isset($_SESSION);
+	public function addAttribute(string $name, string $value)
+	{
+		$_SESSION[$name] = $value;
 	}
 
-	static public function addAttribute(string $name, string $value)
+	public function existAttribute(string $name)
 	{
-		if(!self::exists()){
-			throw new \Exception("Aucune session n'est lancée");
-		}
-		$_SESSION[htmlspecialchars($name)] = htmlspecialchars($value);
+		return isset($_SESSION[$name]);
 	}
 
-	static public function existAttribute(string $name)
+	public function getAttribute(string $name)
 	{
-		if(!self::exists()){
-			throw new \Exception("Aucune session n'est lancée");
-		}
-		return isset($_SESSION[htmlspecialchars($name)]);
-	}
-
-	static public function getAttribute(string $name)
-	{
-		if(!self::exists()){
-			throw new \Exception("Aucune session n'est lancée");
-		}
-		return $_SESSION[htmlspecialchars($name)];
+		return $_SESSION[$name];
 	}
 }

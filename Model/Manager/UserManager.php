@@ -8,7 +8,9 @@ use Blog\Model\User;
  */
 class UserManager extends Manager
 {
-	
+	/**
+	 * 
+	 */	
 	static public function getUserById(int $userId) : User
 	{
 		$request = 'SELECT * FROM user 
@@ -44,18 +46,24 @@ class UserManager extends Manager
 				]);
 	}
 
-	static public function add(User $user)
+	static public function add($firstname,$lastname,$pseudo,$mail,$pwd)
 	{
-		$request = 'INSERT INTO user (chapo, 
-									  title,
-									  content,
-									  author)
-					VALUES (:chapo, 
-							:title, 
-							:content, 
-							:author);';
-		var_dump($user);
-		// $result = self::executeRequest($request, []);
-		// return $result;				    
+		$request = 'INSERT INTO user (first_name, 
+									  last_name,
+									  pseudo,
+									  mail_address,
+									  password)
+					VALUES (:firstname, 
+							:lastname, 
+							:pseudo, 
+							:mail, 
+							:pwd);';
+		$result = self::executeRequest($request, [
+			':firstname'=>$firstname, 
+			':lastname' => $lastname, 
+			':pseudo' => $pseudo, 
+			':mail' => $mail, 
+			':pwd' => $pwd]);
+		return $result;				    
 	}
 }

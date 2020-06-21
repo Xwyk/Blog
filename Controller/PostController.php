@@ -9,20 +9,9 @@ use Blog\Framework\View;
 
 class PostController extends Controller{
 	
-	static public function displayPostById(int $id)
-	{
-		if ($id<0) {
-			throw new OutOfRangeException("L'ID d'un article ne peut pas être négatif");
-		}
-		
+	public function displayPostById(int $id)
+	{		
 		$post = PostManager::getPostById($id);
-		View::render('post',['post' => $post]);
+		$this->render('post',['post' => $post]);
 	}
-
-	static public function display(){
-
-	}
-
-	
-
 }

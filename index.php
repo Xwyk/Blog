@@ -9,38 +9,29 @@ use Blog\Controller\PostController;
 use Blog\Controller\LoginController;
 use Blog\Controller\RegisterController;
 use Blog\Exceptions\PostNotFoundException;
-use Blog\Framework\Session;
 
 $action = $_GET['action'] ?? 'home';
-Session::start();
 
 try{
 switch ($action) {
 	case 'home':
-		HomeController::home();
+		(new HomeController())->home();
 		break;
 	case 'login':
-			LoginController::login();
+			(new LoginController())->login();
 		break;
 	case 'logout':
 			LoginController::logout();
 		break;
 	case 'register':
-			RegisterController::display();
-		break;
-	case 'account':
-		if(!isset($_SESSION['user'])){
-			throw new \Exception("Aucun utilisateur connecté", 1);
-			
-		}
-			var_dump($_SESSION['user']);
-
+			(new RegisterController)->display();
 		break;
 	case 'post':
-		if (!isset($_GET['id'])) {
-			// 404
+		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+		if ($id === false) {
+			throw new PostNotFoundException($id);
 		}
-		PostController::displayPostById($_GET['id']);
+		(new PostController)->displayPostById($id);
 		break;
 	default:
 		// Gerer une 404
@@ -49,6 +40,6 @@ switch ($action) {
 
 }
 catch(PostNotFoundException $e){
-	echo $e->id;
+	echo $e->message;
 }
 

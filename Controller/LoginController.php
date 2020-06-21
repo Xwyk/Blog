@@ -8,30 +8,24 @@ use Blog\Framework\Session;
 
 class LoginController extends Controller{
 	
-	static public function login()
+	public function login()
 	{
 		try{			
 			if(!isset($_POST['email']) || !isset($_POST['password'])){
 				throw new \Exception("Identifiant ou mot de passe non saisi", 1);
 			}
-			Session::addAttribute('username', UserManager::login($_POST['email'],$_POST['password'])->getPseudo());
-			self::redirect('/');
+			$this->session->addAttribute('username', UserManager::login($_POST['email'],$_POST['password'])->getPseudo());
+			$this->redirect('/');
 		}catch(\Exception $e){
-			View::render('login', ['errors' => $e->getMessage()]);
+			$this->render('login', ['errors' => $e->getMessage()]);
 		}
-		View::render('login');
 
 	}
-	static public function logout()
+	public function logout()
 	{
 		if (Session::exists()) {
 			Session::stop();
 		}
-		self::redirect('/');
-	}
-
-	static public function display()
-	{
-		# code...
+		$this->redirect('/');
 	}
 }

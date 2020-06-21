@@ -91,7 +91,8 @@ use Blog\Framework\Session;
                     <div class="footer-col col-md-4">
                         <h3>Accès membre</h3>
                         <?php
-                            if (Session::existAttribute('username')) {
+                            if (true) {
+                            // if ($session->existAttribute('username')) {
                         ?>
                         <p>Accéder à son <a href="/?action=account">compte</a>.</p>
                         <p><a href="/?action=logout">Déconnexion</a>.</p>

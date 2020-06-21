@@ -7,8 +7,8 @@ use Blog\Framework\View;
 
 class RegisterController extends Controller{
 	
-	static public function display()
+	public function display()
 	{
-		View::render('register');
+		$this->render('register');
 	}
 }
