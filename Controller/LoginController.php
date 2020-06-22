@@ -28,4 +28,8 @@ class LoginController extends Controller{
 		}
 		$this->redirect('/');
 	}
+	
+	public function display()
+	{
+	}
 }
