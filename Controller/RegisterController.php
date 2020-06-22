@@ -9,4 +9,7 @@ class RegisterController extends Controller{
 	{
 		$this->render('register');
 	}
+	public function display()
+	{
+	}
 }
