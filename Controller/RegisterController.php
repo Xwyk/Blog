@@ -2,8 +2,6 @@
 
 namespace Blog\Controller;
 use Blog\Framework\Controller;
-use Blog\Model\Manager\UserManager;
-use Blog\Framework\View;
 
 class RegisterController extends Controller{
 	
@@ -22,5 +20,8 @@ class RegisterController extends Controller{
 	{
 		$this->render('register');
 		$this->register();
+	}
+	public function display()
+	{
 	}
 }

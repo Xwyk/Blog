@@ -14,4 +14,8 @@ class PostController extends Controller{
 		$post = PostManager::getPostById($id);
 		$this->render('post',['post' => $post]);
 	}
+	
+	public function display()
+	{
+	}
 }

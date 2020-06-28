@@ -40,4 +40,8 @@ class LoginController extends Controller{
 		$this->session->logout();
 		$this->redirect('/');
 	}
+	
+	public function display()
+	{
+	}
 }
