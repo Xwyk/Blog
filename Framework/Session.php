@@ -7,6 +7,8 @@ namespace Blog\Framework;
  */
 class Session
 {
+	const AUTHENTICATED_KEY = 'user';
+
 	public function __construct()
 	{	
 		if(!isset($_SESSION)){
@@ -14,7 +16,21 @@ class Session
 		}
 	}
 
-	public function stop()
+
+	public function isAuthenticated(){
+		if($this->existAttribute(self::AUTHENTICATED_KEY)){
+			return$this->getAttribute(self::AUTHENTICATED_KEY); 
+		}
+
+
+		return false;
+	}
+
+	public function login($user){
+		$this->addAttribute(self::AUTHENTICATED_KEY, $user);
+	}
+
+	public function logout()
 	{	
 		session_destroy();
 	}

@@ -15,4 +15,10 @@ class HomeController extends Controller{
 		$articles = PostManager::getAllPosts();
 		$this->render('home', ['articles' => $articles]);
 	}
+
+	public function display()
+	{
+		$articles = PostManager::getAllPosts();
+		$this->render('home', ['articles' => $articles]);
+	}
 }

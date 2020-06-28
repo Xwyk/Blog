@@ -12,20 +12,32 @@ class LoginController extends Controller{
 	{
 		try{			
 			if(!isset($_POST['email']) || !isset($_POST['password'])){
-				throw new \Exception("Identifiant ou mot de passe non saisi", 1);
+				throw new \Exception("");
 			}
-			$this->session->addAttribute('username', UserManager::login($_POST['email'],$_POST['password'])->getPseudo());
+			$this->session->login(UserManager::login($_POST['email'],$_POST['password']));
 			$this->redirect('/');
 		}catch(\Exception $e){
 			$this->render('login', ['errors' => $e->getMessage()]);
 		}
-
 	}
+
+	public function display()
+	{
+		try{			
+			if(!isset($_POST['email']) || !isset($_POST['password'])){
+				throw new \Exception("");
+			}
+			$this->session->login(UserManager::login($_POST['email'],$_POST['password']));
+			$this->redirect('/');
+		}catch(\Exception $e){
+			$this->render('login', ['errors' => $e->getMessage()]);
+		}
+	}
+
+
 	public function logout()
 	{
-		if (Session::exists()) {
-			Session::stop();
-		}
+		$this->session->logout();
 		$this->redirect('/');
 	}
 }
