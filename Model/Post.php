@@ -160,7 +160,7 @@ class Post
      * @param Date newDate New date to set
      */
     protected function setCreationDate(string $newDate){
-    	if (is_null($newDate)){
+    	if ($newDate === null){
             $this->creationDate="";
         }
         else{
