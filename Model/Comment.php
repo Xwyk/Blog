@@ -55,7 +55,7 @@ class Comment
      * Return valid state
      * @return bool isValid
      */
-	public function getIsValid()
+	public function isValid()
 	{
 		return $this->isValid;
 	}
