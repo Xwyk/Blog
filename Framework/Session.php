@@ -35,7 +35,7 @@ class Session
 		session_destroy();
 	}
 
-	public function addAttribute(string $name, string $value)
+	public function addAttribute(string $name, $value)
 	{
 		$_SESSION[$name] = $value;
 	}

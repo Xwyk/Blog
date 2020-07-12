@@ -1,3 +1,5 @@
+<?php $mainTitle = "Titre du post"?>
+
 <div class="portfolio-modal" >
     <div class="modal-content">
         <div class="container">
@@ -48,6 +50,18 @@
                                 </div>
                                 <hr>
                         <?php
+                            }
+                            if($session->existAttribute("user")){
+                                if($session->getAttribute("user")->getType()>0){
+                        ?>
+                            <form class="form-signin" action="/?action=addComment" method="post">
+                                <p class="text-danger"><?= $error ?? ""?></p>
+                                <label for="commentText" class="sr-only">Mot de passe</label>
+                                <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>
+                            </form>
+                        <?php
+                                }
                             }
                         ?>
                         </div>

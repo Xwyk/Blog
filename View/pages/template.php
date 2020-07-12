@@ -4,14 +4,13 @@ use Blog\Framework\Session;
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title><?= $mainTitle ?? "Ttire par défaut" ?></title>
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Freelancer - Start Bootstrap Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/Common/themes/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +22,9 @@ use Blog\Framework\Session;
     <link href="/Common/themes/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <?= $scripts ?? ""?>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>tinymce.init({selector:'textarea'});</script>
 </head>
 <body>
 	<!-- Navigation -->

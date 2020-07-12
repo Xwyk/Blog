@@ -8,29 +8,29 @@ use Blog\Framework\Session;
 
 class LoginController extends Controller{
 	
-	public function login()
-	{
-		try{			
-			if(!isset($_POST['email']) || !isset($_POST['password'])){
-				throw new \Exception("");
-			}
-			$this->session->login(UserManager::login($_POST['email'],$_POST['password']));
-			$this->redirect('/');
-		}catch(\Exception $e){
-			$this->render('login', ['errors' => $e->getMessage()]);
-		}
-	}
-
 	public function display()
 	{
+		if (!isset($_POST)) {
+			$this->render('login');	
+		}
+		else{
+			$this->login();
+		}
+		
+	}
+
+	private function login(){
 		try{			
 			if(!isset($_POST['email']) || !isset($_POST['password'])){
-				throw new \Exception("");
+				throw new \Exception("Veuillez entrer un e-mail et un mot de passe");
 			}
-			$this->session->login(UserManager::login($_POST['email'],$_POST['password']));
+			$this->session->login(UserManager::login(
+				filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL),
+				filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+			));
 			$this->redirect('/');
 		}catch(\Exception $e){
-			$this->render('login', ['errors' => $e->getMessage()]);
+			$this->render('login', ['error' => $e->getMessage()]);
 		}
 	}
 
@@ -39,9 +39,5 @@ class LoginController extends Controller{
 	{
 		$this->session->logout();
 		$this->redirect('/');
-	}
-	
-	public function display()
-	{
 	}
 }

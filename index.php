@@ -16,34 +16,28 @@ $action = filter_input(INPUT_GET, 'action',FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?
 
 
 try{
-	$controller = null;
 	$view = new View();
 	$session = new Session();
-switch ($action) {
-	case 'home':
-			(new HomeController($view, $session))->home();
+	switch ($action) {
+		case 'home':
+				(new HomeController($view, $session))->display();
+				break;
+		case 'login':
+				(new LoginController($view, $session))->display();
 			break;
-	case 'login':
-			(new LoginController($view, $session))->login();
-		break;
-	case 'logout':
-			(new LoginController($view, $session))->logout();
-		break;
-	case 'register':
-			(new RegisterController($view, $session))->display();
-		break;
-	case 'post':
-		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
-		if ($id === false) {
-			throw new PostNotFoundException($id);
-		}
-		(new PostController($view, $session))->displayPostById($id);
-		break;
-	default:
-		// Gerer une 404
-		break;
-}
-
+		case 'logout':
+				(new LoginController($view, $session))->logout();
+			break;
+		case 'register':
+				(new RegisterController($view, $session))->display();
+			break;
+		case 'post':
+			(new PostController($view, $session))->display();
+			break;
+		default:
+			// Gerer une 404
+			break;
+	}
 }
 catch(PostNotFoundException $e){
 	echo $e->message;

@@ -6,6 +6,9 @@ namespace Blog\Model;
 
 class User
 {
+    const TYPE_USER = 1;
+    const TYPE_ADMIN = 2 ;
+
     private $id;
     private $creationDate;
     private $modificationDate;
@@ -14,8 +17,8 @@ class User
 	private $pseudo;
 	private $mailAddress;
 	private $password;
-	private $isActive;
-	private $type;
+	private $active = false;
+	private $type = self::TYPE_USER;
 
     /**
      * Construct object
@@ -23,6 +26,8 @@ class User
      */
     public function __construct(array $data)
     {
+        $this->creationDate = new \DateTime();
+        $this->modificationDate = new \DateTime();
         $this->hydrate($data);
     }
 
@@ -43,7 +48,7 @@ class User
             }else
                 $method = 'set'.ucfirst($key);
             // If value isn't null and method exists, call the setter
-            if (!$value === null)
+            if (!is_null($value))
                 if (method_exists($this, $method))
                     $this->$method($value);
             
@@ -97,11 +102,11 @@ class User
 
     /**
      * Return user activation state
-     * @return bool isActive
+     * @return bool active
      */
-    public function getIsActive()
+    public function getActive()
     {
-    	return $this->isActive;
+    	return $this->active;
     }
 
     /**
@@ -144,18 +149,18 @@ class User
      * @throws Exception If newID is already set
      * @throws InvalidArgumentException If newID isn't a number
      */
-    protected function setID(int $newID){
+    protected function setId(int $newID){
         // If id is already set, throw exception
         if (isset($this->id))
-            throw new Exception('Can\'t change id of an object once it was set');
+            throw new \Exception('Can\'t change id of an object once it was set');
         // If id is numeric and bigger than 0, attribute value, else throw exception
         if (is_numeric($newID))
             if ($newID > 0)
                 $this->id = $newID;
             else
-                throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
+                throw new \RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         else
-            throw new InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
+            throw new \InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
     }
 
     /**
@@ -193,7 +198,7 @@ class User
     	if ($newFirstName == strip_tags($newFirstName))
     		$this->firstName = $newFirstName;
     	else
-    		throw new UnexpectedValueException('Can\'t set firstname : value contain html/PHP code');
+    		throw new \UnexpectedValueException('Can\'t set firstname : value contain html/PHP code');
     }
 
     /**
@@ -206,7 +211,7 @@ class User
     	if ($newLastName == strip_tags($newLastName))
     		$this->lastName = $newLastName;
     	else
-    		throw new UnexpectedValueException('Can\'t set lastname : value contain html/PHP code');
+    		throw new \UnexpectedValueException('Can\'t set lastname : value contain html/PHP code');
     }
 
     /**
@@ -219,7 +224,7 @@ class User
     	if ($newPseudo == strip_tags($newPseudo))
     		$this->pseudo = $newPseudo;
     	else
-    		throw new UnexpectedValueException('Can\'t set pseudo : value contain html/PHP code');
+    		throw new \UnexpectedValueException('Can\'t set pseudo : value contain html/PHP code');
     }
 
     /**
@@ -231,11 +236,11 @@ class User
     private function setMailAddress(string $newMailAddress)
     {
     	if ($newMailAddress != strip_tags($newMailAddress))
-    		throw new UnexpectedValueException('Can\'t set mail : value contain html/PHP code');
-    	if (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $newMailAddress))
-    		$this->mailAddress = $newMailAddress;
-    	else
-    		throw new UnexpectedValueException('Can\'t set mail address to '.$newMailAddress.' because isn\'t respecting format.');
+    		throw new \UnexpectedValueException('L\'adresse fournie contient du code');
+    	$isValid = preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $newMailAddress);
+        if (!$isValid)
+            throw new \UnexpectedValueException('L\'adresse mail n\'est pas valide');
+		$this->mailAddress = $newMailAddress;
     }
 
     /**
@@ -246,7 +251,7 @@ class User
     private function setPassword(string $newPassword)
     {
     	if ($newPassword != strip_tags($newPassword))
-            throw new UnexpectedValueException('Can\'t set password : value contain html/PHP code');
+            throw new \UnexpectedValueException('Can\'t set password : value contain html/PHP code');
         else
             $this->password = $newPassword;
     }
@@ -255,21 +260,20 @@ class User
      * Set activation state
      * @param string activation New activation state to set
      */
-    private function setIsActive(bool $activation)
+    private function setActive(bool $activation)
     {
-    	$this->isActive = $activation;
+    	$this->active = $activation;
     }
 
     /**
      * Set user type
-     * @param string newType New type to set : 1->user; 2->admin
      * @throws UnexpectedValueException If newType doesn't correspond to accepted values
      */
     private function setType(int $newType)
     {
-    	if ($newType == 1 || $newType == 2)
+    	if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN)
             $this->type = $newType;
-        else    		
-  			throw new UnexpectedValueException('Can\'t set type : unauthorized value : '.$newType);
+        else
+  			$this->type = self::TYPE_USER;
     }
 }

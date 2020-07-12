@@ -12,10 +12,15 @@ class PostController extends Controller{
 	public function displayPostById(int $id)
 	{		
 		$post = PostManager::getPostById($id);
-		$this->render('post',['post' => $post]);
+		$this->render('post',['post' => $post], true);
 	}
 	
 	public function display()
 	{
+		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+		if ($id == false) {
+			throw new PostNotFoundException($id);
+		}
+		$this->displayPostById($id);
 	}
 }
