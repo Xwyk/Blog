@@ -10,7 +10,6 @@ class RegisterController extends Controller{
 	public function register()
 	{
 		try{
-			var_dump($_POST);
 			$userToAdd = new User([
 				'firstName' => filter_input(INPUT_POST, 'firstName',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
 				'lastName' => filter_input(INPUT_POST, 'lastName',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
@@ -29,11 +28,10 @@ class RegisterController extends Controller{
 
 	public function display()
 	{
-		if ($_POST) {
-			$this->register();
-		}
-		else{
+		if (!isset($_POST)) {
 			$this->render('register');
+			return;
 		}
+		$this->register();
 	}
 }
