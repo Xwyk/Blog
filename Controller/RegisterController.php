@@ -28,7 +28,7 @@ class RegisterController extends Controller{
 
 	public function display()
 	{
-		if (!isset($_POST)) {
+		if (empty($_POST)) {
 			$this->render('register');
 			return;
 		}

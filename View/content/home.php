@@ -1,3 +1,4 @@
+<?php $mainTitle = "Florian LEBOUL -- Accueil"?>
 <!-- Header -->
 <header>
     <div class="container">

@@ -2,7 +2,7 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-require __DIR__.'/config.local.php';
+// require __DIR__.'/config.local.php';
 
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
@@ -33,6 +33,15 @@ try{
 			break;
 		case 'post':
 			(new PostController($view, $session))->display();
+			break;
+		case 'addComment':
+			(new PostController($view, $session))->addComment();
+			break;
+		case 'validateComment':
+			(new PostController($view, $session))->validateComment();
+			break;
+		case 'invalidateComment':
+			(new PostController($view, $session))->invalidateComment();
 			break;
 		default:
 			// Gerer une 404

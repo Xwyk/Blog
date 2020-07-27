@@ -1,5 +1,3 @@
-<?php $mainTitle = "Titre du post"?>
-
 <div class="portfolio-modal" >
     <div class="modal-content">
         <div class="container">
@@ -33,37 +31,80 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="modal-body">
                         <div class="container-fluid">
-                        <?php
-                            foreach ($post->getComments() as $comment) {
-                        ?>
-                                <div class="row">
-                                    <div class="col-lg-2 text-left">
-                                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar " alt="user profile image">
-                                    </div>
-                                    <div class="col-lg-3 text-left">
-                                        <h5><a href="/?action=user&id=<?= $comment->getAuthor()->getId() ?>"><b><?= $comment->getAuthor()->getPseudo()?></b></a></h5>
-                                        <h6 class="text-muted time"><?= $comment->getCreationDate()->format('Y-m-d H:i')?></h6>
-                                    </div>
-                                    <div class="col-lg-7 text-justify"> 
-                                        <p><?= $comment->getContent() ?></p>
-                                    </div>
-                                </div>
-                                <hr>
-                        <?php
-                            }
-                            if($session->existAttribute("user")){
-                                if($session->getAttribute("user")->getType()>0){
-                        ?>
-                            <form class="form-signin" action="/?action=addComment" method="post">
-                                <p class="text-danger"><?= $error ?? ""?></p>
-                                <label for="commentText" class="sr-only">Mot de passe</label>
-                                <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
-                                <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>
-                            </form>
-                        <?php
-                                }
-                            }
-                        ?>
+<?php
+    foreach ($post->getComments() as $comment) {
+        if ($comment->isValid()) {
+?>
+            <div class="row">
+                <div class="col-lg-2 text-left">
+                    <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar " alt="user profile image">
+                </div>
+                <div class="col-lg-3 text-left">
+                    <h5><a href="/?action=user&id=<?= $comment->getAuthor()->getId() ?>"><b><?= $comment->getAuthor()->getPseudo()?></b></a></h5>
+                    <h6 class="text-muted time"><?= $comment->getCreationDate()->format('Y-m-d H:i')?></h6>
+                </div>
+    <?php
+            if($session->existAttribute("user")){
+                if($session->getAttribute("user")->getType()==2){
+    ?>
+                <div class="col-lg-7 text-right "> 
+                    <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>" method="post">
+                        <button class="btn btn-lg btn-danger btn-block" type="submit">Supprimer</button>
+                    </form>
+                </div>
+    <?php
+                }
+            }
+    ?>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-justify"> 
+                    <p><?= $comment->getContent() ?></p>
+                </div>
+            </div>
+            <hr>
+<?php
+        }else{
+            if($session->existAttribute("user")){
+                if($session->getAttribute("user")->getType()==2){
+?>
+            <div class="row">
+                <div class="col-lg-2 text-left">
+                    <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar " alt="user profile image">
+                </div>
+                <div class="col-lg-3 text-left">
+                    <h5><a href="/?action=user&id=<?= $comment->getAuthor()->getId() ?>"><b><?= $comment->getAuthor()->getPseudo()?></b></a></h5>
+                    <h6 class="text-muted time"><?= $comment->getCreationDate()->format('Y-m-d H:i')?></h6>
+                </div>
+                <div class="col-lg-7 text-right"> 
+                    <form class="form-comment" action="/?action=validateComment&id=<?= $comment->getId() ?>" method="post">
+                        <button class="btn btn-lg btn-success btn-block" type="submit">Valider</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-justify"> 
+                    <p><?= $comment->getContent() ?></p>
+                </div>
+            </div>
+            <hr>
+<?php
+                }
+            }
+        }
+    }
+    if($session->existAttribute("user")){
+    if($session->getAttribute("user")->getType()>0){
+?>
+            <form class="form-comment" action="/?action=addComment&id=<?= $post->getId() ?>" method="post">
+                <label for="commentText" class="sr-only">Mot de passe</label>
+                <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>
+            </form>
+<?php
+        }
+    }
+?>
                         </div>
                     </div>
                 </div>

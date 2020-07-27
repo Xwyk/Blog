@@ -10,20 +10,16 @@ class LoginController extends Controller{
 	
 	public function display()
 	{
-		if (!isset($_POST)) {
+		if(!isset($_POST['email']) || !isset($_POST['password'])){
 			$this->render('login');	
+			return;
 		}
-		else{
-			$this->login();
-		}
+		$this->login();
 		
 	}
 
 	private function login(){
 		try{			
-			if(!isset($_POST['email']) || !isset($_POST['password'])){
-				throw new \Exception("Veuillez entrer un e-mail et un mot de passe");
-			}
 			$this->session->login(UserManager::login(
 				filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL),
 				filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)

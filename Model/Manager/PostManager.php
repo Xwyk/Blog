@@ -60,34 +60,11 @@ class PostManager extends Manager
 								ON post.author = user.id
 								WHERE post.id = :id ;';
 		$posts = self::executeRequest($requestPosts, ['id'=>$postId]);
-		$requestComments = 'SELECT comment.id AS commentId,
-						   		   comment.content AS commentContent,
-						   		   comment.isValid AS commentValid,
-						   		   comment.author AS commentAuthor,
-						   		   comment.creation_date AS commentCreationDate,
-		   
-						   		   user.id AS userId, 
-						   		   user.pseudo AS userPseudo, 
-						   		   user.first_name AS userFirstName, 
-						   		   user.last_name AS userLastName, 
-						   		   user.mail_address AS userMailAddress
-						   
-							FROM comment 
-							INNER JOIN post
-							ON comment.post = post.id
-							INNER JOIN user
-							ON comment.author = user.id
-							WHERE post.id = :id ;';
-
-		$comments = self::executeRequest($requestComments, ['id'=>$postId]);
 		$resultPosts = $posts->fetch();
 		if(!$resultPosts){
 			throw new PostNotFoundException($postId);
 		}
-		$resultComments=[];
-		while ($data = $comments->fetch()){
-   			$resultComments[] = CommentManager::createFromArray($data);
-        }
+			$resultComments = CommentManager::getAllCommentsByPost($postId);
 
 		$ret = self::createFromArray($resultPosts, $resultComments);
 		return $ret;

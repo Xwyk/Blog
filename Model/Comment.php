@@ -120,6 +120,11 @@ class Comment
         return $this->author;
     }
 
+    public function setIsValid($newIsValid)
+    {
+        $this->isValid = $newIsValid;
+    }
+
     /**
      * Set content
      * @param string newContent New content to set

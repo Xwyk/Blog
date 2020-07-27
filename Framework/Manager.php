@@ -7,11 +7,18 @@ abstract class Manager
 {
 	static private $database;
 	
-	static private function getDatabase() : \PDO
+	static private function getDatabase(string $configPath) : \PDO
 	{
+		$config = new Configuration($configPath);
+		$host = $config->config['database']['host'];
+		$port = $config->config['database']['port'];
+		$dbname = $config->config['database']['dbname'];
+		$username = $config->config['database']['username'];
+		$password = $config->config['database']['password'];
 		// If database isn't set, set it and return it		
-		if (self::$database === null)
-            self::$database = new \PDO('mysql:host=localhost;port=3308;dbname=blog;charset=utf8', 'root', '');  
+		if (self::$database === null){
+            self::$database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);  
+		}
         return self::$database;
 	}
 
@@ -23,7 +30,7 @@ abstract class Manager
 	 */
 	static protected function executeRequest(string $request, array $parameters = null)
 	{
-		$req = self::getDatabase()->prepare($request);
+		$req = self::getDatabase(__DIR__.'/../config/config.php')->prepare($request);
 		$req->execute($parameters);
 		return $req; 
 	}
