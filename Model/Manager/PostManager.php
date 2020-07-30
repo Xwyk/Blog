@@ -16,6 +16,7 @@ class PostManager extends Manager
         $request = 'SELECT post.id AS postId, 
 						   post.chapo AS postChapo, 
 						   post.title AS postTitle, 
+						   post.content AS postContent, 
 						   post.author AS postAuthor, 
 						   post.creation_date AS postCreationDate, 
 						   post.modification_date AS postModificationDate, 
@@ -84,18 +85,19 @@ class PostManager extends Manager
 		$result = self::executeRequest($request, ['chapo' => $post->getChapo(), 
 												 'title' => $post->getTitle(),
 												 'content' => $post->getContent(),
-												 'author' => $post->getAuthor()]);
+												 'author' => $post->getAuthor()->getId()]);
 		return $result;				    
 	}
 
 	static public function createFromArray(array $data, array $comments = null)
 	{
 		return new Post([
-   				'id' => $data['postId'],
+   				'id' => $data['postId']??null,
 				'chapo' => $data['postChapo'],
 				'title' => $data['postTitle'],
-				'creation_date' => $data['postCreationDate'],
-				'modification_date' => $data['postModificationDate'],
+				'content' => $data['postContent'],
+				'creation_date' => $data['postCreationDate']??null,
+				'modification_date' => $data['postModificationDate']??null,
 				'author' => UserManager::createFromArray($data),
 				'comments' => $comments
    			]);
