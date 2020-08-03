@@ -8,6 +8,7 @@ use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
 use Blog\Controller\LoginController;
 use Blog\Controller\RegisterController;
+use Blog\Controller\AdminController;
 use Blog\Framework\Session;
 use Blog\Framework\View;
 use Blog\Model\User;
@@ -43,6 +44,12 @@ try{
 			break;
 		case 'invalidateComment':
 			(new PostController($view, $session))->invalidateComment();
+			break;
+		case 'admin':
+			(new AdminController($view, $session))->display();
+			break;
+		case 'addPost':
+			(new PostController($view, $session))->AddPost();
 			break;
 		default:
 			var_dump(User::TYPE_ADMIN);

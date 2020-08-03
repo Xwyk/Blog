@@ -20,6 +20,30 @@ class PostController extends Controller{
 		$this->render('post',['post' => $post, "mainTitle"=>$post->getTitle()]);
 	}
 
+	public function addPost()
+	{
+		if (!$this->session->existAttribute('user') || !$this->session->getAttribute('user')->getType()==2) {
+			throw new \Exception('Utilisateur non connecté');
+		}
+		$validate = filter_input(INPUT_POST, 'validate',FILTER_VALIDATE_INT);
+		if (!$validate) {
+			$this->render('addPost');
+			return;
+		}
+		$newpost = PostManager::createFromArray([
+			'postTitle'=>$_POST['postTitle'],
+			'postChapo'=>$_POST['postChapo'],
+			'postContent'=>$_POST['postContent'],
+			'userId'=>$this->session->getAttribute('user')->getId(),
+			'userPseudo'=>$this->session->getAttribute('user')->getPseudo(),
+			'userFirstName'=>$this->session->getAttribute('user')->getFirstName(),
+			'userLastName'=>$this->session->getAttribute('user')->getLastName(),
+			'userMailAddress'=>$this->session->getAttribute('user')->getMailAddress()
+		]);
+		PostManager::add($newpost);
+
+	}
+
 	public function addComment()
 	{
 

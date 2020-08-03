@@ -1,4 +1,4 @@
-<?php $mainTitle = "Florian LEBOUL -- Login"?>
+<?php $mainTitle = "Login"?>
 <div class="portfolio-modal" >
 	<div class="modal-content">
 	    <div class="container">
