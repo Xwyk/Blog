@@ -1,3 +1,4 @@
+<?php $mainTitle = "Interface d'administrateion"?>
 <div class="portfolio-modal" >
     <div class="modal-content">
         <div class="container-fluid">

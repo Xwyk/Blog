@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="modal-body">
-                        <h2><?= $post->getTitle() ?></h2>
+                        <h2><?= strtoupper($post->getTitle()) ?></h2>
                         <hr class="star-primary">
                         <!-- <img src="<?= $imagePath ?>" class="img-responsive img-centered" alt=""> -->
                         <img src="/Common/themes/img/portfolio/cabin.png" class="img-responsive img-centered" alt="">

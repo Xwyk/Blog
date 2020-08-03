@@ -26,5 +26,5 @@ abstract class Controller
 		header("Location: ".$path);
 	}
 	
-	abstract public function display();
+	//abstract public function display();
 }

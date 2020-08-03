@@ -6,6 +6,7 @@ require __DIR__.'/vendor/autoload.php';
 
 use Blog\Controller\HomeController;
 use Blog\Controller\PostController;
+use Blog\Controller\CommentController;
 use Blog\Controller\LoginController;
 use Blog\Controller\RegisterController;
 use Blog\Controller\AdminController;
@@ -37,13 +38,13 @@ try{
 			(new PostController($view, $session))->display();
 			break;
 		case 'addComment':
-			(new PostController($view, $session))->addComment();
+			(new CommentController($view, $session))->addComment();
 			break;
 		case 'validateComment':
-			(new PostController($view, $session))->validateComment();
+			(new CommentController($view, $session))->validateComment();
 			break;
 		case 'invalidateComment':
-			(new PostController($view, $session))->invalidateComment();
+			(new CommentController($view, $session))->invalidateComment();
 			break;
 		case 'admin':
 			(new AdminController($view, $session))->display();
