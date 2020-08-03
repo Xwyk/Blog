@@ -3,6 +3,8 @@ namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
 use Blog\Model\User;
+use Blog\Exceptions\UserNotActiveException;
+use Blog\Exceptions\AlreadyUsedMailAddressException;
 /**
  * 
  */
@@ -42,7 +44,7 @@ class UserManager extends Manager
 		}
 		$user = new User($result);
 		if (!$user->getActive()) {
-			throw new \Exception("Le compte utilisateur n'est pas activé", 1);
+			throw new UserNotActiveException($user->getMailAddress());
 		}
 		if (!password_verify($password,$user->getPassword())) {
 			throw new \Exception("Mot de passe incorrect", 1);
@@ -64,7 +66,7 @@ class UserManager extends Manager
 	static public function add($userToAdd)
 	{
 		if(self::getUserByMail($userToAdd->getMailAddress())){
-		 	throw new \Exception("Adresse mail déjà utilisée", 1);
+		 	throw new AlreadyUsedMailAddressException($userToAdd->getMailAddress());
 		}
 		$request = 'INSERT INTO user (first_name, 
 									  last_name,

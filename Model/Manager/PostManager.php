@@ -35,7 +35,6 @@ class PostManager extends Manager
         while ($data = $posts->fetch()){
    			$postsArray[] = self::createFromArray($data);
         }
-        	
         return $postsArray;
 	}
 
