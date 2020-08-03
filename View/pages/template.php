@@ -17,6 +17,7 @@ use Blog\Framework\Session;
 
     <!-- Theme CSS -->
     <link href="Common/themes/css/freelancer.min.css" rel="stylesheet">
+    <link href="Common/themes/css/datatables.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="Common/themes/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -140,6 +141,11 @@ use Blog\Framework\Session;
     <!-- Contact Form JavaScript -->
     <script src="Common/themes/js/jqBootstrapValidation.js"></script>
     <script src="Common/themes/js/contact_me.js"></script>
+    <script src="Common/themes/js/datatables.min.js"></script>
+<script type="text/javascript">
+$('#dtOrderExample').DataTable({"order": [[ 2, "desc" ]]});
+$('#dataTables_length').addClass('bs-select');
+</script>
 
     <!-- Theme JavaScript -->
     <script src="Common/themes/js/freelancer.min.js"></script>

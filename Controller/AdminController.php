@@ -2,36 +2,41 @@
 
 namespace Blog\Controller;
 // require __DIR__."/../View/View.php";
-use Blog\Framework\Controller;
+use Blog\Framework\SecuredController;
 use Blog\Model\Manager\CommentManager;
 
-class AdminController extends Controller{
+class AdminController extends SecuredController{
 	
 	public function display()
 	{
 		if (!$this->session->existAttribute('user') || !$this->session->getAttribute('user')->getType()==2) {
 			throw new \Exception('Utilisateur non connecté');
 		}
-		$this->render('admin', ['invalidComments' => $this->getAllInvaliComments()]);
+		$this->render('admin', ['comments' => $this->getAllComments()]);
 
 	}
 
-	public function getAllInvaliComments()
+	protected function getAllInvalidComments()
 	{
 		return CommentManager::getAllInvalidComments();
 	}
 
-	public function getAllUsers()
+	protected function getAllComments()
+	{
+		return CommentManager::getAllComments();
+	}
+
+	protected function getAllUsers()
 	{
 		return CommentManager::getAllInvalidComments();
 	}
 
-	public function getAdminUsers()
+	protected function getAdminUsers()
 	{
 		return CommentManager::getAllInvalidComments();
 	}
 
-	public function getNonAdminUsers()
+	protected function getNonAdminUsers()
 	{
 		return CommentManager::getAllInvalidComments();
 	}

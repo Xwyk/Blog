@@ -49,7 +49,8 @@ class CommentManager extends Manager
 						   		   comment.isValid AS commentValid,
 						   		   comment.author AS commentAuthor,
 						   		   comment.creation_date AS commentCreationDate,
-		   
+		   						   comment.post AS commentPostId,
+
 						   		   user.id AS userId, 
 						   		   user.pseudo AS userPseudo, 
 						   		   user.first_name AS userFirstName, 
@@ -68,7 +69,6 @@ class CommentManager extends Manager
 		while ($data = $comments->fetch()){
    			$resultComments[] = CommentManager::createFromArray($data);
         }
-
 		return $resultComments;
 	}
 
