@@ -52,7 +52,7 @@ class PostController extends Controller{
 			throw new PostNotFoundException($id);
 		}
 		$comment = new Comment([
-			'content' => $_POST['commentText'],
+			'content' => filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
 			'author' => $this->session->getAttribute('user'),
 			'postId' => $id
 		]);

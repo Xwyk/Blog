@@ -30,7 +30,7 @@ abstract class Manager
 	 */
 	static protected function executeRequest(string $request, array $parameters = null)
 	{
-		$req = self::getDatabase(__DIR__.'/../config/config.php')->prepare($request);
+		$req = self::getDatabase(__DIR__.'/../config/config.local.php')->prepare($request);
 		$req->execute($parameters);
 		return $req; 
 	}
