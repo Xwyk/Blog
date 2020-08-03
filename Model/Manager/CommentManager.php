@@ -125,7 +125,7 @@ class CommentManager extends Manager
 							ON comment.author = user.id
 							AND comment.isValid = 1;';
 
-		$comments = self::executeRequest($requestComments, ['id'=>$postId]);
+		$comments = self::executeRequest($requestComments);
 		
 		$resultComments=[];
 		while ($data = $comments->fetch()){
