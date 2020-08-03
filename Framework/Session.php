@@ -1,7 +1,7 @@
 <?php
 
 namespace Blog\Framework;
-
+use Blog\Model\User;
 /**
  * 
  */
@@ -18,12 +18,11 @@ class Session
 
 
 	public function isAuthenticated(){
-		if($this->existAttribute(self::AUTHENTICATED_KEY)){
-			return$this->getAttribute(self::AUTHENTICATED_KEY); 
-		}
+		return $this->existAttribute(self::AUTHENTICATED_KEY);
+	}
 
-
-		return false;
+	public function isAdmin(){
+		return ($this->isAuthenticated()) && ($this->getAttribute(self::AUTHENTICATED_KEY)->getType() == User::TYPE_ADMIN);
 	}
 
 	public function login($user){

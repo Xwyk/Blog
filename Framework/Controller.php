@@ -17,9 +17,9 @@ abstract class Controller
 
 	// abstract static public function display();
 
-	protected function render(string $path, array $params = [], bool $tinyNeeded = false){
+	protected function render(string $path, array $params = []){
 		$params += ['session'=> $this->session];
-		$this->templating::render($path,$params,$tinyNeeded);
+		$this->templating::render($path,$params);
 	}
 
 	protected function redirect($path){

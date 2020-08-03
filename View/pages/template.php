@@ -51,6 +51,20 @@ use Blog\Framework\Session;
                     <li class="page-scroll">
                         <a href="/#contact">Contact</a>
                     </li>
+                    <li>
+                        <?php
+                            if ($session->isAuthenticated()) {
+                        ?>
+                        <a href="/?action=logout">Déconnexion</a>
+                        <?php
+                            }
+                            else{
+                        ?>
+                        <a href="/?action=login">Connexion</a>
+                        <?php
+                            }
+                        ?>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -92,8 +106,12 @@ use Blog\Framework\Session;
                         <h3>Accès membre</h3>
                         <?php
                             if ($session->isAuthenticated()) {
+                                if ($session->isAdmin()) {
                         ?>
                         <p>Accéder à <a href="/?action=admin">l'interface d'administration</a>.</p>
+                        <?php
+                                }
+                        ?>
                         <p><a href="/?action=logout">Déconnexion</a>.</p>
                         <?php
                             }
