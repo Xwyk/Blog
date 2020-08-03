@@ -143,5 +143,6 @@ use Blog\Framework\Session;
 
     <!-- Theme JavaScript -->
     <script src="Common/themes/js/freelancer.min.js"></script>
+    
 </body>
 </html>

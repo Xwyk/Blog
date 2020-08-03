@@ -11,6 +11,10 @@ use Blog\Exceptions\PostNotFoundException;
  */
 class PostManager extends Manager
 {
+	const VALID_COMMENTS = 1;
+    const INVALID_COMMENTS = 2 ;
+    const ALL_COMMENTS = 3;
+
 	static public function getAllPosts()
 	{
         $request = 'SELECT post.id AS postId, 
@@ -40,7 +44,7 @@ class PostManager extends Manager
         return $postsArray;
 	}
 
-	static public function getPostById(int $postId)
+	static public function getPostById(int $postId, int $commentsValidity=self::VALID_COMMENTS)
 	{
 		$requestPosts = 'SELECT post.id AS postId, 
 						   		post.chapo AS postChapo, 
@@ -65,7 +69,17 @@ class PostManager extends Manager
 		if(!$resultPosts){
 			throw new PostNotFoundException($postId);
 		}
-			$resultComments = CommentManager::getAllCommentsByPost($postId);
+		switch ($commentsValidity) {
+			case self::INVALID_COMMENTS:
+				$resultComments = CommentManager::getInvalidCommentsByPost($postId);
+				break;
+			case self::ALL_COMMENTS:
+				$resultComments = CommentManager::getAllCommentsByPost($postId);
+				break;
+			default:
+				$resultComments = CommentManager::getValidCommentsByPost($postId);
+				break;
+		}
 
 		$ret = self::createFromArray($resultPosts, $resultComments);
 		return $ret;
