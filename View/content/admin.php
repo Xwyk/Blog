@@ -81,4 +81,20 @@
 		</div>
 	</div>
 </div>
-
+<?php
+ob_start();
+?>
+    <link href="Common/themes/css/datatables.min.css" rel="stylesheet">
+<?php
+$preBody=ob_get_clean();
+ob_start();
+?>
+    <link href="Common/themes/css/datatables.min.css" rel="stylesheet">
+    <script src="Common/themes/js/datatables.min.js"></script>
+    <script type="text/javascript">
+        $('#dtOrderExample').DataTable({"order": [[ 2, "desc" ]]});
+        $('#dataTables_length').addClass('bs-select');
+    </script>
+<?php
+$postBody=ob_get_clean();
+?>
