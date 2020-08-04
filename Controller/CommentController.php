@@ -22,7 +22,7 @@ class CommentController extends Controller{
 			'author' => $this->session->getAttribute('user'),
 			'postId' => $postId
 		]);
-		CommentManager::add($comment);
+		(new CommentManager($this->config))->add($comment);
 		$this->redirect($this::URL_POST.$postId);
 	}
 
@@ -31,8 +31,8 @@ class CommentController extends Controller{
 		if ($id == false) {
 			throw new Exception("Commentaire non valide");
 		}
-		CommentManager::validateComment($id);
-		$this->redirect($this::URL_POST.CommentManager::getCommentById($id)->getPostId());
+		(new CommentManager($this->config))->validateComment($id);
+		$this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
 	}
 
 	public function invalidateComment(){
@@ -40,7 +40,7 @@ class CommentController extends Controller{
 		if ($id == false) {
 			throw new Exception("Commentaire non valide");
 		}
-		CommentManager::invalidateComment($id);
-		$this->redirect($this::URL_POST.CommentManager::getCommentById($id)->getPostId());
+		(new CommentManager($this->config))->invalidateComment($id);
+		$this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
 	}
 }

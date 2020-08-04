@@ -6,32 +6,32 @@ namespace Blog\Framework;
  */
 abstract class Controller
 {
-    const URL_ADMIN="/?action=admin";
-	const URL_HOME="/?action=home";
-	const URL_LOGIN="/?action=login";
-	const URL_LOGOUT="/?action=logout";
-	const URL_REGISTER="/?action=register";
-	const URL_POST="/?action=post&id=";
-	const URL_ADDPOST="/?action=addPost";
-	const URL_ADDCOMMENT="/?action=addComment&postId=";
+	public const URL_ADMIN      =	"/?action=admin";
+	public const URL_HOME       =	"/?action=home";
+	public const URL_LOGIN      =	"/?action=login";
+	public const URL_LOGOUT     =	"/?action=logout";
+	public const URL_REGISTER   =	"/?action=register";
+	public const URL_POST       =	"/?action=post&id=";
+	public const URL_ADDPOST    =	"/?action=addPost";
+	public const URL_ADDCOMMENT =	"/?action=addComment&postId=";
     
-	const VIEW_ADDPOST="addPost";
-	const VIEW_ADMIN="admin";
-	const VIEW_EDITPOST="editPost";
-	const VIEW_HOME="home";
-	const VIEW_LOGIN="login";
-	const VIEW_POST="post";
-	const VIEW_REGISTER="register";
+	public const VIEW_ADDPOST   =	"addPost";
+	public const VIEW_ADMIN     =	"admin";
+	public const VIEW_EDITPOST  =	"editPost";
+	public const VIEW_HOME      =	"home";
+	public const VIEW_LOGIN     =	"login";
+	public const VIEW_POST      =	"post";
+	public const VIEW_REGISTER  =	"register";
 
     public $templating;
     public $session;
+    public $config;
 
-    public function __construct(View $view, Session $session){
-    	$this->templating = $view;
-    	$this->session = $session;
+    public function __construct(View $view, Session $session, Configuration $config){
+		$this->templating = $view;
+		$this->session    = $session;
+		$this->config     = $config;
     }
-
-	// abstract static public function display();
 
 	protected function render(string $path, array $params = []){
 		$params += ['session'=> $this->session];

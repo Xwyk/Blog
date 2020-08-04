@@ -9,7 +9,7 @@ class HomeController extends Controller{
 	
 	public function display()
 	{
-		$articles = PostManager::getAllPosts();
+		$articles = (new PostManager($this->config))->getAllPosts();
 		$this->render($this::VIEW_HOME, ['articles' => $articles]);
 	}
 }

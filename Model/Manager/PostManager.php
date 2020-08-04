@@ -15,7 +15,7 @@ class PostManager extends Manager
     const INVALID_COMMENTS = 2 ;
     const ALL_COMMENTS = 3;
 
-	static public function getAllPosts()
+	public function getAllPosts()
 	{
         $request = 'SELECT post.id AS postId, 
 						   post.chapo AS postChapo, 
@@ -35,15 +35,15 @@ class PostManager extends Manager
 					INNER JOIN user
 					ON author = user.id;';
 
-        $posts = self::executeRequest($request);
+        $posts = $this->executeRequest($request);
         $postsArray = [];
         while ($data = $posts->fetch()){
-   			$postsArray[] = self::createFromArray($data);
+   			$postsArray[] = $this->createFromArray($data);
         }
         return $postsArray;
 	}
 
-	static public function getPostById(int $postId, int $commentsValidity=self::VALID_COMMENTS)
+	public function getPostById(int $postId, int $commentsValidity=PostManager::VALID_COMMENTS)
 	{
 		$requestPosts = 'SELECT post.id AS postId, 
 						   		post.chapo AS postChapo, 
@@ -63,28 +63,28 @@ class PostManager extends Manager
 								INNER JOIN user
 								ON post.author = user.id
 								WHERE post.id = :id ;';
-		$posts = self::executeRequest($requestPosts, ['id'=>$postId]);
+		$posts = $this->executeRequest($requestPosts, ['id'=>$postId]);
 		$resultPosts = $posts->fetch();
 		if(!$resultPosts){
 			throw new PostNotFoundException($postId);
 		}
 		switch ($commentsValidity) {
-			case self::INVALID_COMMENTS:
-				$resultComments = CommentManager::getInvalidCommentsByPost($postId);
+			case $this::INVALID_COMMENTS:
+				$resultComments = (new CommentManager($this->config))->getInvalidCommentsByPost($postId);
 				break;
-			case self::ALL_COMMENTS:
-				$resultComments = CommentManager::getAllCommentsByPost($postId);
+			case $this::ALL_COMMENTS:
+				$resultComments = (new CommentManager($this->config))->getAllCommentsByPost($postId);
 				break;
 			default:
-				$resultComments = CommentManager::getValidCommentsByPost($postId);
+				$resultComments = (new CommentManager($this->config))->getValidCommentsByPost($postId);
 				break;
 		}
 
-		$ret = self::createFromArray($resultPosts, $resultComments);
+		$ret = $this->createFromArray($resultPosts, $resultComments);
 		return $ret;
 	}
 
-	static public function add(Post $post)
+	public function add(Post $post)
 	{
 		$request = 'INSERT INTO post (chapo, 
 									  title,
@@ -95,14 +95,14 @@ class PostManager extends Manager
 							:content, 
 							:author);';
 					
-		$result = self::executeRequest($request, ['chapo' => $post->getChapo(), 
+		$result = $this->executeRequest($request, ['chapo' => $post->getChapo(), 
 												 'title' => $post->getTitle(),
 												 'content' => $post->getContent(),
 												 'author' => $post->getAuthor()->getId()]);
 		return $result;				    
 	}
 
-	static public function createFromArray(array $data, array $comments = null)
+	public function createFromArray(array $data, array $comments = null)
 	{
 		return new Post([
    				'id' => $data['postId']??null,
@@ -111,17 +111,17 @@ class PostManager extends Manager
 				'content' => $data['postContent'],
 				'creation_date' => $data['postCreationDate']??null,
 				'modification_date' => $data['postModificationDate']??null,
-				'author' => UserManager::createFromArray($data),
+				'author' => (new UserManager($this->config))->createFromArray($data),
 				'comments' => $comments
    			]);
 	}
 	
 
-	static public function remove(Post $post)
+	public function remove(Post $post)
 	{
 		$request = 'DELETE FROM post
 					WHERE id = :id ;';
-		$result = self::executeRequest($request, ['id'=>$post->getId()]);
+		$result = $this->executeRequest($request, ['id'=>$post->getId()]);
 		return $result;				    
 	}
 

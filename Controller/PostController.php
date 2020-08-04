@@ -7,16 +7,19 @@ use Blog\Model\Manager\PostManager;
 use Blog\Model\Manager\CommentManager;
 use Blog\Model\Comment;
 use Blog\Framework\View;
+use Blog\Framework\Configuration;
+use Blog\Framework\Session;
 
 class PostController extends Controller{
 	
+
 	public function display()
 	{
 		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
 		if ($id == false) {
 			throw new PostNotFoundException($id);
 		}
-		$post = PostManager::getPostById($id);
+		$post = (new PostManager($this->config))->getPostById($id);
 		$this->render($this::VIEW_POST,['post' => $post, "mainTitle"=>$post->getTitle()]);
 	}
 
@@ -30,7 +33,7 @@ class PostController extends Controller{
 			$this->render($this::VIEW_ADDPOST);
 			return;
 		}
-		$newpost = PostManager::createFromArray([
+		$newpost = (new PostManager($this->config))->createFromArray([
 			'postTitle'=>$_POST['postTitle'],
 			'postChapo'=>$_POST['postChapo'],
 			'postContent'=>$_POST['postContent'],
@@ -40,7 +43,7 @@ class PostController extends Controller{
 			'userLastName'=>$this->session->getAttribute('user')->getLastName(),
 			'userMailAddress'=>$this->session->getAttribute('user')->getMailAddress()
 		]);
-		PostManager::add($newpost);
+		(new PostManager($this->config))->add($newpost);
 
 	}
 

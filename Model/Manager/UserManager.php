@@ -13,19 +13,19 @@ class UserManager extends Manager
 	/**
 	 * 
 	 */	
-	static public function getUserById(int $userId) : User
+	public function getUserById(int $userId) : User
 	{
 		$request = 'SELECT * FROM user 
 					WHERE id = :id ;';
-		$user = self::executeRequest($request, ['id' => $userId]);
+		$user = $this->executeRequest($request, ['id' => $userId]);
 		return new User($user->fetch());
 	}
 
-	static public function getUserByMail(string $userMail)
+	public function getUserByMail(string $userMail)
 	{
 		$request = 'SELECT * FROM user 
 					WHERE mail_address = :mail ;';
-		$user = self::executeRequest($request, [':mail' => $userMail]);
+		$user = $this->executeRequest($request, [':mail' => $userMail]);
 		$user = $user->fetch();
 		if ($user) {
 			$user = new User($user);	
@@ -33,11 +33,11 @@ class UserManager extends Manager
 		return $user;
 	}
 
-	static public function login(string $usermail, string $password)
+	public function login(string $usermail, string $password)
 	{
 		$request = 'SELECT * FROM user 
 					WHERE mail_address = :mailAddress ;';
-		$user = self::executeRequest($request, [':mailAddress' => $usermail]);
+		$user = $this->executeRequest($request, [':mailAddress' => $usermail]);
 		$result=$user->fetch();
 		if (!is_array($result)) {
 		 	throw new \Exception("Aucun compte trouvé", 1);
@@ -52,7 +52,7 @@ class UserManager extends Manager
 		return $user;
 	}
 
-	static public function createFromArray(array $data)
+	public function createFromArray(array $data)
 	{
 		return new User([
 					'id' => $data['userId'],
@@ -63,9 +63,9 @@ class UserManager extends Manager
 				]);
 	}
 
-	static public function add($userToAdd)
+	public function add($userToAdd)
 	{
-		if(self::getUserByMail($userToAdd->getMailAddress())){
+		if($this->getUserByMail($userToAdd->getMailAddress())){
 		 	throw new AlreadyUsedMailAddressException($userToAdd->getMailAddress());
 		}
 		$request = 'INSERT INTO user (first_name, 
@@ -78,7 +78,7 @@ class UserManager extends Manager
 							:pseudo, 
 							:mail, 
 							:pwd);';
-		$result = self::executeRequest($request, [
+		$result = $this->executeRequest($request, [
 			':firstname'=>$userToAdd->getFirstName(), 
 			':lastname' => $userToAdd->getLastName(), 
 			':pseudo' => $userToAdd->getPseudo(), 

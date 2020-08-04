@@ -1,22 +1,27 @@
 <?php
 
 namespace Blog\Framework;
-
+use Blog\Exceptions\FileNotFoundException;
 /**
  * 
  */
 class View
 
 {
+	const VIEW_TEMPLATE=__DIR__.'/../View/pages/template.php';
 	static public function render(string $view, array $parameters = null)
 	{
 		if (isset($parameters)) {
 			extract($parameters);
 		}
+		$contentFile = __DIR__.'/../View/content/'.$view.'.php';
+		if (!file_exists($contentFile)) {
+			throw new FileNotFoundException($view);
+		}
 		ob_start();
-		require __DIR__.'/../View/content/'.$view.'.php';
+		require $contentFile;
 		$content=ob_get_clean();
 
-		require __DIR__.'/../View/pages/template.php';
+		require self::VIEW_TEMPLATE;
 	}
 }

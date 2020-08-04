@@ -8,9 +8,9 @@ use Blog\Exceptions\FileNotFoundException;
  * 
  */
 class Configuration{
-	public $config;
+	private $config;
 
-	public function __construct(string $path=__DIR__.'/config/config.local.php')
+	public function __construct(string $path)
 	{
 		if (!file_exists($path)) {
 			throw new FileNotFoundException($path);
@@ -20,5 +20,28 @@ class Configuration{
 			throw new NotValidFileException($path);
 		}
 		$this->config = $ini_array;
+	}
+
+
+
+	public function getHost()
+	{
+		return $this->config['database']['host'];
+	}
+	public function getPort()
+	{
+		return $this->config['database']['port'];
+	}
+	public function getDbName()
+	{
+		return $this->config['database']['dbname'];
+	}
+	public function getUsername()
+	{
+		return $this->config['database']['username'];
+	}
+	public function getPassword()
+	{
+		return $this->config['database']['password'];
 	}
 }

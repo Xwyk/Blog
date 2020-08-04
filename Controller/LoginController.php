@@ -20,7 +20,7 @@ class LoginController extends Controller{
 
 	private function login(){
 		try{			
-			$this->session->login(UserManager::login(
+			$this->session->login((new UserManager($this->config))->login(
 				filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL),
 				filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)
 			));

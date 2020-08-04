@@ -5,21 +5,26 @@ namespace Blog\Framework;
  */
 abstract class Manager
 {
-	static private $database;
-	
-	static private function getDatabase(string $configPath) : \PDO
+	private $database;
+	protected $config;
+
+	public function __construct(Configuration $config)
 	{
-		$config = new Configuration($configPath);
-		$host = $config->config['database']['host'];
-		$port = $config->config['database']['port'];
-		$dbname = $config->config['database']['dbname'];
-		$username = $config->config['database']['username'];
-		$password = $config->config['database']['password'];
-		// If database isn't set, set it and return it		
-		if (self::$database === null){
-            self::$database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);  
+		$this->config = $config;
+		$this->database = $this->getDatabase();
+	}
+
+	private function getDatabase() : \PDO
+	{
+		if ($this->database === null){
+			$host     = $this->config->getHost();
+			$port     = $this->config->getPort();
+			$dbname   = $this->config->getDbName();
+			$username = $this->config->getUsername();
+			$password = $this->config->getPassword();
+            $this->database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);  
 		}
-        return self::$database;
+        return $this->database;
 	}
 
 	/**
@@ -28,9 +33,9 @@ abstract class Manager
 	 * @param array  Parameters : parameters to set for the request
 	 * @return PDOStatement : result of the query 
 	 */
-	static protected function executeRequest(string $request, array $parameters = null)
+	protected function executeRequest(string $request, array $parameters = null)
 	{
-		$req = self::getDatabase(__DIR__.'/../config/config.local.php')->prepare($request);
+		$req = $this->database->prepare($request);
 		$req->execute($parameters);
 		return $req; 
 	}

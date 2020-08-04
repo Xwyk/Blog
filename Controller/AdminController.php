@@ -1,12 +1,13 @@
 <?php
 
 namespace Blog\Controller;
-// require __DIR__."/../View/View.php";
 use Blog\Framework\SecuredController;
 use Blog\Model\Manager\CommentManager;
-
+use Blog\Framework\Configuration;
+use Blog\Framework\Session;
+use Blog\Framework\View;
 class AdminController extends SecuredController{
-	
+
 	public function display()
 	{
 		if (!$this->session->existAttribute('user') || !$this->session->getAttribute('user')->getType()==2) {
@@ -23,7 +24,7 @@ class AdminController extends SecuredController{
 
 	protected function getAllComments()
 	{
-		return CommentManager::getAllComments();
+		return (new CommentManager($this->config))->getAllComments();
 	}
 
 	protected function getAllUsers()
