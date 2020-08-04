@@ -18,18 +18,18 @@ class RegisterController extends Controller{
 				'password' => filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)
 			]);
 			UserManager::add($userToAdd);
-			$this->redirect('/?action=login');
+			$this->redirect($this::URL_LOGIN);
 
 		}
 		catch (\Exception $e){
-			$this->render('register', ['error'=>$e->getMessage()]);
+			$this->render($this::VIEW_REGISTER, ['error'=>$e->getMessage()]);
 		}
 	}
 
 	public function display()
 	{
 		if (empty($_POST)) {
-			$this->render('register');
+			$this->render($this::VIEW_REGISTER);
 			return;
 		}
 		$this->register();

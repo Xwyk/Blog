@@ -13,17 +13,17 @@ class CommentController extends Controller{
 	public function addComment()
 	{
 
-		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
-		if ($id == false) {
-			throw new PostNotFoundException($id);
+		$postId = filter_input(INPUT_GET, 'postId',FILTER_VALIDATE_INT);
+		if ($postId == false) {
+			throw new PostNotFoundException($postId);
 		}
 		$comment = new Comment([
 			'content' => filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
 			'author' => $this->session->getAttribute('user'),
-			'postId' => $id
+			'postId' => $postId
 		]);
 		CommentManager::add($comment);
-		$this->redirect('/?action=post&id='.$id);
+		$this->redirect($this::URL_POST.$postId);
 	}
 
 	public function validateComment(){
@@ -32,7 +32,7 @@ class CommentController extends Controller{
 			throw new Exception("Commentaire non valide");
 		}
 		CommentManager::validateComment($id);
-		$this->redirect('/?action=post&id='.CommentManager::getCommentById($id)->getPostId());
+		$this->redirect($this::URL_POST.CommentManager::getCommentById($id)->getPostId());
 	}
 
 	public function invalidateComment(){
@@ -41,6 +41,6 @@ class CommentController extends Controller{
 			throw new Exception("Commentaire non valide");
 		}
 		CommentManager::invalidateComment($id);
-		$this->redirect('/?action=post&id='.CommentManager::getCommentById($id)->getPostId());
+		$this->redirect($this::URL_POST.CommentManager::getCommentById($id)->getPostId());
 	}
 }

@@ -55,7 +55,7 @@
                         if($session->existAttribute("user")){
                             if($session->getAttribute("user")->getType()>0){
 ?>
-                            <form class="form-comment" action="/?action=addComment&id=<?= $post->getId() ?>" method="post">
+                            <form class="form-comment" action="/?action=addComment&postId=<?= $post->getId() ?>" method="post">
                                 <label for="commentText" class="sr-only">Mot de passe</label>
                                 <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>

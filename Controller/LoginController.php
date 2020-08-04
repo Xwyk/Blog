@@ -11,7 +11,7 @@ class LoginController extends Controller{
 	public function display()
 	{
 		if(!isset($_POST['email']) || !isset($_POST['password'])){
-			$this->render('login');	
+			$this->render($this::VIEW_LOGIN);	
 			return;
 		}
 		$this->login();
@@ -24,9 +24,12 @@ class LoginController extends Controller{
 				filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL),
 				filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)
 			));
-			$this->redirect('/');
+			if ($this->session->isAdmin) {
+				$this->redirect($this::URL_ADMIN);
+			}
+			$this->redirect($this::URL_HOME);
 		}catch(\Exception $e){
-			$this->render('login', ['error' => $e->getMessage()]);
+			$this->render($this::VIEW_LOGIN, ['error' => $e->getMessage()]);
 		}
 	}
 
@@ -34,6 +37,6 @@ class LoginController extends Controller{
 	public function logout()
 	{
 		$this->session->logout();
-		$this->redirect('/');
+		$this->redirect($this::URL_HOME);
 	}
 }

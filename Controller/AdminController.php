@@ -12,7 +12,7 @@ class AdminController extends SecuredController{
 		if (!$this->session->existAttribute('user') || !$this->session->getAttribute('user')->getType()==2) {
 			throw new \Exception('Utilisateur non connecté');
 		}
-		$this->render('admin', ['comments' => $this->getAllComments()]);
+		$this->render($this::VIEW_ADMIN, ['comments' => $this->getAllComments()]);
 
 	}
 

@@ -17,7 +17,7 @@ class PostController extends Controller{
 			throw new PostNotFoundException($id);
 		}
 		$post = PostManager::getPostById($id);
-		$this->render('post',['post' => $post, "mainTitle"=>$post->getTitle()]);
+		$this->render($this::VIEW_POST,['post' => $post, "mainTitle"=>$post->getTitle()]);
 	}
 
 	public function addPost()
@@ -27,7 +27,7 @@ class PostController extends Controller{
 		}
 		$validate = filter_input(INPUT_POST, 'validate',FILTER_VALIDATE_INT);
 		if (!$validate) {
-			$this->render('addPost');
+			$this->render($this::VIEW_ADDPOST);
 			return;
 		}
 		$newpost = PostManager::createFromArray([

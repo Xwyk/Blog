@@ -8,7 +8,8 @@ use Blog\Model\User;
  */
 abstract class SecuredController extends Controller
 {
-	public function __construct(View $view, Session $session){
+	
+    public function __construct(View $view, Session $session){
 	    if (!$session->isAuthenticated()) {
 	    	throw new UserNotConnectedException();
 	    }
