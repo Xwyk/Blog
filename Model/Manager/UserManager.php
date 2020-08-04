@@ -25,10 +25,10 @@ class UserManager extends Manager
 	{
 		$request = 'SELECT * FROM user 
 					WHERE mail_address = :mail ;';
-		$user = $this->executeRequest($request, [':mail' => $userMail]);
-		$user = $user->fetch();
-		if ($user) {
-			$user = new User($user);	
+		$requestResult = $this->executeRequest($request, [':mail' => $userMail]);
+		$userResult = $requestResult->fetch();
+		if ($userResult) {
+			$user = new User($userResult);	
 		}
 		return $user;
 	}
@@ -55,12 +55,12 @@ class UserManager extends Manager
 	public function createFromArray(array $data)
 	{
 		return new User([
-					'id' => $data['userId'],
-					'pseudo' => $data['userPseudo'],
-					'first_name' => $data['userFirstName'],
-					'last_name' => $data['userLastName'],
-					'mail_address' => $data['userMailAddress']
-				]);
+			'id'           => $data['userId'],
+			'pseudo'       => $data['userPseudo'],
+			'first_name'   => $data['userFirstName'],
+			'last_name'    => $data['userLastName'],
+			'mail_address' => $data['userMailAddress']
+		]);
 	}
 
 	public function add($userToAdd)
@@ -79,11 +79,11 @@ class UserManager extends Manager
 							:mail, 
 							:pwd);';
 		$result = $this->executeRequest($request, [
-			':firstname'=>$userToAdd->getFirstName(), 
-			':lastname' => $userToAdd->getLastName(), 
-			':pseudo' => $userToAdd->getPseudo(), 
-			':mail' => $userToAdd->getMailAddress(), 
-			':pwd' => password_hash($userToAdd->getPassword(), PASSWORD_DEFAULT)]);
+			':firstname' =>$userToAdd->getFirstName(), 
+			':lastname'  => $userToAdd->getLastName(), 
+			':pseudo'    => $userToAdd->getPseudo(), 
+			':mail'      => $userToAdd->getMailAddress(), 
+			':pwd'       => password_hash($userToAdd->getPassword(), PASSWORD_DEFAULT)]);
 		return $result;				    
 	}
 }

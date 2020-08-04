@@ -11,41 +11,11 @@ use Blog\Exceptions\PostNotFoundException;
  */
 class PostManager extends Manager
 {
-	const VALID_COMMENTS = 1;
-    const INVALID_COMMENTS = 2 ;
-    const ALL_COMMENTS = 3;
+	const COMMENTS_VALID = 1;
+    const COMMENTS_INVALID = 2 ;
+    const COMMENTS_ALL = 3;
 
-	public function getAllPosts()
-	{
-        $request = 'SELECT post.id AS postId, 
-						   post.chapo AS postChapo, 
-						   post.title AS postTitle, 
-						   post.content AS postContent, 
-						   post.author AS postAuthor, 
-						   post.creation_date AS postCreationDate, 
-						   post.modification_date AS postModificationDate, 
-						   
-						   user.id AS userId, 
-						   user.pseudo AS userPseudo, 
-						   user.first_name AS userFirstName, 
-						   user.last_name AS userLastName, 
-						   user.mail_address AS userMailAddress
-						 
-					FROM post 
-					INNER JOIN user
-					ON author = user.id;';
-
-        $posts = $this->executeRequest($request);
-        $postsArray = [];
-        while ($data = $posts->fetch()){
-   			$postsArray[] = $this->createFromArray($data);
-        }
-        return $postsArray;
-	}
-
-	public function getPostById(int $postId, int $commentsValidity=PostManager::VALID_COMMENTS)
-	{
-		$requestPosts = 'SELECT post.id AS postId, 
+    const BASE_REQUEST='SELECT post.id AS postId, 
 						   		post.chapo AS postChapo, 
 						   		post.title AS postTitle, 
 						   		post.content AS postContent, 
@@ -61,25 +31,41 @@ class PostManager extends Manager
 						   
 								FROM post 
 								INNER JOIN user
-								ON post.author = user.id
-								WHERE post.id = :id ;';
+								ON post.author = user.id ';
+
+	public function getAllPosts()
+	{
+        $request = $this::BASE_REQUEST;
+
+        $posts = $this->executeRequest($request);
+        $postsArray = [];
+        while ($data = $posts->fetch()){
+   			$postsArray[] = $this->createFromArray($data);
+        }
+        return $postsArray;
+	}
+
+	public function getPostById(int $postId, int $commentsValidity=PostManager::COMMENTS_VALID)
+	{
+		$requestPosts = $this::BASE_REQUEST.'WHERE post.id = :id ;';
 		$posts = $this->executeRequest($requestPosts, ['id'=>$postId]);
 		$resultPosts = $posts->fetch();
 		if(!$resultPosts){
 			throw new PostNotFoundException($postId);
 		}
+		$commentManager = new CommentManager($this->config);
 		switch ($commentsValidity) {
-			case $this::INVALID_COMMENTS:
-				$resultComments = (new CommentManager($this->config))->getInvalidCommentsByPost($postId);
+			case $this::COMMENTS_INVALID:
+				$resultComments = $commentManager->getInvalidCommentsByPost($postId);
 				break;
-			case $this::ALL_COMMENTS:
-				$resultComments = (new CommentManager($this->config))->getAllCommentsByPost($postId);
+			case $this::COMMENTS_ALL:
+				$resultComments = $commentManager->getAllCommentsByPost($postId);
 				break;
+			case $this::COMMENTS_VALID:
 			default:
-				$resultComments = (new CommentManager($this->config))->getValidCommentsByPost($postId);
+				$resultComments = $commentManager->getValidCommentsByPost($postId);
 				break;
 		}
-
 		$ret = $this->createFromArray($resultPosts, $resultComments);
 		return $ret;
 	}
