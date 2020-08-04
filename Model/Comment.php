@@ -1,11 +1,12 @@
 <?php
 namespace Blog\Model;
+use Blog\Framework\Entity;
 /**
  * public class who define an user. Extends TextContent
  *
  * @author     Florian LEBOUL
  */
-class Comment
+class Comment extends Entity
 {
     private $id;
     private $creationDate;
@@ -23,32 +24,6 @@ class Comment
 	public function __construct(array $data)
 	{
 		$this->hydrate($data);
-	}
-
-	/**
-     * Hydrate object by setting values passed by an array. Doesn't affect directly variables, passing by setters
-     * @param array data Associative array containing values for variables
-     */
-	public function hydrate(array $data)
-	{
-		// For each key in array, searching associated setter (ie : key 'id', setter 'setId') 
-        // if method exist, call her with value as parameter
-        foreach ($data as $key => $value){
-            // If db's attribute name contains '_', split name
-            if (strpos($key, "_")) {
-                $keyName = explode("_", $key);
-                $method = 'set';
-                for ($i=0; $i < count($keyName); $i++) { 
-                    $method.=ucfirst($keyName[$i]);
-                }
-            }else
-                $method = 'set'.ucfirst($key);
-                if (!is_null($value)) {
-                    if (method_exists($this, $method))
-                        $this->$method($value);
-                }
-            
-        }
 	}
 
 	/**
@@ -120,7 +95,7 @@ class Comment
         return $this->author;
     }
 
-    public function setIsValid($newIsValid)
+    protected function setIsValid($newIsValid)
     {
         $this->isValid = $newIsValid;
     }
@@ -130,7 +105,7 @@ class Comment
      * @param string newContent New content to set
      * @throws UnexpectedValueException If newContent contain html or php code
      */
-    public function setContent(string $newContent)
+    protected function setContent(string $newContent)
     {
         if ($newContent != strip_tags($newContent)){
             throw new UnexpectedValueException('Can\'t set content : value contain html/PHP code');
@@ -147,7 +122,7 @@ class Comment
      * @throws Exception If newAuthor is already set
      * @throws InvalidArgumentException If newAuthor isn't a number
      */
-    public function setAuthor(User $newAuthor)
+    protected function setAuthor(User $newAuthor)
     {
         // If id is already set, throw exception
         if (isset($this->author)){
@@ -202,7 +177,7 @@ class Comment
      * @throws Exception If newValidatorId is already set
      * @throws InvalidArgumentException If newValidatorId isn't a number
      */
-	public function setValidatorId(int $newValidatorId)
+	protected function setValidatorId(int $newValidatorId)
 	{
 		// If id is already set, throw exception
         if (isset($this->validatorId))
@@ -219,7 +194,7 @@ class Comment
      * @throws Exception If newPostId is already set
      * @throws InvalidArgumentException If newPostId isn't a number
      */
-	public function setPostId(int $newPostId)
+	protected function setPostId(int $newPostId)
 	{
 		// If id is already set, throw exception
         if (isset($this->postId))

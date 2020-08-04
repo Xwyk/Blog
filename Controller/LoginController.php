@@ -4,7 +4,6 @@ namespace Blog\Controller;
 use Blog\Framework\Controller;
 use Blog\Model\Manager\UserManager;
 use Blog\Framework\View;
-use Blog\Framework\Session;
 
 class LoginController extends Controller{
 	

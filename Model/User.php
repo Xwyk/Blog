@@ -1,10 +1,11 @@
 <?php
 namespace Blog\Model;
+use Blog\Framework\Entity;
 /**
  * summary
  */
 
-class User
+class User extends Entity
 {
     const TYPE_USER = 1;
     const TYPE_ADMIN = 2 ;
@@ -29,30 +30,6 @@ class User
         $this->creationDate = new \DateTime();
         $this->modificationDate = new \DateTime();
         $this->hydrate($data);
-    }
-
-    /**
-     * Hydrate object by setting values passed by an array. Doesn't affect directly variables, passing by setters
-     * @param array data Associative array containing values for variables
-     */
-    public function hydrate(array $data)
-    {
-        foreach ($data as $key => $value){
-            // If db's attribute name contains '_', split name
-            if (strpos($key, "_")) {
-                $keyName = explode("_", $key);
-                $method = 'set';
-                for ($i=0; $i < count($keyName); $i++) { 
-                    $method.=ucfirst($keyName[$i]);
-                }
-            }else
-                $method = 'set'.ucfirst($key);
-            // If value isn't null and method exists, call the setter
-            if (!is_null($value))
-                if (method_exists($this, $method))
-                    $this->$method($value);
-            
-        }
     }
 
     /**
@@ -193,7 +170,7 @@ class User
      * @param string newFirstName New first name to set
      * @throws UnexpectedValueException If newFirstName contain html or php code
      */
-    private function setFirstName(string $newFirstName)
+    protected function setFirstName(string $newFirstName)
     {
     	if ($newFirstName == strip_tags($newFirstName))
     		$this->firstName = $newFirstName;
@@ -206,7 +183,7 @@ class User
      * @param string newLastName New last name to set
      * @throws UnexpectedValueException If newLastName contain html or php code
      */
-    private function setLastName(string $newLastName)
+    protected function setLastName(string $newLastName)
     {
     	if ($newLastName == strip_tags($newLastName))
     		$this->lastName = $newLastName;
@@ -219,7 +196,7 @@ class User
      * @param string newPseudo New pseudo to set
      * @throws UnexpectedValueException If newPseudo contain html or php code
      */
-    private function setPseudo(string $newPseudo)
+    protected function setPseudo(string $newPseudo)
     {
     	if ($newPseudo == strip_tags($newPseudo))
     		$this->pseudo = $newPseudo;
@@ -233,7 +210,7 @@ class User
      * @throws UnexpectedValueException If newMailAddress contain html or php code
      * @throws UnexpectedValueException If newMailAddress doesn't match regexp
      */
-    private function setMailAddress(string $newMailAddress)
+    protected function setMailAddress(string $newMailAddress)
     {
     	if ($newMailAddress != strip_tags($newMailAddress))
     		throw new \UnexpectedValueException('L\'adresse fournie contient du code');
@@ -248,7 +225,7 @@ class User
      * @param string newPassword New password to set
      * @throws UnexpectedValueException If newPassword contain html or php code
      */
-    private function setPassword(string $newPassword)
+    protected function setPassword(string $newPassword)
     {
     	if ($newPassword != strip_tags($newPassword))
             throw new \UnexpectedValueException('Can\'t set password : value contain html/PHP code');
@@ -260,7 +237,7 @@ class User
      * Set activation state
      * @param string activation New activation state to set
      */
-    private function setActive(bool $activation)
+    protected function setActive(bool $activation)
     {
     	$this->active = $activation;
     }
@@ -269,7 +246,7 @@ class User
      * Set user type
      * @throws UnexpectedValueException If newType doesn't correspond to accepted values
      */
-    private function setType(int $newType)
+    protected function setType(int $newType)
     {
     	if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN)
             $this->type = $newType;

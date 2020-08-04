@@ -163,6 +163,5 @@ use Blog\Framework\Session;
     <!-- Theme JavaScript -->
     <script src="Common/themes/js/freelancer.min.js"></script>
     <?= $postBody ?? ""?>
-    
 </body>
 </html>

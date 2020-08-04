@@ -1,9 +1,10 @@
 <?php
 namespace Blog\Model;
+use Blog\Framework\Entity;
 /**
  * 
  */
-class Post
+class Post extends Entity
 {
 	private $id;
 	private $creationDate;
@@ -19,28 +20,6 @@ class Post
 	{
         $comments=[];
 		$this->hydrate($data);
-	}
-
-	public function hydrate(array $data)
-	{
-		// For each key in array, searching associated setter (ie : key 'id', setter 'setId') 
-		// if method exist, call her with value as parameter
-        foreach ($data as $key => $value){
-            // If db's attribute name contains '_', split name
-            if (strpos($key, "_")) {
-                $keyName = explode("_", $key);
-                $method = 'set';
-                for ($i=0; $i < count($keyName); $i++) { 
-                    $method.=ucfirst($keyName[$i]);
-                }
-            }else
-                $method = 'set'.ucfirst($key);
-            // If value isn't null and method exists, call the setter
-            if (!is_null($value))
-                if (method_exists($this, $method))
-                    $this->$method($value);
-            
-        }
 	}
 
 	/**
@@ -188,7 +167,7 @@ class Post
      * @param string newChapo New chapo to set
      * @throws UnexpectedValueException If newChapo contain html or php code
      */
-	public function setChapo(string $newChapo)
+	protected function setChapo(string $newChapo)
 	{
 		if ($newChapo != strip_tags($newChapo)){
     		throw new UnexpectedValueException('Can\'t set chapo : value contain html/PHP code');
@@ -201,7 +180,7 @@ class Post
      * @param string newTitle New title to set
      * @throws UnexpectedValueException If newTitle contain html or php code
      */
-	public function setTitle(string $newTitle)
+	protected function setTitle(string $newTitle)
 	{
 		if ($newTitle != strip_tags($newTitle)){
     		throw new UnexpectedValueException('Can\'t set title : value contain html/PHP code');
@@ -213,7 +192,7 @@ class Post
      * Set comments
      * @param array newComments New title to set
      */
-    public function setComments(array $newComments)
+    protected function setComments(array $newComments)
     {
         $this->comments = $newComments;
     }
