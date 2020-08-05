@@ -39,12 +39,14 @@
                                                    if ($comment->isValid()) {
                                                 ?>
                                                 <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>" method="post">
+                                                    <input type="hidden" name="token" value="<?= $token ?>">
                                                     <button class="btn btn-lg btn-warning btn-block" type="submit">Masquer</button>
                                                 </form>
                                                 <?php
                                                     }else{
                                                 ?>
                                                 <form class="form-comment" action="/?action=validateComment&id=<?= $comment->getId() ?>" method="post">
+                                                    <input type="hidden" name="token" value="<?= $token ?>">
                                                     <button class="btn btn-lg btn-success btn-block" type="submit">Afficher</button>
                                                 </form>
                                                 <?php

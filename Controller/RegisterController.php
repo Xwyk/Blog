@@ -17,7 +17,7 @@ class RegisterController extends Controller{
 				'mailAddress' => filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL),
 				'password' => filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)
 			]);
-			UserManager::add($userToAdd);
+			(new UserManager($this->config))->add($userToAdd);
 			$this->redirect($this::URL_LOGIN);
 
 		}

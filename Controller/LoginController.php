@@ -9,6 +9,10 @@ class LoginController extends Controller{
 	
 	public function display()
 	{
+		if ($this->session->isAuthenticated()) {
+			$this->redirect($this::URL_HOME);	
+			return;
+		}
 		if(!isset($_POST['email']) || !isset($_POST['password'])){
 			$this->render($this::VIEW_LOGIN);	
 			return;
@@ -23,10 +27,11 @@ class LoginController extends Controller{
 				filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL),
 				filter_input(INPUT_POST, 'password',FILTER_SANITIZE_FULL_SPECIAL_CHARS)
 			));
-			if ($this->session->isAdmin) {
+			if ($this->session->isAdmin()) {
 				$this->redirect($this::URL_ADMIN);
+			}else{
+				$this->redirect($this::URL_HOME);
 			}
-			$this->redirect($this::URL_HOME);
 		}catch(\Exception $e){
 			$this->render($this::VIEW_LOGIN, ['error' => $e->getMessage()]);
 		}

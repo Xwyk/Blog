@@ -10,11 +10,17 @@ class AdminController extends Controller{
 
 	public function display()
 	{
+
 		if (!$this->isAdmin()) {
-			throw new \Exception("Utilisateur non connecté", 1);
-			
+			if (!$this->isUser()) {
+				$this->redirect($this::URL_LOGIN);
+			}
+			throw new \Exception("Les droits administrateur sont nécéssaires", 1);
 		}
-		$this->render($this::VIEW_ADMIN, ['comments' => $this->getAllComments()]);
+		$this->render($this::VIEW_ADMIN, [
+			'comments' => $this->getAllComments(),
+			'token'    => $this->getToken()
+		]);
 	}
 
 	protected function getAllInvalidComments()

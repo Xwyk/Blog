@@ -51,6 +51,16 @@ abstract class Controller
     {
         return $this->session->isAuthenticated();
     }
+
+    public function getToken()
+    {
+        return $this->session->getToken();
+    }
+
+    public function checkToken(string $tokenToCheck)
+    {
+    	return $this->session->checkToken($tokenToCheck);
+    }
 	
 	//abstract public function display();
 }

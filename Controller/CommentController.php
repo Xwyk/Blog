@@ -7,6 +7,7 @@ use Blog\Model\Manager\PostManager;
 use Blog\Model\Manager\CommentManager;
 use Blog\Model\Comment;
 use Blog\Framework\View;
+use Blog\Framework\Session;
 
 class CommentController extends Controller{
 	
@@ -28,19 +29,51 @@ class CommentController extends Controller{
 
 	public function validateComment(){
 		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		$resultCheck = $this->checkToken($token);
+		
+		switch ($resultCheck) {
+			case Session::TOKEN_VALID:
+			break;
+			case Session::TOKEN_EXPIRATED:
+				throw new \Exception("Token Expiré");
+				break;
+			case Session::TOKEN_NOT_GENERATED:
+				throw new \Exception("Token non généré");
+				break;
+			case Session::TOKEN_INVALID:
+				throw new \Exception("Token non valide");
+				break;
+		}
 		if ($id == false) {
-			throw new Exception("Commentaire non valide");
+			throw new \Exception("Commentaire non valide");
 		}
 		(new CommentManager($this->config))->validateComment($id);
-		$this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
+		// $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
 	}
 
 	public function invalidateComment(){
 		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		$resultCheck = $this->checkToken($token);
+		
+		switch ($resultCheck) {
+			case Session::TOKEN_VALID:
+			break;
+			case Session::TOKEN_EXPIRATED:
+				throw new \Exception("Token Expiré");
+				break;
+			case Session::TOKEN_NOT_GENERATED:
+				throw new \Exception("Token non généré");
+				break;
+			case Session::TOKEN_INVALID:
+				throw new \Exception("Token non valide");
+				break;
+		}
 		if ($id == false) {
-			throw new Exception("Commentaire non valide");
+			throw new \Exception("Commentaire non valide");
 		}
 		(new CommentManager($this->config))->invalidateComment($id);
-		$this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
+		// $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
 	}
 }
