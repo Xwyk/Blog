@@ -28,7 +28,7 @@ class RegisterController extends Controller{
 
 	public function display()
 	{
-		if (empty($_POST)) {
+		if (empty(filter_input_array(INPUT_POST))) {
 			$this->render($this::VIEW_REGISTER);
 			return;
 		}
