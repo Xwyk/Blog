@@ -22,8 +22,6 @@ class Configuration{
 		$this->config = $ini_array;
 	}
 
-
-
 	public function getHost()
 	{
 		return $this->config['database']['host'];
