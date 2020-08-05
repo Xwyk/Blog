@@ -41,6 +41,16 @@ abstract class Controller
 	protected function redirect($path){
 		header("Location: ".$path);
 	}
+
+	public function isAdmin()
+    {
+        return $this->session->isAdmin();
+    }
+
+    public function isUser()
+    {
+        return $this->session->isAuthenticated();
+    }
 	
 	//abstract public function display();
 }

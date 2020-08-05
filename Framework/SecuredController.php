@@ -10,13 +10,17 @@ abstract class SecuredController extends Controller
 {
 	
     public function __construct(View $view, Session $session, Configuration $config){
-	    if (!$session->isAuthenticated()) {
-	    	throw new UserNotConnectedException();
-	    }
-    	if (!$session->isAdmin()) {
-    		throw new NotEnoughRightsException();
-    	}
 
         parent::__construct($view, $session, $config);
+    }
+
+    public function isAdmin()
+    {
+        return $this->session->isAdmin();
+    }
+
+    public function isUser()
+    {
+        return $this->session->isAuthenticated();
     }
 }
