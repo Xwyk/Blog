@@ -22,6 +22,7 @@
                                             <th class="th-sm text-center ">Pseudo</th>
                                             <th class="th-sm text-center ">Contenu</th>
                                             <th class="th-sm text-center ">Date d'ajout</th>
+                                            <th class="th-sm text-center ">Visibilité</th>
                                             <th class="th-sm text-center ">Validation</th>
                                             <th class="th-sm text-center ">Lien vers l'article</th>
                                         </tr>
@@ -34,37 +35,67 @@
                                             <td><?= $comment->getAuthor()->getPseudo()?></td>
                                             <td><?= $comment->getContent() ?></td>
                                             <td><?= $comment->getCreationDate()->format('Y-m-d H:i')?></td>
+                                            <td><i class="fa fa-eye<?= $comment->isValid()?"":"-slash";?>" aria-hidden="true"></i></td>
                                             <td>
-                                                <?php
-                                                   if ($comment->isValid()) {
-                                                ?>
-                                                <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>" method="post">
-                                                    <input type="hidden" name="token" value="<?= $token ?>">
-                                                    <button class="btn btn-lg btn-warning btn-block" type="submit">Masquer</button>
-                                                </form>
-                                                <?php
-                                                    }else{
-                                                ?>
-                                                <form class="form-comment" action="/?action=validateComment&id=<?= $comment->getId() ?>" method="post">
-                                                    <input type="hidden" name="token" value="<?= $token ?>">
-                                                    <button class="btn btn-lg btn-success btn-block" type="submit">Afficher</button>
-                                                </form>
-                                                <?php
-                                                    }
-                                                ?>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                                    <div class="dropdown-menu" aria-labelledby="actionMenuButton">
+                                                    <?php
+                                                       if ($comment->isValid()) {
+                                                    ?>
+                                                         <a class="dropdown-item">
+                                                            <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>"  method="post">
+                                                                <input type="hidden" name="token" value="<?= $token ?>">
+                                                                <button class="btn btn-warning btn-block" type="submit">Masquer</button>
+                                                            </form>
+                                                        </a>
+                                                    <!-- <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>"     method="post">
+                                                        <input type="hidden" name="token" value="<?= $token ?>">
+                                                        <button class="btn btn-lg btn-warning btn-block" type="submit">Masquer</button>
+                                                    </form> -->
+                                                    <?php
+                                                        }else{
+                                                    ?>
+                                                        <a class="dropdown-item">
+                                                            <form class="form-comment" action="/?action=validateComment&id=<?= $comment->getId() ?>"    method="post">
+                                                                <input type="hidden" name="token" value="<?= $token ?>">
+                                                                <button class="btn btn-success btn-block" type="submit">Valider</button>
+                                                            </form>
+                                                        </a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                        <a class="dropdown-item">
+                                                            <form class="form-comment" action="/?action=removeComment&id=<?= $comment->getId() ?>"    method="post">
+                                                                <input type="hidden" name="token" value="<?= $token ?>">
+                                                                <button class="btn btn-danger btn-block" type="submit">Supprimer</button>
+                                                            </form>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td><a href="/?action=post&id=<?= $comment->getPostId()?>">Lien</a></td>
+                                            
 
                                         </tr>
 											<?php
     											}
                                             ?>
                                     </tbody>
+
+
+
+
+
+
+
+
                                     <tfoot>
                                         <tr>
                                             <th>Pseudo</th>
                                             <th>Contenu</th>
                                             <th>Date d'ajout</th>
+                                            <th>Visibilité</th>
                                             <th>Validation</th>
                                             <th>Lien vers l'article</th>
                                         </tr>

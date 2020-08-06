@@ -16,7 +16,6 @@ use Blog\Exceptions\PostNotFoundException;
 
 $action = filter_input(INPUT_GET, 'action',FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
-
 try{
 	$view    = new View();
 	$session = new Session();
@@ -60,4 +59,3 @@ try{
 catch(PostNotFoundException $e){
 	echo $e->message;
 }
-

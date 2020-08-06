@@ -8,6 +8,7 @@ use Blog\Model\Manager\CommentManager;
 use Blog\Model\Comment;
 use Blog\Framework\View;
 use Blog\Framework\Session;
+use Blog\Framework\Token;
 
 class CommentController extends Controller{
 	
@@ -33,15 +34,12 @@ class CommentController extends Controller{
 		$resultCheck = $this->checkToken($token);
 		
 		switch ($resultCheck) {
-			case Session::TOKEN_VALID:
+			case Token::TOKEN_VALID:
 			break;
-			case Session::TOKEN_EXPIRATED:
+			case Token::TOKEN_EXPIRATED:
 				throw new \Exception("Token Expiré");
 				break;
-			case Session::TOKEN_NOT_GENERATED:
-				throw new \Exception("Token non généré");
-				break;
-			case Session::TOKEN_INVALID:
+			case Token::TOKEN_INVALID:
 				throw new \Exception("Token non valide");
 				break;
 		}
@@ -58,15 +56,12 @@ class CommentController extends Controller{
 		$resultCheck = $this->checkToken($token);
 		
 		switch ($resultCheck) {
-			case Session::TOKEN_VALID:
+			case Token::TOKEN_VALID:
 			break;
-			case Session::TOKEN_EXPIRATED:
+			case Token::TOKEN_EXPIRATED:
 				throw new \Exception("Token Expiré");
 				break;
-			case Session::TOKEN_NOT_GENERATED:
-				throw new \Exception("Token non généré");
-				break;
-			case Session::TOKEN_INVALID:
+			case Token::TOKEN_INVALID:
 				throw new \Exception("Token non valide");
 				break;
 		}

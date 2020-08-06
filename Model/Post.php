@@ -13,7 +13,8 @@ class Post extends Entity
 	private $modificationDate;
 	private $chapo;
     private $title;
-	private $comments;
+    private $comments;
+	private $picture;
 
 
 	public function __construct(array $data)
@@ -89,6 +90,15 @@ class Post extends Entity
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Return picture
+     * @return string picture path
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 
 	/**
@@ -196,4 +206,14 @@ class Post extends Entity
     {
         $this->comments = $newComments;
     }
+
+    /**
+     * Set picture
+     * @param string newPicture New image to set
+     */
+    protected function setPicture(string $newPicture)
+    {
+        $this->picture = $newPicture;
+    }
+
 }

@@ -21,6 +21,7 @@ class AdminController extends Controller{
 			'comments' => $this->getAllComments(),
 			'token'    => $this->getToken()
 		]);
+		var_dump($_SESSION);
 	}
 
 	protected function getAllInvalidComments()

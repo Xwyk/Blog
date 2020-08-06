@@ -95,6 +95,7 @@ class PostManager extends Manager
 				'chapo' => $data['postChapo'],
 				'title' => $data['postTitle'],
 				'content' => $data['postContent'],
+				'picture' => $data['postPicture']??null,
 				'creation_date' => $data['postCreationDate']??null,
 				'modification_date' => $data['postModificationDate']??null,
 				'author' => (new UserManager($this->config))->createFromArray($data),

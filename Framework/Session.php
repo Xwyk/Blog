@@ -8,19 +8,12 @@ use Blog\Model\User;
 class Session
 {
 	const AUTHENTICATED_KEY = 'user';
-	const TOKEN_VALIDITY_MINUTES = 1;
+
 	const SESSION_VALIDITY_MINUTES = 60;
 	const SESSION_INACTIVITY_LOGOUT_MINUTES = 20;
 	const TOKEN_KEY = 'token';
 	const SESSION_KEY = 'session';
 
-	const TOKEN_EXPIRATED = 4;
-	const TOKEN_NOT_GENERATED = 3;
-	const TOKEN_INVALID = 2;
-	const TOKEN_VALID = 1;
-
-	const TOKEN_GENERATION_TIME_KEY = 'tokenGenerationTime';
-	const TOKEN_EXPIRATION_TIME_KEY = 'tokenExpirationTime';
 	const SESSION_GENERATION_TIME_KEY = 'sessionGenerationTime';
 	const SESSION_EXPIRATION_TIME_KEY = 'sessionExpirationTime';
 	const SESSION_INACTIVITY_TIME_KEY = 'sessionInactivityTime';
@@ -93,30 +86,14 @@ class Session
 
 	public function getToken() : string
 	{
+		$this->addAttribute($this::TOKEN_KEY, new Token(32));
 
-		$this->addAttribute($this::TOKEN_KEY, bin2hex(openssl_random_pseudo_bytes(32)));
-
-		$this->addAttribute($this::TOKEN_GENERATION_TIME_KEY, new \DateTime());
-
-		$tokenExpirationTime = clone $this->getAttribute($this::TOKEN_GENERATION_TIME_KEY);
-		$tokenExpirationTime->modify('+ '.$this::TOKEN_VALIDITY_MINUTES.' minutes');
-		$this->addAttribute($this::TOKEN_EXPIRATION_TIME_KEY, $tokenExpirationTime);
-
-		return $this->getAttribute($this::TOKEN_KEY);
+		return $this->token->getTokenValue();
 	}
 
-	public function checkToken(string $tokenToCheck) : int
+	public function checkToken(string $tokenToCheck)
 	{
-		if (!$this->existAttribute($this::TOKEN_KEY)) {
-			return $this::TOKEN_NOT_GENERATED;
-		}
-		if ($this->getAttribute($this::TOKEN_KEY) != $tokenToCheck) {
-			return $this::TOKEN_INVALID;
-		}
-		if ($this->getAttribute($this::TOKEN_EXPIRATION_TIME_KEY) < new \DateTime()) {
-			return $this::TOKEN_EXPIRATED;
-		}
-		return $this::TOKEN_VALID;
+		return $this->getAttribute($this::TOKEN_KEY)->checkToken($tokenToCheck);
 	}
 
 	private function checkSession()

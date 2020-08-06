@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <!-- <img src="<?= $imagePath ?>" class="img-responsive" alt=""> -->
-                            <img src="/Common/themes/img/portfolio/cabin.png" class="img-responsive" alt="">
+                            <img src="<?=$article->getPicture() ?? '/Common/themes/img/portfolio/cabin.png'?>" class="img-responsive" alt="">
                             <p><?= $article->getChapo() ?></p>
                         </a>
                     </div>

@@ -33,6 +33,7 @@ class PostController extends Controller{
 			$this->render($this::VIEW_ADDPOST);
 			return;
 		}
+		var_dump($_FILES['postImage']);
 		$newpost = (new PostManager($this->config))->createFromArray([
 			'postTitle'=>$_POST['postTitle'],
 			'postChapo'=>$_POST['postChapo'],
@@ -44,7 +45,7 @@ class PostController extends Controller{
 			'userMailAddress'=>$this->session->getAttribute('user')->getMailAddress()
 		]);
 		(new PostManager($this->config))->add($newpost);
-
+		//$this->redirect(self::URL_HOME);
 	}
 
 }
