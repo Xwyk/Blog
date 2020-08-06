@@ -2,6 +2,7 @@
 
 namespace Blog\Framework;
 use Blog\Model\User;
+use Blog\Model\Manager\TokenManager;
 /**
  * 
  */
@@ -84,16 +85,14 @@ class Session
 
 	}
 
-	public function getToken() : string
+	public function getToken($config) : string
 	{
-		$this->addAttribute($this::TOKEN_KEY, new Token(32));
-
-		return $this->token->getTokenValue();
+		return (new TokenManager($config))->createToken(32, $this->getAttribute($this::AUTHENTICATED_KEY));
 	}
 
-	public function checkToken(string $tokenToCheck)
+	public function checkToken(string $tokenToCheck, $config)
 	{
-		return $this->getAttribute($this::TOKEN_KEY)->checkToken($tokenToCheck);
+		return (new TokenManager($config))->checkToken($tokenToCheck,$this->getAttribute($this::AUTHENTICATED_KEY));
 	}
 
 	private function checkSession()

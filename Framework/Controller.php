@@ -54,12 +54,12 @@ abstract class Controller
 
     public function getToken()
     {
-        return $this->session->getToken();
+        return $this->session->getToken($this->config);
     }
 
     public function checkToken(string $tokenToCheck)
     {
-    	return $this->session->checkToken($tokenToCheck);
+    	return $this->session->checkToken($tokenToCheck, $this->config);
     }
 	
 	//abstract public function display();
