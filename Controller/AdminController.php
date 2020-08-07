@@ -6,22 +6,21 @@ use Blog\Model\Manager\CommentManager;
 use Blog\Framework\Configuration;
 use Blog\Framework\Session;
 use Blog\Framework\View;
+use Blog\Exceptions\NotEnoughRightsException;
 class AdminController extends Controller{
 
 	public function display()
 	{
-
 		if (!$this->isAdmin()) {
 			if (!$this->isUser()) {
 				$this->redirect($this::URL_LOGIN);
 			}
-			throw new \Exception("Les droits administrateur sont nécéssaires", 1);
+			throw new \NotEnoughRightsException();
 		}
 		$this->render($this::VIEW_ADMIN, [
 			'comments' => $this->getAllComments(),
 			'token'    => $this->getToken()
 		]);
-		var_dump($_SESSION);
 	}
 
 	protected function getAllInvalidComments()

@@ -25,15 +25,18 @@ class PostController extends Controller{
 
 	public function addPost()
 	{
-		if (!$this->session->existAttribute('user') || !$this->session->getAttribute('user')->getType()==2) {
-			throw new \Exception('Utilisateur non connecté');
+		if (!$this->isAdmin()) {
+			if (!$this->isUser()) {
+				$this->redirect($this::URL_LOGIN);
+			}
+			throw new \Exception("Les droits administrateur sont nécéssaires", 1);
 		}
 		$validate = filter_input(INPUT_POST, 'validate',FILTER_VALIDATE_INT);
 		if (!$validate) {
 			$this->render($this::VIEW_ADDPOST);
 			return;
 		}
-		var_dump($_FILES['postImage']);
+		
 		$newpost = (new PostManager($this->config))->createFromArray([
 			'postTitle'=>$_POST['postTitle'],
 			'postChapo'=>$_POST['postChapo'],

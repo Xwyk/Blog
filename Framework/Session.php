@@ -3,6 +3,7 @@
 namespace Blog\Framework;
 use Blog\Model\User;
 use Blog\Model\Manager\TokenManager;
+use Blog\Exceptions\ExpiredSessionException;
 /**
  * 
  */
@@ -11,7 +12,7 @@ class Session
 	const AUTHENTICATED_KEY = 'user';
 
 	const SESSION_VALIDITY_MINUTES = 60;
-	const SESSION_INACTIVITY_LOGOUT_MINUTES = 20;
+	const SESSION_INACTIVITY_LOGOUT_MINUTES = 10;
 	const TOKEN_KEY = 'token';
 	const SESSION_KEY = 'session';
 
@@ -19,18 +20,34 @@ class Session
 	const SESSION_EXPIRATION_TIME_KEY = 'sessionExpirationTime';
 	const SESSION_INACTIVITY_TIME_KEY = 'sessionInactivityTime';
 
-	public function __construct()
+	protected $config;
+	protected $tokenManager;
+
+	public function __construct(Configuration $config)
 	{	
+		$this->config = $config;
+		$this->tokenManager = new TokenManager($this->config);
+
 		if(session_status() != PHP_SESSION_ACTIVE){
 			//Création ou récupération d'une session
 			session_start();
+			// If there is no generated session 
+			// var_dump($_SESSION);
 			if (!$this->existAttribute($this::SESSION_KEY)) {
 				$this->generateSession();
 			}
+			// If session is'nt valid
+			// var_dump($_SESSION);
 			if (!$this->checkSession()) {
-				$this->logout();
-				throw new \Exception("Session expirée");
+				// If user is authenticated on invalid session, kill it
+				if ($this->isAuthenticated()) {
+					$this->logout();
+					throw new ExpiredSessionException("Session expirée");
+				}
+				// If there is no user on session, regenerate it
+				$this->generateSession();
 			}
+			// var_dump($_SESSION);
 		}
 	}
 
@@ -53,7 +70,18 @@ class Session
 
 	public function logout()
 	{	
-		session_destroy();
+		if ($this->isAuthenticated()) {
+			$this->tokenManager->removeForUser($this->getAttribute($this::AUTHENTICATED_KEY));
+			$_SESSION = array();
+			if (ini_get("session.use_cookies")) {
+			    $params = session_get_cookie_params();
+			    setcookie(session_name(), '', time() - 42000,
+			        $params["path"], $params["domain"],
+			        $params["secure"], $params["httponly"]
+			    );
+			}
+		}
+			session_destroy();
 	}
 
 	public function addAttribute(string $name, $value)
@@ -75,30 +103,36 @@ class Session
 	{
 		$this->addAttribute($this::SESSION_GENERATION_TIME_KEY, new \DateTime());
 		$this->addAttribute($this::SESSION_KEY, bin2hex(openssl_random_pseudo_bytes(32)));
-		$sessionExpirationTime = clone $this->getAttribute($this::SESSION_GENERATION_TIME_KEY);
-		$sessionExpirationTime->modify('+ '.$this::SESSION_VALIDITY_MINUTES.' minutes');
-		$this->addAttribute($this::SESSION_EXPIRATION_TIME_KEY, $sessionExpirationTime);
+		$sessionExpiration = clone $this->getAttribute($this::SESSION_GENERATION_TIME_KEY);
+		$sessionExpiration->modify('+ '.$this::SESSION_VALIDITY_MINUTES.' minutes');
+		$this->addAttribute($this::SESSION_EXPIRATION_TIME_KEY, $sessionExpiration);
 
-		$sessionInactivityTime = clone $this->getAttribute($this::SESSION_GENERATION_TIME_KEY);
-		$sessionInactivityTime->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' minutes');
-		$this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivityTime);
+		$sessionInactivity = clone $this->getAttribute($this::SESSION_GENERATION_TIME_KEY);
+		$sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' seconds');
+		$this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);
 
 	}
 
-	public function getToken($config) : string
+	public function getToken() : string
 	{
-		return (new TokenManager($config))->createToken(32, $this->getAttribute($this::AUTHENTICATED_KEY));
+		$connectedUser = $this->getAttribute($this::AUTHENTICATED_KEY);
+		return $this->tokenManager->createToken(32, $connectedUser);
 	}
 
-	public function checkToken(string $tokenToCheck, $config)
+	public function checkToken(string $tokenToCheck)
 	{
-		return (new TokenManager($config))->checkToken($tokenToCheck,$this->getAttribute($this::AUTHENTICATED_KEY));
+		$connectedUser = $this->getAttribute($this::AUTHENTICATED_KEY);
+		return $this->tokenManager->checkToken($tokenToCheck, $connectedUser);
 	}
 
 	private function checkSession()
 	{
 		$now = new \DateTime();
-		if (!($this->getAttribute($this::SESSION_EXPIRATION_TIME_KEY) > $now || $this->getAttribute($this::SESSION_INACTIVITY_TIME_KEY) > $now)) {
+		$sessionExpiration = $this->getAttribute($this::SESSION_EXPIRATION_TIME_KEY);
+		$sessionInactivity = $this->getAttribute($this::SESSION_INACTIVITY_TIME_KEY);
+		 // || $sessionInactivity < $now
+		
+		if (($sessionInactivity < $now)) {
 			return false;
 		}
 		return true;
@@ -106,8 +140,8 @@ class Session
 
 	private function retardInactivity()
 	{
-		$sessionInactivityTime = new \DateTime();
-		$sessionInactivityTime->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' minutes');
-		$this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivityTime);
+		$sessionInactivity = new \DateTime();
+		$sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' seconds');
+		$this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);
 	}
 }

@@ -5,10 +5,10 @@ namespace Blog\Controller;
 use Blog\Framework\Controller;
 use Blog\Model\Manager\PostManager;
 use Blog\Model\Manager\CommentManager;
+use Blog\Model\Manager\TokenManager;
 use Blog\Model\Comment;
 use Blog\Framework\View;
 use Blog\Framework\Session;
-use Blog\Framework\Token;
 
 class CommentController extends Controller{
 	
@@ -31,15 +31,15 @@ class CommentController extends Controller{
 	public function validateComment(){
 		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
 		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-		$resultCheck = $this->checkToken($token);
+		$resultCheck = $this->session->checkToken($token);
 		
 		switch ($resultCheck) {
-			case Token::TOKEN_VALID:
+			case TokenManager::TOKEN_VALID:
 			break;
-			case Token::TOKEN_EXPIRATED:
+			case TokenManager::TOKEN_EXPIRED:
 				throw new \Exception("Token Expiré");
 				break;
-			case Token::TOKEN_INVALID:
+			case TokenManager::TOKEN_INVALID:
 				throw new \Exception("Token non valide");
 				break;
 		}
@@ -53,15 +53,15 @@ class CommentController extends Controller{
 	public function invalidateComment(){
 		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
 		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-		$resultCheck = $this->checkToken($token);
+		$resultCheck = $this->session->checkToken($token);
 		
 		switch ($resultCheck) {
-			case Token::TOKEN_VALID:
+			case TokenManager::TOKEN_VALID:
 			break;
-			case Token::TOKEN_EXPIRATED:
+			case TokenManager::TOKEN_EXPIRED:
 				throw new \Exception("Token Expiré");
 				break;
-			case Token::TOKEN_INVALID:
+			case TokenManager::TOKEN_INVALID:
 				throw new \Exception("Token non valide");
 				break;
 		}

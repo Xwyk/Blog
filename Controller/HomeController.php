@@ -10,7 +10,6 @@ class HomeController extends Controller{
 	
 	public function display()
 	{
-		(new TokenManager($this->config))->createToken(32, $this->session->getAttribute('user'));
 		$articles = (new PostManager($this->config))->getAllPosts();
 		$this->render($this::VIEW_HOME, ['articles' => $articles]);
 	}

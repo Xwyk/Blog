@@ -7,7 +7,7 @@ class Token
 {
 	const TOKEN_VALIDITY_MINUTES = 1;
 
-	const TOKEN_EXPIRATED = 3;
+	const TOKEN_EXPIRED = 3;
 	const TOKEN_INVALID = 2;
 	const TOKEN_VALID = 1;
 
@@ -34,7 +34,7 @@ class Token
 			return $this::TOKEN_INVALID;
 		}
 		if ($this->tokenExpirationDateTime < new \DateTime()) {
-			return $this::TOKEN_EXPIRATED;
+			return $this::TOKEN_EXPIRED;
 		}
 		return $this::TOKEN_VALID;
 	}

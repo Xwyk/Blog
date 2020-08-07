@@ -18,8 +18,9 @@ $action = filter_input(INPUT_GET, 'action',FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?
 
 try{
 	$view    = new View();
-	$session = new Session();
 	$config  = new Configuration(__DIR__.'/config/config.local.php');
+	$session = new Session($config);
+	
 	switch ($action) {
 		case 'home':
 				(new HomeController($view, $session, $config))->display();
@@ -52,7 +53,7 @@ try{
 			(new PostController($view, $session, $config))->AddPost();
 			break;
 		default:
-			var_dump(User::TYPE_ADMIN);
+			
 			break;
 	}
 }

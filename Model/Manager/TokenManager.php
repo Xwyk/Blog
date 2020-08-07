@@ -12,9 +12,9 @@ use Blog\Model\User;
  */
 class TokenManager extends Manager
 {
-	const TOKEN_VALIDITY_MINUTES = 10;
+	const TOKEN_VALIDITY_MINUTES = 1;
 	const MAX_ALLOWED_TOKENS = 2;
-	const TOKEN_EXPIRATED = 3;
+	const TOKEN_EXPIRED = 3;
 	const TOKEN_INVALID = 2;
 	const TOKEN_VALID = 1;
 	const BASE_REQUEST = 'SELECT  
@@ -101,12 +101,11 @@ class TokenManager extends Manager
 
 	public function checkToken(string $tokenToCheck, User $user)
 	{
-		var_dump($this->getTokenByUser($user)->getExpirationDate());
 		if (strcmp($this->getTokenByUser($user)->getValue(), $tokenToCheck) !== 0) {
 			return $this::TOKEN_INVALID;
 		}
-		if ($this->getTokenByUser($user)->getExpirationDate() > new \DateTime()) {
-			return $this::TOKEN_EXPIRATED;
+		if ($this->getTokenByUser($user)->getExpirationDate() < (new \DateTime())->format('Y-m-d H:i:s')) {
+			return $this::TOKEN_EXPIRED;
 		}
 		return $this::TOKEN_VALID;
 	}
@@ -123,7 +122,7 @@ class TokenManager extends Manager
 
 	public function removeForUser(User $user)
 	{
-		var_dump("remove");
+		
 		$request = 'DELETE FROM token WHERE user = :user;';
 		$result = $this->executeRequest($request, [':user'=>$user->getId()]);
 		return $result;
