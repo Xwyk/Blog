@@ -8,7 +8,7 @@ use Blog\Exceptions\FileNotFoundException;
  * 
  */
 class Configuration{
-	private $config;
+	protected $config;
 
 	public function __construct(string $path)
 	{

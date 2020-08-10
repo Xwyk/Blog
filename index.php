@@ -46,11 +46,17 @@ try{
 		case 'invalidateComment':
 			(new CommentController($view, $session, $config))->invalidateComment();
 			break;
+		case 'removeComment':
+			(new CommentController($view, $session, $config))->removeComment();
+			break;
 		case 'admin':
 			(new AdminController($view, $session, $config))->display();
 			break;
 		case 'addPost':
-			(new PostController($view, $session, $config))->AddPost();
+			(new PostController($view, $session, $config))->addPost();
+			break;
+		case 'editPost':
+			(new PostController($view, $session, $config))->editPost();
 			break;
 		default:
 			

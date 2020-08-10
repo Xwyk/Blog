@@ -71,4 +71,11 @@ class CommentController extends Controller{
 		(new CommentManager($this->config))->invalidateComment($id);
 		// $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
 	}
+
+	public function removeComment()
+	{
+		$commentId = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+		$comment = (new CommentManager($this->config))->getCommentById($commentId);
+		(new CommentManager($this->config))->remove($comment);
+	}
 }

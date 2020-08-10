@@ -4,6 +4,8 @@ namespace Blog\Model\Manager;
 use Blog\Framework\Manager;
 use Blog\Model\User;
 use Blog\Exceptions\UserNotActiveException;
+use Blog\Exceptions\WrongPasswordException;
+use Blog\Exceptions\UserNotFoundException;
 use Blog\Exceptions\AlreadyUsedMailAddressException;
 /**
  * 
@@ -40,14 +42,14 @@ class UserManager extends Manager
 		$user = $this->executeRequest($request, [':mailAddress' => $usermail]);
 		$result=$user->fetch();
 		if (!is_array($result)) {
-		 	throw new \Exception("Aucun compte trouvé", 1);
+		 	throw new UserNotFoundException($usermail);
 		}
 		$user = new User($result);
 		if (!$user->getActive()) {
 			throw new UserNotActiveException($user->getMailAddress());
 		}
 		if (!password_verify($password,$user->getPassword())) {
-			throw new \Exception("Mot de passe incorrect", 1);
+			throw new WrongPasswordException("Mot de passe incorrect", 1);
 		}
 		return $user;
 	}

@@ -32,12 +32,10 @@ class Session
 			//Création ou récupération d'une session
 			session_start();
 			// If there is no generated session 
-			// var_dump($_SESSION);
 			if (!$this->existAttribute($this::SESSION_KEY)) {
 				$this->generateSession();
 			}
 			// If session is'nt valid
-			// var_dump($_SESSION);
 			if (!$this->checkSession()) {
 				// If user is authenticated on invalid session, kill it
 				if ($this->isAuthenticated()) {
@@ -47,7 +45,6 @@ class Session
 				// If there is no user on session, regenerate it
 				$this->generateSession();
 			}
-			// var_dump($_SESSION);
 		}
 	}
 
@@ -73,13 +70,6 @@ class Session
 		if ($this->isAuthenticated()) {
 			$this->tokenManager->removeForUser($this->getAttribute($this::AUTHENTICATED_KEY));
 			$_SESSION = array();
-			if (ini_get("session.use_cookies")) {
-			    $params = session_get_cookie_params();
-			    setcookie(session_name(), '', time() - 42000,
-			        $params["path"], $params["domain"],
-			        $params["secure"], $params["httponly"]
-			    );
-			}
 		}
 			session_destroy();
 	}
