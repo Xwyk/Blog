@@ -25,7 +25,7 @@ class AdminController extends Controller{
 
 	protected function getAllInvalidComments()
 	{
-		return CommentManager::getAllInvalidComments();
+		return (new CommentManager($this->config))->getAllInvalidComments();
 	}
 
 	protected function getAllComments()
@@ -35,16 +35,16 @@ class AdminController extends Controller{
 
 	protected function getAllUsers()
 	{
-		return CommentManager::getAllInvalidComments();
+		//return (new CommentManager($this->config))->getAllInvalidComments();
 	}
 
 	protected function getAdminUsers()
 	{
-		return CommentManager::getAllInvalidComments();
+		//return (new CommentManager($this->config))->getAllInvalidComments();
 	}
 
 	protected function getNonAdminUsers()
 	{
-		return CommentManager::getAllInvalidComments();
+		//return (new CommentManager($this->config))->getAllInvalidComments();
 	}
 }

@@ -153,7 +153,7 @@ class Comment extends Entity
         if (is_null($newDate))
             $this->creationDate="";
         else
-            $this->creationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
+            $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         
     }
 
@@ -166,7 +166,7 @@ class Comment extends Entity
             $this->validationDate="";
         
         else
-            $this->validationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
+            $this->validationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         
     }
 

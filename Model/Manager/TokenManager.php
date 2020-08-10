@@ -37,14 +37,11 @@ class TokenManager extends Manager
 		$sqlRequest = self::BASE_REQUEST.'WHERE user = :user;';
 		$token     = $this->executeRequest($sqlRequest, [':user'=>$user->getId()]);
 		$result     = $token->fetch();
-		if ($result) {
-			$result = $this->createFromArray($result);
-		}else{
+		if (!$result) {
 			throw new \Exception("aucun token enregistré", 1);
-			
 		}
+		$result = $this->createFromArray($result);
         return $result;
-
 	}
 
 	public function getTokensByValue(string $tokenValue)
@@ -61,16 +58,16 @@ class TokenManager extends Manager
 	public function createToken($tokenLength = 32, User $user){
 		$tokenValue = bin2hex(openssl_random_pseudo_bytes($tokenLength));
 			
-		$tokenGenerationDateTime = new \DateTime();
+		$tokenGeneration = new \DateTime();
 		
-		$tokenExpirationDateTime = clone $tokenGenerationDateTime;
-		$tokenExpirationDateTime->modify('+ '.$this::TOKEN_VALIDITY_MINUTES.' minutes');
+		$tokenExpiration = clone $tokenGeneration;
+		$tokenExpiration->modify('+ '.$this::TOKEN_VALIDITY_MINUTES.' minutes');
 		$this->removeOldTokens();
 		$this->removeForUser($user);
 		$this->add($this->createFromArray([
 			'tokenValue'          => $tokenValue,
-			'tokenGenerationDate' => $tokenGenerationDateTime,
-			'tokenExpirationDate' => $tokenExpirationDateTime,
+			'tokenGenerationDate' => $tokenGeneration,
+			'tokenExpirationDate' => $tokenExpiration,
 			'userId' => $user->getId(),
 			'userPseudo' => $user->getPseudo(),
 			'userFirstName' => $user->getFirstName(),

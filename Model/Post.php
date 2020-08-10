@@ -151,11 +151,9 @@ class Post extends Entity
     protected function setCreationDate(string $newDate){
     	if ($newDate === null){
             $this->creationDate="";
+            return;
         }
-        else{
-    		$this->creationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
-        }
-    	
+    	$this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
     }
 
     /**
@@ -165,10 +163,9 @@ class Post extends Entity
     protected function setModificationDate(string $newDate){
     	if (is_null($newDate)){
             $this->creationDate="";
+            return;
         }
-        else{
-    		$this->modificationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
-        }
+   		$this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
     	
     }
 

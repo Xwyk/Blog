@@ -45,7 +45,7 @@ class UserManager extends Manager
 		 	throw new UserNotFoundException($usermail);
 		}
 		$user = new User($result);
-		if (!$user->getActive()) {
+		if (!$user->isActive()) {
 			throw new UserNotActiveException($user->getMailAddress());
 		}
 		if (!password_verify($password,$user->getPassword())) {

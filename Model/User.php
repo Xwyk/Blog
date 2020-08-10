@@ -81,7 +81,7 @@ class User extends Entity
      * Return user activation state
      * @return bool active
      */
-    public function getActive()
+    public function isActive()
     {
     	return $this->active;
     }
@@ -149,7 +149,7 @@ class User extends Entity
             $this->creationDate="";
         
         else
-            $this->creationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
+            $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         
     }
 
@@ -161,7 +161,7 @@ class User extends Entity
         if (is_null($newDate))
             $this->creationDate="";
         else
-            $this->modificationDate = \DateTime::createFromFormat('Y-m-d H:i:s', $newDate);
+            $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         
     }
 
