@@ -23,7 +23,7 @@ class Entity
             }else
                 $method = 'set'.ucfirst($key);
             // If value isn't null and method exists, call the setter
-            if (!is_null($value))
+            if (!($value===null))
                 if (method_exists($this, $method))
                     $this->$method($value);
             

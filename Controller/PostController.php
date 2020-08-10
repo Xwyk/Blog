@@ -38,9 +38,9 @@ class PostController extends Controller{
 		}
 		
 		$newpost = (new PostManager($this->config))->createFromArray([
-			'postTitle'=>$_POST['postTitle'],
-			'postChapo'=>$_POST['postChapo'],
-			'postContent'=>$_POST['postContent'],
+			'postTitle'=>filter_input(INPUT_POST, 'postTitle',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+			'postChapo'=>filter_input(INPUT_POST, 'postChapo',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+			'postContent'=>filter_input(INPUT_POST, 'postContent',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
 			'userId'=>$this->session->getAttribute('user')->getId(),
 			'userPseudo'=>$this->session->getAttribute('user')->getPseudo(),
 			'userFirstName'=>$this->session->getAttribute('user')->getFirstName(),
