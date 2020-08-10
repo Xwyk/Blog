@@ -64,5 +64,5 @@ try{
 	}
 }
 catch(PostNotFoundException $e){
-	echo $e->message;
+	
 }
