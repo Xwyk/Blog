@@ -19,7 +19,7 @@ class Post extends Entity
 
 	public function __construct(array $data)
 	{
-        $comments=[];
+        $this->$comments=[];
 		$this->hydrate($data);
 	}
 
