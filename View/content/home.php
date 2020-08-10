@@ -34,7 +34,6 @@
                                     <i class="fa fa-search-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <!-- <img src="<?= $imagePath ?>" class="img-responsive" alt=""> -->
                             <img src="<?=$article->getPicture() ?? '/Common/themes/img/portfolio/cabin.png'?>" class="img-responsive" alt="">
                             <p><?= $article->getChapo() ?></p>
                         </a>

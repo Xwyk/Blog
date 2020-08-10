@@ -26,7 +26,6 @@ class Entity
             if (!($value===null))
                 if (method_exists($this, $method))
                     $this->$method($value);
-            
         }
     }
 }

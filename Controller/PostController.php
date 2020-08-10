@@ -12,7 +12,13 @@ use Blog\Framework\Session;
 
 class PostController extends Controller{
 	
-
+	const IMAGE_MAX_SIZE = 10000000;
+	const ALLOWED_EXTENSIONS = [
+		'png',
+		'jpg',
+		'jpeg',
+		'webp'
+	];
 	public function display()
 	{
 		$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
@@ -36,11 +42,24 @@ class PostController extends Controller{
 			$this->render($this::VIEW_ADDPOST);
 			return;
 		}
+		$imageDir = '.\images\\';
+		$imageName=md5(uniqid());
+		$imageExtension = pathinfo($_FILES['postImage']['name'], PATHINFO_EXTENSION);
+		// if (in_array($imageExtension, $this::ALLOWED_EXTENSIONS)) {
+		// 	throw new \Exception("Extension non authorisée", 1);
+		// }
+		if ($_FILES['postImage']['size'] > $this::IMAGE_MAX_SIZE) {
+			throw new \Exception("L'image est trop grande", 1);
+		}
+		if(!move_uploaded_file($_FILES['postImage']['tmp_name'], $imageDir.$imageName.'.'.$imageExtension)){
+			throw new \Exception("Impossible de déplacer l'image", 1);
+		}
 		
 		$newpost = (new PostManager($this->config))->createFromArray([
 			'postTitle'=>filter_input(INPUT_POST, 'postTitle',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
 			'postChapo'=>filter_input(INPUT_POST, 'postChapo',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
 			'postContent'=>filter_input(INPUT_POST, 'postContent',FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+			'postPicture'=>$imageDir.$imageName.'.'.$imageExtension,
 			'userId'=>$this->session->getAttribute('user')->getId(),
 			'userPseudo'=>$this->session->getAttribute('user')->getPseudo(),
 			'userFirstName'=>$this->session->getAttribute('user')->getFirstName(),

@@ -19,7 +19,7 @@ class Post extends Entity
 
 	public function __construct(array $data)
 	{
-        $this->$comments=[];
+        $this->comments=[];
 		$this->hydrate($data);
 	}
 
@@ -161,7 +161,7 @@ class Post extends Entity
      * @param Date newDate New date to set
      */
     protected function setModificationDate(string $newDate){
-    	if (is_null($newDate)){
+    	if ($newDate===null){
             $this->creationDate="";
             return;
         }
@@ -212,5 +212,4 @@ class Post extends Entity
     {
         $this->picture = $newPicture;
     }
-
 }

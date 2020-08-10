@@ -98,7 +98,7 @@ class Session
 		$this->addAttribute($this::SESSION_EXPIRATION_TIME_KEY, $sessionExpiration);
 
 		$sessionInactivity = clone $this->getAttribute($this::SESSION_GENERATION_TIME_KEY);
-		$sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' seconds');
+		$sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' minutes');
 		$this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);
 
 	}
@@ -131,7 +131,7 @@ class Session
 	private function retardInactivity()
 	{
 		$sessionInactivity = new \DateTime();
-		$sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' seconds');
+		$sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' minutes');
 		$this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);
 	}
 }

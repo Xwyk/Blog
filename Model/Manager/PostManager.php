@@ -22,6 +22,7 @@ class PostManager extends Manager
 						   		post.author AS postAuthor, 
 						   		post.creation_date AS postCreationDate, 
 						   		post.modification_date AS postModificationDate, 
+						   		post.picture AS postPicture, 
 						   		
 						   		user.id AS userId, 
 						   		user.pseudo AS userPseudo, 
@@ -75,15 +76,18 @@ class PostManager extends Manager
 		$request = 'INSERT INTO post (chapo, 
 									  title,
 									  content,
+									  picture,
 									  author)
 					VALUES (:chapo, 
 							:title, 
 							:content, 
+							:picture, 
 							:author);';
 					
 		$result = $this->executeRequest($request, ['chapo' => $post->getChapo(), 
 												 'title' => $post->getTitle(),
 												 'content' => $post->getContent(),
+												 'picture' => $post->getPicture(),
 												 'author' => $post->getAuthor()->getId()]);
 		return $result;				    
 	}
@@ -98,6 +102,7 @@ class PostManager extends Manager
 				'picture' => $data['postPicture']??null,
 				'creation_date' => $data['postCreationDate']??null,
 				'modification_date' => $data['postModificationDate']??null,
+				'picture' => $data['postPicture']??null,
 				'author' => (new UserManager($this->config))->createFromArray($data),
 				'comments' => $comments
    			]);

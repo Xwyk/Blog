@@ -13,7 +13,7 @@ class LoginController extends Controller{
 			$this->redirect($this::URL_HOME);	
 			return;
 		}
-		if(!isset(filter_input(INPUT_POST,'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) || !isset(filter_input(INPUT_POST,'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS))){
+		if(!(filter_input(INPUT_POST,'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) || !(filter_input(INPUT_POST,'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS))){
 			$this->render($this::VIEW_LOGIN);	
 			return;
 		}
