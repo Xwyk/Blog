@@ -31,14 +31,14 @@
             foreach ($articles as $key => $article) {
                 ?>
                     <div class="col-sm-4 portfolio-item">
-                        <a href='/?action=post&id=<?= $article->getId() ?>' class="portfolio-link" data-toggle="modal">
+                        <a href='/?action=post&id=<?= htmlspecialchars($article->getId()) ?>' class="portfolio-link" data-toggle="modal">
                             <div class="caption">
                                 <div class="caption-content">
                                     <i class="fa fa-search-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img src="<?=$article->getPicture() ?? '/Common/themes/img/portfolio/cabin.png'?>" class="img-responsive" alt="">
-                            <p><?= $article->getChapo() ?></p>
+                            <img src="<?=htmlspecialchars($article->getPicture()) ?? '/Common/themes/img/portfolio/cabin.png'?>" class="img-responsive" alt="">
+                            <p><?= htmlspecialchars($article->getChapo()) ?></p>
                         </a>
                     </div>
                 <?php
