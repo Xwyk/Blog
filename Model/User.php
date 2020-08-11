@@ -132,22 +132,16 @@ class User extends Entity
      * @throws Exception If newID is already set
      * @throws InvalidArgumentException If newID isn't a number
      */
-    protected function setId(int $newID)
+    protected function setId(int $newId)
     {
         // If id is already set, throw exception
         if (isset($this->id)) {
             throw new \Exception('Can\'t change id of an object once it was set');
         }
-        // If id is numeric and bigger than 0, attribute value, else throw exception
-        if (is_numeric($newID)) {
-            if ($newID > 0) {
-                $this->id = $newID;
-            } else {
-                throw new \RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
-            }
-        } else {
-            throw new \InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
+        if ($newID <= 0) {
+            throw new \RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         }
+        $this->id = $newId;
     }
 
     /**
@@ -156,9 +150,8 @@ class User extends Entity
      */
     protected function setCreationDate(string $newDate)
     {
-        if (is_null($newDate)) {
-            $this->creationDate="";
-        } else {
+        $this->creationDate="";
+        if (!is_null($newDate)) {
             $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         }
     }
@@ -169,9 +162,8 @@ class User extends Entity
      */
     protected function setModificationDate(string $newDate)
     {
-        if (is_null($newDate)) {
-            $this->creationDate="";
-        } else {
+        $this->creationDate="";
+        if (!is_null($newDate)) {
             $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         }
     }

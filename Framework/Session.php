@@ -58,7 +58,7 @@ class Session
     public function isAdmin()
     {
         return (($this->isAuthenticated()) &&
-               ($this->getAttribute($this::AUTHENTICATED_KEY)->getType() == User::TYPE_ADMIN));
+            ($this->getAttribute($this::AUTHENTICATED_KEY)->getType() == User::TYPE_ADMIN));
     }
 
     public function login($user)
@@ -73,22 +73,22 @@ class Session
             $this->tokenManager->removeForUser($this->getAttribute($this::AUTHENTICATED_KEY));
             $_SESSION = array();
         }
-            session_destroy();
+        session_destroy();
     }
 
     public function addAttribute(string $name, $value)
     {
-            $_SESSION[$name] = $value;
+        $_SESSION[$name] = $value;
     }
 
     public function existAttribute(string $name)
     {
-            return isset($_SESSION[$name]);
+        return isset($_SESSION[$name]);
     }
 
     public function getAttribute(string $name)
     {
-            return $_SESSION[$name];
+        return $_SESSION[$name];
     }
 
     private function generateSession()
@@ -104,7 +104,7 @@ class Session
         $this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);
     }
 
-    public function getToken() : string
+    public function getToken(): string
     {
         $connectedUser = $this->getAttribute($this::AUTHENTICATED_KEY);
         return $this->tokenManager->createToken(32, $connectedUser);

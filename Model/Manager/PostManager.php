@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
@@ -12,11 +13,11 @@ use Blog\Exceptions\PostNotFoundException;
  */
 class PostManager extends Manager
 {
-    const COMMENTS_VALID = 1;
-    const COMMENTS_INVALID = 2 ;
-    const COMMENTS_ALL = 3;
+    public const COMMENTS_VALID = 1;
+    public const COMMENTS_INVALID = 2 ;
+    public const COMMENTS_ALL = 3;
 
-    const BASE_REQUEST='SELECT post.id AS postId, 
+    protected const BASE_REQUEST='SELECT post.id AS postId, 
                                    post.chapo AS postChapo, 
                                    post.title AS postTitle, 
                                    post.content AS postContent, 
@@ -42,7 +43,7 @@ class PostManager extends Manager
         $posts = $this->executeRequest($request);
         $postsArray = [];
         while ($data = $posts->fetch()) {
-               $postsArray[] = $this->createFromArray($data);
+            $postsArray[] = $this->createFromArray($data);
         }
         return $postsArray;
     }
@@ -98,17 +99,17 @@ class PostManager extends Manager
     public function createFromArray(array $data, array $comments = null)
     {
         return new Post([
-                   'id' => $data['postId']??null,
-                'chapo' => $data['postChapo'],
-                'title' => $data['postTitle'],
-                'content' => $data['postContent'],
-                'picture' => $data['postPicture']??null,
-                'creation_date' => $data['postCreationDate']??null,
-                'modification_date' => $data['postModificationDate']??null,
-                'picture' => $data['postPicture']??null,
-                'author' => (new UserManager($this->config))->createFromArray($data),
-                'comments' => $comments
-               ]);
+            'id' => $data['postId']??null,
+            'chapo' => $data['postChapo'],
+            'title' => $data['postTitle'],
+            'content' => $data['postContent'],
+            'picture' => $data['postPicture']??null,
+            'creation_date' => $data['postCreationDate']??null,
+            'modification_date' => $data['postModificationDate']??null,
+            'picture' => $data['postPicture']??null,
+            'author' => (new UserManager($this->config))->createFromArray($data),
+            'comments' => $comments
+        ]);
     }
     
 
