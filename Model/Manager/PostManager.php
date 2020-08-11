@@ -6,8 +6,9 @@ use Blog\Model\Post;
 use Blog\Model\User;
 use Blog\Model\Comment;
 use Blog\Exceptions\PostNotFoundException;
+
 /**
- * 
+ *
  */
 class PostManager extends Manager
 {
@@ -40,18 +41,18 @@ class PostManager extends Manager
 
         $posts = $this->executeRequest($request);
         $postsArray = [];
-        while ($data = $posts->fetch()){
+        while ($data = $posts->fetch()) {
                $postsArray[] = $this->createFromArray($data);
         }
         return $postsArray;
     }
 
-    public function getPostById(int $postId, int $commentsValidity=PostManager::COMMENTS_VALID)
+    public function getPostById(int $postId, int $commentsValidity = PostManager::COMMENTS_VALID)
     {
         $requestPosts = $this::BASE_REQUEST.'WHERE post.id = :id ;';
         $posts = $this->executeRequest($requestPosts, ['id'=>$postId]);
         $resultPosts = $posts->fetch();
-        if(!$resultPosts){
+        if (!$resultPosts) {
             throw new PostNotFoundException($postId);
         }
         $commentManager = new CommentManager($this->config);
@@ -84,12 +85,12 @@ class PostManager extends Manager
                             :picture, 
                             :author);';
                     
-        $result = $this->executeRequest($request, ['chapo' => $post->getChapo(), 
+        $result = $this->executeRequest($request, ['chapo' => $post->getChapo(),
                                                  'title' => $post->getTitle(),
                                                  'content' => $post->getContent(),
                                                  'picture' => $post->getPicture(),
                                                  'author' => $post->getAuthor()->getId()]);
-        return $result;                    
+        return $result;
     }
 
     public function createFromArray(array $data, array $comments = null)
@@ -114,7 +115,6 @@ class PostManager extends Manager
         $request = 'DELETE FROM post
                     WHERE id = :id ;';
         $result = $this->executeRequest($request, ['id'=>$post->getId()]);
-        return $result;                    
+        return $result;
     }
-
 }

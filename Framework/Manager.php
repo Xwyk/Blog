@@ -1,7 +1,9 @@
 <?php
+
 namespace Blog\Framework;
+
 /**
- * 
+ *
  */
 abstract class Manager
 {
@@ -16,13 +18,13 @@ abstract class Manager
 
     private function getDatabase() : \PDO
     {
-        if ($this->database === null){
+        if ($this->database === null) {
             $host     = $this->config->getHost();
             $port     = $this->config->getPort();
             $dbname   = $this->config->getDbName();
             $username = $this->config->getUsername();
             $password = $this->config->getPassword();
-            $this->database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);  
+            $this->database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);
         }
         return $this->database;
     }
@@ -31,12 +33,12 @@ abstract class Manager
      * Execute a request and return PDOStatement
      * @param string request : sql request to execute
      * @param array  Parameters : parameters to set for the request
-     * @return PDOStatement : result of the query 
+     * @return PDOStatement : result of the query
      */
     protected function executeRequest(string $request, array $parameters = null)
     {
         $req = $this->database->prepare($request);
         $req->execute($parameters);
-        return $req; 
+        return $req;
     }
 }

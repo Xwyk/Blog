@@ -1,15 +1,16 @@
 <?php
 
 namespace Blog\Framework;
+
 use Blog\Exceptions\FileNotFoundException;
+
 /**
- * 
+ *
  */
 class View
-
 {
     const VIEW_TEMPLATE=__DIR__.'/../View/pages/template.php';
-    static public function render(string $view, array $parameters = null)
+    public static function render(string $view, array $parameters = null)
     {
         if (isset($parameters)) {
             extract($parameters);

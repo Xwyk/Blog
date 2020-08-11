@@ -1,11 +1,13 @@
 <?php
 
 namespace Blog\Framework;
+
 use Blog\Model\User;
 use Blog\Model\Manager\TokenManager;
 use Blog\Exceptions\ExpiredSessionException;
+
 /**
- * 
+ *
  */
 class Session
 {
@@ -24,14 +26,14 @@ class Session
     protected $tokenManager;
 
     public function __construct(Configuration $config)
-    {    
+    {
         $this->config = $config;
         $this->tokenManager = new TokenManager($this->config);
 
-        if(session_status() != PHP_SESSION_ACTIVE){
+        if (session_status() != PHP_SESSION_ACTIVE) {
             //Création ou récupération d'une session
             session_start();
-            // If there is no generated session 
+            // If there is no generated session
             if (!$this->existAttribute($this::SESSION_KEY)) {
                 $this->generateSession();
             }
@@ -55,7 +57,7 @@ class Session
 
     public function isAdmin()
     {
-        return $this->isAuthenticated() && 
+        return $this->isAuthenticated() &&
                $this->getAttribute($this::AUTHENTICATED_KEY)->getType() == User::TYPE_ADMIN;
     }
 
@@ -66,7 +68,7 @@ class Session
     }
 
     public function logout()
-    {    
+    {
         if ($this->isAuthenticated()) {
             $this->tokenManager->removeForUser($this->getAttribute($this::AUTHENTICATED_KEY));
             $_SESSION = array();
@@ -100,7 +102,6 @@ class Session
         $sessionInactivity = clone $this->getAttribute($this::SESSION_GENERATION_TIME_KEY);
         $sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' minutes');
         $this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);
-
     }
 
     public function getToken() : string

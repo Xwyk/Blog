@@ -7,14 +7,15 @@ use Blog\Exceptions\UserNotActiveException;
 use Blog\Exceptions\WrongPasswordException;
 use Blog\Exceptions\UserNotFoundException;
 use Blog\Exceptions\AlreadyUsedMailAddressException;
+
 /**
- * 
+ *
  */
 class UserManager extends Manager
 {
     /**
-     * 
-     */    
+     *
+     */
     public function getUserById(int $userId) : User
     {
         $request = 'SELECT * FROM user 
@@ -30,7 +31,7 @@ class UserManager extends Manager
         $requestResult = $this->executeRequest($request, [':mail' => $userMail]);
         $userResult = $requestResult->fetch();
         if ($userResult) {
-            $user = new User($userResult);    
+            $user = new User($userResult);
         }
         return $user;
     }
@@ -48,7 +49,7 @@ class UserManager extends Manager
         if (!$user->isActive()) {
             throw new UserNotActiveException($user->getMailAddress());
         }
-        if (!password_verify($password,$user->getPassword())) {
+        if (!password_verify($password, $user->getPassword())) {
             throw new WrongPasswordException("Mot de passe incorrect", 1);
         }
         return $user;
@@ -67,7 +68,7 @@ class UserManager extends Manager
 
     public function add($userToAdd)
     {
-        if($this->getUserByMail($userToAdd->getMailAddress())){
+        if ($this->getUserByMail($userToAdd->getMailAddress())) {
              throw new AlreadyUsedMailAddressException($userToAdd->getMailAddress());
         }
         $request = 'INSERT INTO user (first_name, 
@@ -81,12 +82,11 @@ class UserManager extends Manager
                             :mail, 
                             :pwd);';
         $result = $this->executeRequest($request, [
-            ':firstname' =>$userToAdd->getFirstName(), 
-            ':lastname'  => $userToAdd->getLastName(), 
-            ':pseudo'    => $userToAdd->getPseudo(), 
-            ':mail'      => $userToAdd->getMailAddress(), 
+            ':firstname' =>$userToAdd->getFirstName(),
+            ':lastname'  => $userToAdd->getLastName(),
+            ':pseudo'    => $userToAdd->getPseudo(),
+            ':mail'      => $userToAdd->getMailAddress(),
             ':pwd'       => password_hash($userToAdd->getPassword(), PASSWORD_DEFAULT)]);
-        return $result;                    
+        return $result;
     }
 }
-

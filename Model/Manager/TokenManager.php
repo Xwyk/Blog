@@ -5,10 +5,8 @@ use Blog\Framework\Manager;
 use Blog\Model\Token;
 use Blog\Model\User;
 
-
-
 /**
- * 
+ *
  */
 class TokenManager extends Manager
 {
@@ -55,7 +53,8 @@ class TokenManager extends Manager
         return $result;
     }
 
-    public function createToken($tokenLength = 32, User $user){
+    public function createToken($tokenLength = 32, User $user)
+    {
         $tokenValue = bin2hex(openssl_random_pseudo_bytes($tokenLength));
             
         $tokenGeneration = new \DateTime();
@@ -88,12 +87,12 @@ class TokenManager extends Manager
                             :generation_date, 
                             :expiration_date);';
         $result = $this->executeRequest($request, [
-            ':user'            => $tokenToAdd->getUser()->getId(), 
-            ':value'           => $tokenToAdd->getValue(), 
-            ':generation_date' => $tokenToAdd->getGenerationDate()->Format('Y-m-d H:i:s'), 
+            ':user'            => $tokenToAdd->getUser()->getId(),
+            ':value'           => $tokenToAdd->getValue(),
+            ':generation_date' => $tokenToAdd->getGenerationDate()->Format('Y-m-d H:i:s'),
             ':expiration_date' => $tokenToAdd->getExpirationDate()->Format('Y-m-d H:i:s')
         ]);
-        return $result;                    
+        return $result;
     }
 
     public function checkToken(string $tokenToCheck, User $user)
@@ -129,6 +128,6 @@ class TokenManager extends Manager
     {
         $request = 'DELETE FROM token WHERE expiration_date < :expDate;';
         $result = $this->executeRequest($request, [':expDate'=>(new \DateTime)->format('Y-m-d H:i:s')]);
-        return $result;            
+        return $result;
     }
 }
