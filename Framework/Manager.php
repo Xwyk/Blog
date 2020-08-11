@@ -5,38 +5,38 @@ namespace Blog\Framework;
  */
 abstract class Manager
 {
-	private $database;
-	protected $config;
+    private $database;
+    protected $config;
 
-	public function __construct(Configuration $config)
-	{
-		$this->config = $config;
-		$this->database = $this->getDatabase();
-	}
+    public function __construct(Configuration $config)
+    {
+        $this->config = $config;
+        $this->database = $this->getDatabase();
+    }
 
-	private function getDatabase() : \PDO
-	{
-		if ($this->database === null){
-			$host     = $this->config->getHost();
-			$port     = $this->config->getPort();
-			$dbname   = $this->config->getDbName();
-			$username = $this->config->getUsername();
-			$password = $this->config->getPassword();
+    private function getDatabase() : \PDO
+    {
+        if ($this->database === null){
+            $host     = $this->config->getHost();
+            $port     = $this->config->getPort();
+            $dbname   = $this->config->getDbName();
+            $username = $this->config->getUsername();
+            $password = $this->config->getPassword();
             $this->database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);  
-		}
+        }
         return $this->database;
-	}
+    }
 
-	/**
-	 * Execute a request and return PDOStatement
-	 * @param string request : sql request to execute
-	 * @param array  Parameters : parameters to set for the request
-	 * @return PDOStatement : result of the query 
-	 */
-	protected function executeRequest(string $request, array $parameters = null)
-	{
-		$req = $this->database->prepare($request);
-		$req->execute($parameters);
-		return $req; 
-	}
+    /**
+     * Execute a request and return PDOStatement
+     * @param string request : sql request to execute
+     * @param array  Parameters : parameters to set for the request
+     * @return PDOStatement : result of the query 
+     */
+    protected function executeRequest(string $request, array $parameters = null)
+    {
+        $req = $this->database->prepare($request);
+        $req->execute($parameters);
+        return $req; 
+    }
 }

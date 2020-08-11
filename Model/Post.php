@@ -6,47 +6,47 @@ use Blog\Framework\Entity;
  */
 class Post extends Entity
 {
-	private $id;
-	private $creationDate;
-	private $content;
-	private $author;
-	private $modificationDate;
-	private $chapo;
+    private $id;
+    private $creationDate;
+    private $content;
+    private $author;
+    private $modificationDate;
+    private $chapo;
     private $title;
     private $comments;
-	private $picture;
+    private $picture;
 
 
-	public function __construct(array $data)
-	{
+    public function __construct(array $data)
+    {
         $this->comments=[];
-		$this->hydrate($data);
-	}
+        $this->hydrate($data);
+    }
 
-	/**
+    /**
      * Return chapo
      * @return string chapo
      */
-	public function getChapo()
-	{
-		return $this->chapo;
-	}
+    public function getChapo()
+    {
+        return $this->chapo;
+    }
 
-	/**
+    /**
      * Return title
      * @return string title
      */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
+    /**
      * Return id value
      * @return int id
      */
     public function getID(){
-    	return $this->id;
+        return $this->id;
     }
 
     /**
@@ -54,7 +54,7 @@ class Post extends Entity
      * @return Date creationDate
      */
     public function getCreationDate(){
-    	return $this->creationDate;
+        return $this->creationDate;
     }
 
     /**
@@ -62,26 +62,26 @@ class Post extends Entity
      * @return Date modificationDate
      */
     public function getModificationDate(){
-    	return $this->modificationDate;
+        return $this->modificationDate;
     }
 
     /**
      * Return content
      * @return string content
      */
-	public function getContent()
-	{
-		return $this->content;
-	}
+    public function getContent()
+    {
+        return $this->content;
+    }
 
-	/**
+    /**
      * Return author
      * @return User author
      */
-	public function getAuthor()
-	{
-		return $this->author;
-	}
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 
     /**
      * Return comments
@@ -101,31 +101,31 @@ class Post extends Entity
         return $this->picture;
     }
 
-	/**
+    /**
      * Set content
      * @param string newContent New content to set
      * @throws UnexpectedValueException If newContent contain html or php code
      */
-	public function setContent(string $newContent)
-	{
-		if ($newContent != strip_tags($newContent)){
-    		throw new UnexpectedValueException('Can\'t set content : value contain html/PHP code');
+    public function setContent(string $newContent)
+    {
+        if ($newContent != strip_tags($newContent)){
+            throw new UnexpectedValueException('Can\'t set content : value contain html/PHP code');
         }
-		$this->content = $newContent;
-	}
+        $this->content = $newContent;
+    }
 
-	/**
+    /**
      * Set author
      * @param User newAuthor New author to set. This can be set once
      */
-	public function setAuthor(User $newAuthor)
-	{
-		// If id is already set, throw exception
+    public function setAuthor(User $newAuthor)
+    {
+        // If id is already set, throw exception
         if (isset($this->author)){
             throw new Exception('Can\'t change author of an object once it was set');
         }
-		$this->author = $newAuthor;
-	}
+        $this->author = $newAuthor;
+    }
 
     /**
      * Set id value
@@ -138,10 +138,10 @@ class Post extends Entity
         if (isset($this->id)){
             throw new Exception('Can\'t change id of an object once it was set');
         }
-    	if ($newID <= 0){
-			throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
+        if ($newID <= 0){
+            throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         }
-		$this->id = $newID;
+        $this->id = $newID;
     }
 
     /**
@@ -149,11 +149,11 @@ class Post extends Entity
      * @param Date newDate New date to set
      */
     protected function setCreationDate(string $newDate){
-    	if ($newDate === null){
+        if ($newDate === null){
             $this->creationDate="";
             return;
         }
-    	$this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
+        $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
     }
 
     /**
@@ -161,39 +161,39 @@ class Post extends Entity
      * @param Date newDate New date to set
      */
     protected function setModificationDate(string $newDate){
-    	if ($newDate===null){
+        if ($newDate===null){
             $this->creationDate="";
             return;
         }
-   		$this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
-    	
+           $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
+        
     }
 
-	/**
+    /**
      * Set chapo
      * @param string newChapo New chapo to set
      * @throws UnexpectedValueException If newChapo contain html or php code
      */
-	protected function setChapo(string $newChapo)
-	{
-		if ($newChapo != strip_tags($newChapo)){
-    		throw new UnexpectedValueException('Can\'t set chapo : value contain html/PHP code');
+    protected function setChapo(string $newChapo)
+    {
+        if ($newChapo != strip_tags($newChapo)){
+            throw new UnexpectedValueException('Can\'t set chapo : value contain html/PHP code');
         }
-		$this->chapo = $newChapo;
-	}
+        $this->chapo = $newChapo;
+    }
 
-	/**
+    /**
      * Set title
      * @param string newTitle New title to set
      * @throws UnexpectedValueException If newTitle contain html or php code
      */
-	protected function setTitle(string $newTitle)
-	{
-		if ($newTitle != strip_tags($newTitle)){
-    		throw new UnexpectedValueException('Can\'t set title : value contain html/PHP code');
+    protected function setTitle(string $newTitle)
+    {
+        if ($newTitle != strip_tags($newTitle)){
+            throw new UnexpectedValueException('Can\'t set title : value contain html/PHP code');
         }
-		$this->title = $newTitle;
-	}
+        $this->title = $newTitle;
+    }
 
     /**
      * Set comments

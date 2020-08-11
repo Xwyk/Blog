@@ -7,10 +7,10 @@ use Blog\Model\Manager\TokenManager;
 use Blog\Framework\Controller;
 
 class HomeController extends Controller{
-	
-	public function display()
-	{
-		$articles = (new PostManager($this->config))->getAllPosts();
-		$this->render($this::VIEW_HOME, ['articles' => $articles]);
-	}
+    
+    public function display()
+    {
+        $articles = (new PostManager($this->config))->getAllPosts();
+        $this->render($this::VIEW_HOME, ['articles' => $articles]);
+    }
 }

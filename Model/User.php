@@ -13,13 +13,13 @@ class User extends Entity
     private $id;
     private $creationDate;
     private $modificationDate;
-	private $firstName;
-	private $lastName;
-	private $pseudo;
-	private $mailAddress;
-	private $password;
-	private $active = false;
-	private $type = self::TYPE_USER;
+    private $firstName;
+    private $lastName;
+    private $pseudo;
+    private $mailAddress;
+    private $password;
+    private $active = false;
+    private $type = self::TYPE_USER;
 
     /**
      * Construct object
@@ -38,7 +38,7 @@ class User extends Entity
      */
     public function getFirstName()
     {
-    	return $this->firstName;
+        return $this->firstName;
     }
 
     /**
@@ -47,7 +47,7 @@ class User extends Entity
      */
     public function getLastName()
     {
-    	return $this->lastName;
+        return $this->lastName;
     }
 
     /**
@@ -56,7 +56,7 @@ class User extends Entity
      */
     public function getPseudo()
     {
-    	return $this->pseudo;
+        return $this->pseudo;
     }
 
     /**
@@ -65,7 +65,7 @@ class User extends Entity
      */
     public function getMailAddress()
     {
-    	return $this->mailAddress;
+        return $this->mailAddress;
     }
 
     /**
@@ -74,7 +74,7 @@ class User extends Entity
      */
     public function getPassword()
     {
-    	return $this->password;
+        return $this->password;
     }
 
     /**
@@ -83,7 +83,7 @@ class User extends Entity
      */
     public function isActive()
     {
-    	return $this->active;
+        return $this->active;
     }
 
     /**
@@ -92,7 +92,7 @@ class User extends Entity
      */
     public function getType()
     {
-    	return $this->type;
+        return $this->type;
     }
 
     /**
@@ -172,10 +172,10 @@ class User extends Entity
      */
     protected function setFirstName(string $newFirstName)
     {
-    	if ($newFirstName == strip_tags($newFirstName))
-    		$this->firstName = $newFirstName;
-    	else
-    		throw new \UnexpectedValueException('Can\'t set firstname : value contain html/PHP code');
+        if ($newFirstName == strip_tags($newFirstName))
+            $this->firstName = $newFirstName;
+        else
+            throw new \UnexpectedValueException('Can\'t set firstname : value contain html/PHP code');
     }
 
     /**
@@ -185,10 +185,10 @@ class User extends Entity
      */
     protected function setLastName(string $newLastName)
     {
-    	if ($newLastName == strip_tags($newLastName))
-    		$this->lastName = $newLastName;
-    	else
-    		throw new \UnexpectedValueException('Can\'t set lastname : value contain html/PHP code');
+        if ($newLastName == strip_tags($newLastName))
+            $this->lastName = $newLastName;
+        else
+            throw new \UnexpectedValueException('Can\'t set lastname : value contain html/PHP code');
     }
 
     /**
@@ -198,10 +198,10 @@ class User extends Entity
      */
     protected function setPseudo(string $newPseudo)
     {
-    	if ($newPseudo == strip_tags($newPseudo))
-    		$this->pseudo = $newPseudo;
-    	else
-    		throw new \UnexpectedValueException('Can\'t set pseudo : value contain html/PHP code');
+        if ($newPseudo == strip_tags($newPseudo))
+            $this->pseudo = $newPseudo;
+        else
+            throw new \UnexpectedValueException('Can\'t set pseudo : value contain html/PHP code');
     }
 
     /**
@@ -212,12 +212,12 @@ class User extends Entity
      */
     protected function setMailAddress(string $newMailAddress)
     {
-    	if ($newMailAddress != strip_tags($newMailAddress))
-    		throw new \UnexpectedValueException('L\'adresse fournie contient du code');
-    	$isValid = preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $newMailAddress);
+        if ($newMailAddress != strip_tags($newMailAddress))
+            throw new \UnexpectedValueException('L\'adresse fournie contient du code');
+        $isValid = preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $newMailAddress);
         if (!$isValid)
             throw new \UnexpectedValueException('L\'adresse mail n\'est pas valide');
-		$this->mailAddress = $newMailAddress;
+        $this->mailAddress = $newMailAddress;
     }
 
     /**
@@ -227,7 +227,7 @@ class User extends Entity
      */
     protected function setPassword(string $newPassword)
     {
-    	if ($newPassword != strip_tags($newPassword))
+        if ($newPassword != strip_tags($newPassword))
             throw new \UnexpectedValueException('Can\'t set password : value contain html/PHP code');
         else
             $this->password = $newPassword;
@@ -239,7 +239,7 @@ class User extends Entity
      */
     protected function setActive(bool $activation)
     {
-    	$this->active = $activation;
+        $this->active = $activation;
     }
 
     /**
@@ -248,9 +248,9 @@ class User extends Entity
      */
     protected function setType(int $newType)
     {
-    	if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN)
+        if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN)
             $this->type = $newType;
         else
-  			$this->type = self::TYPE_USER;
+              $this->type = self::TYPE_USER;
     }
 }
