@@ -12,8 +12,13 @@ use Blog\Framework\Session;
 
 class PostController extends Controller{
     
-    const IMAGE_MAX_SIZE = 10000000;
-    const ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'];
+    protected const IMAGE_MAX_SIZE = 10000000;
+    protected const ALLOWED_EXTENSIONS = array(
+                                            'png', 
+                                            'jpg', 
+                                            'jpeg', 
+                                            'webp',
+                                        );
     public function display()
     {
         $id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
