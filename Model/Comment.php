@@ -152,7 +152,7 @@ class Comment extends Entity
      */
     protected function setCreationDate(string $newDate){
         $this->creationDate = "";
-        if (!$newDate===null) {
+        if ($newDate!==null) {
             $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         }
     }
@@ -162,12 +162,10 @@ class Comment extends Entity
      * @param Date newDate New date to set
      */
     protected function setValidationDate(string $newDate){
-        if ($newDate===null)
-            $this->validationDate = "";
-        
-        else
+        $this->validationDate = "";
+        if ($newDate!==null) {
             $this->validationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
-        
+        }
     }
 
     /**
@@ -180,10 +178,12 @@ class Comment extends Entity
     protected function setValidatorId(int $newValidatorId)
     {
         // If id is already set, throw exception
-        if (isset($this->validatorId))
+        if (isset($this->validatorId)) {
             throw new Exception('Can\'t change validator of an object once it was set');
-        if ($newValidatorId <= 0)
+        }
+        if ($newValidatorId <= 0) {
             throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
+        }
         $this->validatorId = $newValidatorId;
     }
 
@@ -197,15 +197,13 @@ class Comment extends Entity
     protected function setPostId(int $newPostId)
     {
         // If id is already set, throw exception
-        if (isset($this->postId))
+        if (isset($this->postId)) {
             throw new Exception('Can\'t change post id of an object once it was set');
+        }
         // If id is numeric and bigger than 0, attribute value, else throw exception
-        if (is_numeric($newPostId))
-            if ($newPostId > 0)
-                $this->postId = $newPostId;
-            else
-                throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
-        else
-            throw new InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
+        if ($newPostId <= 0) {
+            throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
+        }
+        $this->postId = $newPostId;
     }
 }
