@@ -9,7 +9,7 @@ use Blog\Exceptions\FileNotFoundException;
  */
 class View
 {
-    const VIEW_TEMPLATE=__DIR__.'/../View/pages/template.php';
+    protected const VIEW_TEMPLATE=__DIR__.'/../View/pages/template.php';
     public static function render(string $view, array $parameters = null)
     {
         if (isset($parameters)) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
@@ -16,7 +17,7 @@ class UserManager extends Manager
     /**
      *
      */
-    public function getUserById(int $userId) : User
+    public function getUserById(int $userId): User
     {
         $request = 'SELECT * FROM user 
                     WHERE id = :id ;';
@@ -43,7 +44,7 @@ class UserManager extends Manager
         $user = $this->executeRequest($request, [':mailAddress' => $usermail]);
         $result=$user->fetch();
         if (!is_array($result)) {
-             throw new UserNotFoundException($usermail);
+            throw new UserNotFoundException($usermail);
         }
         $user = new User($result);
         if (!$user->isActive()) {
@@ -69,7 +70,7 @@ class UserManager extends Manager
     public function add($userToAdd)
     {
         if ($this->getUserByMail($userToAdd->getMailAddress())) {
-             throw new AlreadyUsedMailAddressException($userToAdd->getMailAddress());
+            throw new AlreadyUsedMailAddressException($userToAdd->getMailAddress());
         }
         $request = 'INSERT INTO user (first_name, 
                                       last_name,

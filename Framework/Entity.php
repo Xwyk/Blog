@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Framework;
 
 /**
@@ -14,6 +15,7 @@ class Entity
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
             // If db's attribute name contains '_', split name
             if (strpos($key, "_")) {
                 $keyName = explode("_", $key);
@@ -21,8 +23,6 @@ class Entity
                 for ($i=0; $i < count($keyName); $i++) {
                     $method.=ucfirst($keyName[$i]);
                 }
-            } else {
-                $method = 'set'.ucfirst($key);
             }
             // If value isn't null and method exists, call the setter
             if (!($value===null)) {
