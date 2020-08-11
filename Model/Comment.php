@@ -3,6 +3,7 @@
 namespace Blog\Model;
 
 use Blog\Framework\Entity;
+
 /**
  * public class who define an user. Extends TextContent
  *
@@ -59,7 +60,7 @@ class Comment extends Entity
      * Return id value
      * @return int id
      */
-    public function getID(){
+    public function getId(){
         return $this->id;
     }
 
@@ -112,9 +113,7 @@ class Comment extends Entity
         if ($newContent != strip_tags($newContent)){
             throw new UnexpectedValueException('Can\'t set content : value contain html/PHP code');
         }
-            
         $this->content = $newContent;
-            
     }
 
     /**
@@ -140,11 +139,11 @@ class Comment extends Entity
      * @throws Exception If newID is already set
      * @throws InvalidArgumentException If newID isn't a number
      */
-    protected function setID(int $newID){
+    protected function setId(int $newId){
         // If id is already set, throw exception
         if (isset($this->id))
             throw new Exception('Can\'t change id of an object once it was set');
-        $this->id = $newID;
+        $this->id = $newId;
     }
 
     /**

@@ -1,14 +1,17 @@
 <?php
+
 namespace Blog\Model;
+
 use Blog\Framework\Entity;
+
 /**
  * summary
  */
 
 class User extends Entity
 {
-    const TYPE_USER = 1;
-    const TYPE_ADMIN = 2 ;
+    public const TYPE_USER = 1;
+    public const TYPE_ADMIN = 2 ;
 
     private $id;
     private $creationDate;
@@ -99,7 +102,8 @@ class User extends Entity
      * Return id value
      * @return int id
      */
-    public function getID(){
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -107,7 +111,8 @@ class User extends Entity
      * Return creationDate value
      * @return Date creationDate
      */
-    public function getCreationDate(){
+    public function getCreationDate()
+    {
         return $this->creationDate;
     }
 
@@ -115,7 +120,8 @@ class User extends Entity
      * Return modificationDate value
      * @return Date modificationDate
      */
-    public function getModificationDate(){
+    public function getModificationDate()
+    {
         return $this->modificationDate;
     }
 
@@ -126,43 +132,48 @@ class User extends Entity
      * @throws Exception If newID is already set
      * @throws InvalidArgumentException If newID isn't a number
      */
-    protected function setId(int $newID){
+    protected function setId(int $newID)
+    {
         // If id is already set, throw exception
-        if (isset($this->id))
+        if (isset($this->id)) {
             throw new \Exception('Can\'t change id of an object once it was set');
+        }
         // If id is numeric and bigger than 0, attribute value, else throw exception
-        if (is_numeric($newID))
-            if ($newID > 0)
+        if (is_numeric($newID)) {
+            if ($newID > 0) {
                 $this->id = $newID;
-            else
+            } else {
                 throw new \RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
-        else
+            }
+        } else {
             throw new \InvalidArgumentException('Le type de l\'argument fourni ne correspond pas à un nombre ');
+        }
     }
 
     /**
      * Set creationDate value
      * @param Date newDate New date to set
      */
-    protected function setCreationDate(string $newDate){
-        if (is_null($newDate))
+    protected function setCreationDate(string $newDate)
+    {
+        if (is_null($newDate)) {
             $this->creationDate="";
-        
-        else
+        } else {
             $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
-        
+        }
     }
 
     /**
      * Set modificationDate value
      * @param Date newDate New date to set
      */
-    protected function setModificationDate(string $newDate){
-        if (is_null($newDate))
+    protected function setModificationDate(string $newDate)
+    {
+        if (is_null($newDate)) {
             $this->creationDate="";
-        else
+        } else {
             $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
-        
+        }
     }
 
     /**
@@ -172,10 +183,11 @@ class User extends Entity
      */
     protected function setFirstName(string $newFirstName)
     {
-        if ($newFirstName == strip_tags($newFirstName))
+        if ($newFirstName == strip_tags($newFirstName)) {
             $this->firstName = $newFirstName;
-        else
+        } else {
             throw new \UnexpectedValueException('Can\'t set firstname : value contain html/PHP code');
+        }
     }
 
     /**
@@ -185,10 +197,11 @@ class User extends Entity
      */
     protected function setLastName(string $newLastName)
     {
-        if ($newLastName == strip_tags($newLastName))
+        if ($newLastName == strip_tags($newLastName)) {
             $this->lastName = $newLastName;
-        else
+        } else {
             throw new \UnexpectedValueException('Can\'t set lastname : value contain html/PHP code');
+        }
     }
 
     /**
@@ -198,10 +211,11 @@ class User extends Entity
      */
     protected function setPseudo(string $newPseudo)
     {
-        if ($newPseudo == strip_tags($newPseudo))
+        if ($newPseudo == strip_tags($newPseudo)) {
             $this->pseudo = $newPseudo;
-        else
+        } else {
             throw new \UnexpectedValueException('Can\'t set pseudo : value contain html/PHP code');
+        }
     }
 
     /**
@@ -212,11 +226,13 @@ class User extends Entity
      */
     protected function setMailAddress(string $newMailAddress)
     {
-        if ($newMailAddress != strip_tags($newMailAddress))
+        if ($newMailAddress != strip_tags($newMailAddress)) {
             throw new \UnexpectedValueException('L\'adresse fournie contient du code');
+        }
         $isValid = preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $newMailAddress);
-        if (!$isValid)
+        if (!$isValid) {
             throw new \UnexpectedValueException('L\'adresse mail n\'est pas valide');
+        }
         $this->mailAddress = $newMailAddress;
     }
 
@@ -227,10 +243,11 @@ class User extends Entity
      */
     protected function setPassword(string $newPassword)
     {
-        if ($newPassword != strip_tags($newPassword))
+        if ($newPassword != strip_tags($newPassword)) {
             throw new \UnexpectedValueException('Can\'t set password : value contain html/PHP code');
-        else
+        } else {
             $this->password = $newPassword;
+        }
     }
 
     /**
@@ -248,9 +265,10 @@ class User extends Entity
      */
     protected function setType(int $newType)
     {
-        if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN)
+        if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN) {
             $this->type = $newType;
-        else
-              $this->type = self::TYPE_USER;
+        } else {
+            $this->type = self::TYPE_USER;
+        }
     }
 }

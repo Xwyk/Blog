@@ -1,12 +1,13 @@
 <?php
 
 use Blog\Framework\Session;
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?= $mainTitle ?? "Titre par défaut" ?></title>
-	<meta charset="utf-8">
+    <title><?= $mainTitle ?? "Titre par défaut"?></title>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -14,7 +15,7 @@ use Blog\Framework\Session;
 
 
     <!-- Bootstrap Core CSS -->
-     <link href="Common/themes/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Common/themes/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
     <link href="Common/themes/css/freelancer.min.css" rel="stylesheet">
@@ -26,7 +27,7 @@ use Blog\Framework\Session;
     <?= $preBody ?? ""?>
 </head>
 <body>
-	<!-- Navigation -->
+    <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -54,16 +55,15 @@ use Blog\Framework\Session;
                     </li>
                     <li>
                         <?php
-                            if ($session->isAuthenticated()) {
-                        ?>
+                        if ($session->isAuthenticated()) {
+                            ?>
                         <a href="/?action=logout">Déconnexion</a>
-                        <?php
-                            }
-                            else{
-                        ?>
+                            <?php
+                        } else {
+                            ?>
                         <a href="/?action=login">Connexion</a>
-                        <?php
-                            }
+                            <?php
+                        }
                         ?>
                     </li>
                 </ul>
@@ -72,8 +72,8 @@ use Blog\Framework\Session;
         </div>
         <!-- /.container-fluid -->
     </nav>
-	<?= $content ?>
-	<!-- Footer -->
+    <?= $content ?>
+    <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
             <div class="container">
@@ -106,22 +106,21 @@ use Blog\Framework\Session;
                     <div class="footer-col col-md-4">
                         <h3>Accès membre</h3>
                         <?php
-                            if ($session->isAuthenticated()) {
-                                if ($session->isAdmin()) {
-                        ?>
+                        if ($session->isAuthenticated()) {
+                            if ($session->isAdmin()) {
+                                ?>
                         <p>Accéder à <a href="/?action=admin">l'interface d'administration</a>.</p>
-                        <?php
-                                }
-                        ?>
-                        <p><a href="/?action=logout">Déconnexion</a>.</p>
-                        <?php
+                                <?php
                             }
-                            else{
-                        ?>
+                            ?>
+                        <p><a href="/?action=logout">Déconnexion</a>.</p>
+                            <?php
+                        } else {
+                            ?>
                         <p>Se <a href="/?action=login">connecter</a>.</p>
                     </div>
-                        <?php
-                            }
+                            <?php
+                        }
                         ?>
                 </div>
             </div>

@@ -16,7 +16,7 @@ abstract class Manager
         $this->database = $this->getDatabase();
     }
 
-    private function getDatabase() : \PDO
+    private function getDatabase(): \PDO
     {
         if ($this->database === null) {
             $host     = $this->config->getHost();

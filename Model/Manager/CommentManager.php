@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
@@ -68,41 +69,41 @@ class CommentManager extends Manager
         return $this->formatResponse($this->executeRequest($requestComments, [':id'=>$postId]));
     }
 
-    public function getAllComments() : array
+    public function getAllComments(): array
     {
         return $this->getComments($this::COMMENTS_ALL);
     }
 
-    public function getAllValidComments() : array
+    public function getAllValidComments(): array
     {
         return $this->getComments($this::COMMENTS_VALID);
     }
 
-    public function getAllInvalidComments() : array
+    public function getAllInvalidComments(): array
     {
         return $this->getComments($this::COMMENTS_INVALID);
     }
 
-    public function getAllCommentsByPost(int $postId) : array
+    public function getAllCommentsByPost(int $postId): array
     {
         return $this->getComments($this::COMMENTS_ALL, $postId);
     }
 
-    public function getValidCommentsByPost(int $postId) : array
+    public function getValidCommentsByPost(int $postId): array
     {
         return $this->getComments($this::COMMENTS_VALID, $postId);
     }
 
-    public function getInvalidCommentsByPost(int $postId) : array
+    public function getInvalidCommentsByPost(int $postId): array
     {
         return $this->getComments($this::COMMENTS_INVALID, $postId);
     }
 
-    private function formatResponse($comments) : array
+    private function formatResponse($comments): array
     {
-        $result=[];
+        $result = [];
         while ($data = $comments->fetch()) {
-               $result[] = $this->createFromArray($data);
+            $result[] = $this->createFromArray($data);
         }
         return $result;
     }
@@ -117,7 +118,7 @@ class CommentManager extends Manager
         if (!$resultRequest) {
             throw new \Exception('commentaire non trouvé');
         }
-           $ret = $this->createFromArray($resultRequest);
+        $ret = $this->createFromArray($resultRequest);
         
         return $ret;
     }

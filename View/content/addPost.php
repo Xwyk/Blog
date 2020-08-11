@@ -1,4 +1,7 @@
-<?php $mainTitle = "Ajout d'un article"?>
+<?php
+
+    $mainTitle = "Ajout d'un article"
+?>
 <div class="portfolio-modal" >
     <div class="modal-content">
         <h1><?= $mainTitle ?? "Titre par défaut" ?></h1>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
@@ -10,12 +11,12 @@ use Blog\Model\User;
  */
 class TokenManager extends Manager
 {
-    const TOKEN_VALIDITY_MINUTES = 1;
-    const MAX_ALLOWED_TOKENS = 2;
-    const TOKEN_EXPIRED = 3;
-    const TOKEN_INVALID = 2;
-    const TOKEN_VALID = 1;
-    const BASE_REQUEST = 'SELECT  
+    protected const TOKEN_VALIDITY_MINUTES = 1;
+    protected const MAX_ALLOWED_TOKENS = 2;
+    public const TOKEN_EXPIRED = 3;
+    public const TOKEN_INVALID = 2;
+    public const TOKEN_VALID = 1;
+    protected const BASE_REQUEST = 'SELECT  
                             token.user AS tokenUser,
                             token.value AS tokenValue,
                             token.generation_date AS tokenGenerationDate,

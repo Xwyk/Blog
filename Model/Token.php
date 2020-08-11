@@ -1,6 +1,9 @@
 <?php
+
 namespace Blog\Model;
+
 use Blog\Framework\Entity;
+
 /**
  * 
  */

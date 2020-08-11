@@ -1,4 +1,7 @@
-<?php $mainTitle = "Accueil"?>
+<?php
+
+    $mainTitle = "Accueil"
+?>
 <!-- Header -->
 <header>
     <div class="container">

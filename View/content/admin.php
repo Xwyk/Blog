@@ -1,4 +1,6 @@
-<?php $mainTitle = "Interface d'administrateion"?>
+<?php
+    $mainTitle = "Interface d'administrateion"
+?>
 <div class="portfolio-modal" >
     <div class="modal-content">
         <div class="container-fluid">
@@ -43,7 +45,7 @@
                                                 <?php
                                                 if ($comment->isValid()) {
                                                     ?>
-                                                         <a class="dropdown-item">
+                                                        <a class="dropdown-item">
                                                             <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>"  method="post">
                                                                 <input type="hidden" name="token" value="<?= $token ?>">
                                                                 <button class="btn btn-warning btn-block" type="submit">Masquer</button>
@@ -74,9 +76,9 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><a href="/?action=post&id=<?= $comment->getPostId()?>">Lien</a></td>
-                                            
-
+                                            <td>
+                                                <a href="/?action=post&id=<?= $comment->getPostId()?>">Lien</a>
+                                            </td>
                                         </tr>
                                             <?php
                                         }

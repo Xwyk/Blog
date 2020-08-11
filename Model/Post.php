@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Model;
 
 use Blog\Framework\Entity;
@@ -47,7 +48,7 @@ class Post extends Entity
      * Return id value
      * @return int id
      */
-    public function getID()
+    public function getId()
     {
         return $this->id;
     }
@@ -138,7 +139,7 @@ class Post extends Entity
      * @throws RangeException If newID isn't bigger than 0
      * @throws Exception If newID is already set
      */
-    protected function setID(int $newID)
+    protected function setId(int $newId)
     {
         // If id is already set, throw exception
         if (isset($this->id)) {
@@ -147,7 +148,7 @@ class Post extends Entity
         if ($newID <= 0) {
             throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         }
-        $this->id = $newID;
+        $this->id = $newId;
     }
 
     /**
@@ -173,7 +174,7 @@ class Post extends Entity
             $this->creationDate="";
             return;
         }
-           $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
+            $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
     }
 
     /**

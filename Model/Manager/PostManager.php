@@ -85,11 +85,13 @@ class PostManager extends Manager
                             :picture, 
                             :author);';
                     
-        $result = $this->executeRequest($request, ['chapo' => $post->getChapo(),
-                                                 'title' => $post->getTitle(),
-                                                 'content' => $post->getContent(),
-                                                 'picture' => $post->getPicture(),
-                                                 'author' => $post->getAuthor()->getId()]);
+        $result = $this->executeRequest($request, [
+            'chapo' => $post->getChapo(),
+            'title' => $post->getTitle(),
+            'content' => $post->getContent(),
+            'picture' => $post->getPicture(),
+            'author' => $post->getAuthor()->getId()
+        ]);
         return $result;
     }
 

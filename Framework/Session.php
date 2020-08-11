@@ -11,16 +11,16 @@ use Blog\Exceptions\ExpiredSessionException;
  */
 class Session
 {
-    const AUTHENTICATED_KEY = 'user';
+    public const AUTHENTICATED_KEY = 'user';
 
-    const SESSION_VALIDITY_MINUTES = 60;
-    const SESSION_INACTIVITY_LOGOUT_MINUTES = 10;
-    const TOKEN_KEY = 'token';
-    const SESSION_KEY = 'session';
+    protected const SESSION_VALIDITY_MINUTES = 60;
+    protected const SESSION_INACTIVITY_LOGOUT_MINUTES = 10;
+    public const TOKEN_KEY = 'token';
+    public const SESSION_KEY = 'session';
 
-    const SESSION_GENERATION_TIME_KEY = 'sessionGenerationTime';
-    const SESSION_EXPIRATION_TIME_KEY = 'sessionExpirationTime';
-    const SESSION_INACTIVITY_TIME_KEY = 'sessionInactivityTime';
+    public const SESSION_GENERATION_TIME_KEY = 'sessionGenerationTime';
+    public const SESSION_EXPIRATION_TIME_KEY = 'sessionExpirationTime';
+    public const SESSION_INACTIVITY_TIME_KEY = 'sessionInactivityTime';
 
     protected $config;
     protected $tokenManager;
@@ -57,8 +57,8 @@ class Session
 
     public function isAdmin()
     {
-        return $this->isAuthenticated() &&
-               $this->getAttribute($this::AUTHENTICATED_KEY)->getType() == User::TYPE_ADMIN;
+        return (($this->isAuthenticated()) &&
+               ($this->getAttribute($this::AUTHENTICATED_KEY)->getType() == User::TYPE_ADMIN));
     }
 
     public function login($user)
