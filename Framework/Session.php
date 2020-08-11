@@ -119,7 +119,7 @@ class Session
     private function checkSession()
     {
         $now = new \DateTime();
-        $sessionExpiration = $this->getAttribute($this::SESSION_EXPIRATION_TIME_KEY);
+        //$sessionExpiration = $this->getAttribute($this::SESSION_EXPIRATION_TIME_KEY);
         $sessionInactivity = $this->getAttribute($this::SESSION_INACTIVITY_TIME_KEY);
         // || $sessionInactivity < $now
         

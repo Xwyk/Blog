@@ -43,16 +43,21 @@ class PostController extends Controller
             $this->render($this::VIEW_ADDPOST);
             return;
         }
+        if (!isset($_FILES['postImage'])) {
+            $this->render($this::VIEW_ADDPOST);
+            return;
+        }
+        $image = $_FILES['postImage'];
         $imageDir = '.\images\\';
         $imageName=md5(uniqid());
-        $imageExtension = pathinfo($_FILES['postImage']['name'], PATHINFO_EXTENSION);
+        $imageExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
         // if (in_array($imageExtension, $this::ALLOWED_EXTENSIONS)) {
         //  throw new \Exception("Extension non authorisée", 1);
         // }
-        if ($_FILES['postImage']['size'] > $this::IMAGE_MAX_SIZE) {
+        if ($image['size'] > $this::IMAGE_MAX_SIZE) {
             throw new \Exception("L'image est trop grande", 1);
         }
-        if (!move_uploaded_file($_FILES['postImage']['tmp_name'], $imageDir.$imageName.'.'.$imageExtension)) {
+        if (!move_uploaded_file($image['tmp_name'], $imageDir.$imageName.'.'.$imageExtension)) {
             throw new \Exception("Impossible de déplacer l'image", 1);
         }
         
