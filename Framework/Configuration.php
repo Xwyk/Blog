@@ -5,9 +5,10 @@ use Blog\Exceptions\NotValidFileException;
 use Blog\Exceptions\FileNotFoundException;
 
 /**
- * 
+ *
  */
-class Configuration{
+class Configuration
+{
     protected $config;
 
     public function __construct(string $path)

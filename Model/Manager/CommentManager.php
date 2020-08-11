@@ -3,8 +3,9 @@ namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
 use Blog\Model\Comment;
+
 /**
- * 
+ *
  */
 class CommentManager extends Manager
 {
@@ -63,7 +64,7 @@ class CommentManager extends Manager
         }
         if ($postId == -1) {
             return $this->formatResponse($this->executeRequest($requestComments));
-        } 
+        }
         return $this->formatResponse($this->executeRequest($requestComments, [':id'=>$postId]));
     }
 
@@ -100,7 +101,7 @@ class CommentManager extends Manager
     private function formatResponse($comments) : array
     {
         $result=[];
-        while ($data = $comments->fetch()){
+        while ($data = $comments->fetch()) {
                $result[] = $this->createFromArray($data);
         }
         return $result;
@@ -121,7 +122,8 @@ class CommentManager extends Manager
         return $ret;
     }
 
-    public function validateComment(int $commentId){
+    public function validateComment(int $commentId)
+    {
         $request = 'UPDATE comment
                     SET isValid = 1
                     WHERE id = :id;';
@@ -129,7 +131,8 @@ class CommentManager extends Manager
         return $result;
     }
 
-    public function invalidateComment(int $commentId){
+    public function invalidateComment(int $commentId)
+    {
         $request = 'UPDATE comment
                     SET isValid = 0
                     WHERE id = :id;';
@@ -146,11 +149,11 @@ class CommentManager extends Manager
                             :author,
                             :post);';
         $result = $this->executeRequest($request, [
-            ':content' => $comment->getContent(), 
+            ':content' => $comment->getContent(),
             ':author'  => $comment->getAuthor()->getId(),
             ':post'    => $comment->getPostId()
         ]);
-        return $result;                    
+        return $result;
     }
 
     public function remove(Comment $comment)
@@ -158,7 +161,7 @@ class CommentManager extends Manager
         $request = 'DELETE FROM comment
                     WHERE id = :id ;';
         $result  = $this->executeRequest($request, ['id'=>$comment->getId()]);
-        return $result;                    
+        return $result;
     }
 
     public function createFromArray(array $data)

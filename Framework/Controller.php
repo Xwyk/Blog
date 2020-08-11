@@ -2,7 +2,7 @@
 namespace Blog\Framework;
 
 /**
- * 
+ *
  */
 abstract class Controller
 {
@@ -27,18 +27,21 @@ abstract class Controller
     public $session;
     public $config;
 
-    public function __construct(View $view, Session $session, Configuration $config){
+    public function __construct(View $view, Session $session, Configuration $config)
+    {
         $this->templating = $view;
         $this->session    = $session;
         $this->config     = $config;
     }
 
-    protected function render(string $path, array $params = []){
+    protected function render(string $path, array $params = [])
+    {
         $params += ['session'=> $this->session];
-        $this->templating::render($path,$params);
+        $this->templating::render($path, $params);
     }
 
-    protected function redirect($path){
+    protected function redirect($path)
+    {
         header("Location: ".$path);
     }
 
