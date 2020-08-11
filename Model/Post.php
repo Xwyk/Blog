@@ -145,7 +145,7 @@ class Post extends Entity
         if (isset($this->id)) {
             throw new Exception('Can\'t change id of an object once it was set');
         }
-        if ($newID <= 0) {
+        if ($newId <= 0) {
             throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         }
         $this->id = $newId;

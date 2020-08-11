@@ -138,7 +138,7 @@ class User extends Entity
         if (isset($this->id)) {
             throw new \Exception('Can\'t change id of an object once it was set');
         }
-        if ($newID <= 0) {
+        if ($newId <= 0) {
             throw new \RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         }
         $this->id = $newId;
@@ -175,11 +175,10 @@ class User extends Entity
      */
     protected function setFirstName(string $newFirstName)
     {
-        if ($newFirstName == strip_tags($newFirstName)) {
-            $this->firstName = $newFirstName;
-        } else {
+        if ($newFirstName != strip_tags($newFirstName)) {
             throw new \UnexpectedValueException('Can\'t set firstname : value contain html/PHP code');
         }
+        $this->firstName = $newFirstName;
     }
 
     /**
@@ -189,11 +188,10 @@ class User extends Entity
      */
     protected function setLastName(string $newLastName)
     {
-        if ($newLastName == strip_tags($newLastName)) {
-            $this->lastName = $newLastName;
-        } else {
+        if ($newLastName != strip_tags($newLastName)) {
             throw new \UnexpectedValueException('Can\'t set lastname : value contain html/PHP code');
         }
+        $this->lastName = $newLastName;
     }
 
     /**
@@ -203,11 +201,10 @@ class User extends Entity
      */
     protected function setPseudo(string $newPseudo)
     {
-        if ($newPseudo == strip_tags($newPseudo)) {
-            $this->pseudo = $newPseudo;
-        } else {
+        if ($newPseudo != strip_tags($newPseudo)) {
             throw new \UnexpectedValueException('Can\'t set pseudo : value contain html/PHP code');
         }
+        $this->pseudo = $newPseudo;
     }
 
     /**
@@ -237,9 +234,8 @@ class User extends Entity
     {
         if ($newPassword != strip_tags($newPassword)) {
             throw new \UnexpectedValueException('Can\'t set password : value contain html/PHP code');
-        } else {
-            $this->password = $newPassword;
         }
+        $this->password = $newPassword;
     }
 
     /**
@@ -257,10 +253,9 @@ class User extends Entity
      */
     protected function setType(int $newType)
     {
-        if ($newType == self::TYPE_USER || $newType == self::TYPE_ADMIN) {
+        $this->type = self::TYPE_USER;
+        if ($newType == self::TYPE_ADMIN) {
             $this->type = $newType;
-        } else {
-            $this->type = self::TYPE_USER;
         }
     }
 }

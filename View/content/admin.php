@@ -107,9 +107,6 @@
                             </div>
                             <div id="usersManagement" class="tab-pane fade">
                                 <h2>Gestion des utilisateurs</h2>
-                                
-
-
                             </div>
                         </div>
                     </div>

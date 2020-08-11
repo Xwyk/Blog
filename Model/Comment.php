@@ -151,12 +151,10 @@ class Comment extends Entity
      * @param Date newDate New date to set
      */
     protected function setCreationDate(string $newDate){
-        if ($newDate===null) {
-            $this->creationDate = "";
-        } else {
+        $this->creationDate = "";
+        if (!$newDate===null) {
             $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         }
-        
     }
 
     /**
