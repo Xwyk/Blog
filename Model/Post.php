@@ -1,8 +1,10 @@
 <?php
 namespace Blog\Model;
+
 use Blog\Framework\Entity;
+
 /**
- * 
+ *
  */
 class Post extends Entity
 {
@@ -45,7 +47,8 @@ class Post extends Entity
      * Return id value
      * @return int id
      */
-    public function getID(){
+    public function getID()
+    {
         return $this->id;
     }
 
@@ -53,7 +56,8 @@ class Post extends Entity
      * Return creationDate value
      * @return Date creationDate
      */
-    public function getCreationDate(){
+    public function getCreationDate()
+    {
         return $this->creationDate;
     }
 
@@ -61,7 +65,8 @@ class Post extends Entity
      * Return modificationDate value
      * @return Date modificationDate
      */
-    public function getModificationDate(){
+    public function getModificationDate()
+    {
         return $this->modificationDate;
     }
 
@@ -108,7 +113,7 @@ class Post extends Entity
      */
     public function setContent(string $newContent)
     {
-        if ($newContent != strip_tags($newContent)){
+        if ($newContent != strip_tags($newContent)) {
             throw new UnexpectedValueException('Can\'t set content : value contain html/PHP code');
         }
         $this->content = $newContent;
@@ -121,7 +126,7 @@ class Post extends Entity
     public function setAuthor(User $newAuthor)
     {
         // If id is already set, throw exception
-        if (isset($this->author)){
+        if (isset($this->author)) {
             throw new Exception('Can\'t change author of an object once it was set');
         }
         $this->author = $newAuthor;
@@ -133,12 +138,13 @@ class Post extends Entity
      * @throws RangeException If newID isn't bigger than 0
      * @throws Exception If newID is already set
      */
-    protected function setID(int $newID){
+    protected function setID(int $newID)
+    {
         // If id is already set, throw exception
-        if (isset($this->id)){
+        if (isset($this->id)) {
             throw new Exception('Can\'t change id of an object once it was set');
         }
-        if ($newID <= 0){
+        if ($newID <= 0) {
             throw new RangeException('La valeur de l\'identifiant ne pet pas être inférieure ou égale à 0');
         }
         $this->id = $newID;
@@ -148,8 +154,9 @@ class Post extends Entity
      * Set creationDate value
      * @param Date newDate New date to set
      */
-    protected function setCreationDate(string $newDate){
-        if ($newDate === null){
+    protected function setCreationDate(string $newDate)
+    {
+        if ($newDate === null) {
             $this->creationDate="";
             return;
         }
@@ -160,13 +167,13 @@ class Post extends Entity
      * Set modificationDate value
      * @param Date newDate New date to set
      */
-    protected function setModificationDate(string $newDate){
-        if ($newDate===null){
+    protected function setModificationDate(string $newDate)
+    {
+        if ($newDate===null) {
             $this->creationDate="";
             return;
         }
            $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
-        
     }
 
     /**
@@ -176,7 +183,7 @@ class Post extends Entity
      */
     protected function setChapo(string $newChapo)
     {
-        if ($newChapo != strip_tags($newChapo)){
+        if ($newChapo != strip_tags($newChapo)) {
             throw new UnexpectedValueException('Can\'t set chapo : value contain html/PHP code');
         }
         $this->chapo = $newChapo;
@@ -189,7 +196,7 @@ class Post extends Entity
      */
     protected function setTitle(string $newTitle)
     {
-        if ($newTitle != strip_tags($newTitle)){
+        if ($newTitle != strip_tags($newTitle)) {
             throw new UnexpectedValueException('Can\'t set title : value contain html/PHP code');
         }
         $this->title = $newTitle;

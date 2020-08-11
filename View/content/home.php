@@ -24,9 +24,9 @@
             </div>
         </div>
         <div class="row">
-            <?php 
-                foreach ($articles as $key => $article) {
-            ?>
+            <?php
+            foreach ($articles as $key => $article) {
+                ?>
                     <div class="col-sm-4 portfolio-item">
                         <a href='/?action=post&id=<?= $article->getId() ?>' class="portfolio-link" data-toggle="modal">
                             <div class="caption">
@@ -38,8 +38,8 @@
                             <p><?= $article->getChapo() ?></p>
                         </a>
                     </div>
-            <?php
-                }
+                <?php
+            }
             ?>
         </div>
     </div>

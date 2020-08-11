@@ -1,5 +1,7 @@
 <?php
+
 namespace Blog\Model;
+
 use Blog\Framework\Entity;
 /**
  * public class who define an user. Extends TextContent
@@ -151,7 +153,7 @@ class Comment extends Entity
      */
     protected function setCreationDate(string $newDate){
         if ($newDate===null)
-            $this->creationDate="";
+            $this->creationDate = "";
         else
             $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         
@@ -163,7 +165,7 @@ class Comment extends Entity
      */
     protected function setValidationDate(string $newDate){
         if ($newDate===null)
-            $this->validationDate="";
+            $this->validationDate = "";
         
         else
             $this->validationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);

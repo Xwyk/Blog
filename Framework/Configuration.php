@@ -1,4 +1,5 @@
 <?php
+
 namespace Blog\Framework;
 
 use Blog\Exceptions\NotValidFileException;
@@ -16,11 +17,11 @@ class Configuration
         if (!file_exists($path)) {
             throw new FileNotFoundException($path);
         }
-        $ini_array = parse_ini_file($path, true);
-        if (!$ini_array) {
+        $iniArray = parse_ini_file($path, true);
+        if (!$iniArray) {
             throw new NotValidFileException($path);
         }
-        $this->config = $ini_array;
+        $this->config = $iniArray;
     }
 
     public function getHost()

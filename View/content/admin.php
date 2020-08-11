@@ -2,20 +2,20 @@
 <div class="portfolio-modal" >
     <div class="modal-content">
         <div class="container-fluid">
-        	<h1>Interface d'administration</h1>
-        	<div class="row">
-        		<div class="col-lg-2 col-lg-offset-1">
-					<ul class="nav nav-tabs text-left">
-						<li class="active"><a data-toggle="tab" href="#commentsManagement">Gestion des commentaires</a></li>
-						<li><a data-toggle="tab" href="#usersManagement">Gestion des utilisateurs</a></li>
-						<li><a href="/?action=addPost">Ajouter un article</a></li>
-					</ul>
-				</div>
-        		<div class="col-lg-8">
-        			<div class="container-fluid">
-						<div class="tab-content">
-							<div id="commentsManagement" class="tab-pane fade in active">
-								<h2>Gestion des commentaires</h2>
+            <h1>Interface d'administration</h1>
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-1">
+                    <ul class="nav nav-tabs text-left">
+                        <li class="active"><a data-toggle="tab" href="#commentsManagement">Gestion des commentaires</a></li>
+                        <li><a data-toggle="tab" href="#usersManagement">Gestion des utilisateurs</a></li>
+                        <li><a href="/?action=addPost">Ajouter un article</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-8">
+                    <div class="container-fluid">
+                        <div class="tab-content">
+                            <div id="commentsManagement" class="tab-pane fade in active">
+                                <h2>Gestion des commentaires</h2>
                                 <table id="dtOrderExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
@@ -28,9 +28,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-										<?php
-											foreach ($comments as $comment) {
-										?>
+                                        <?php
+                                        foreach ($comments as $comment) {
+                                            ?>
                                         <tr>
                                             <td><?= $comment->getAuthor()->getPseudo()?></td>
                                             <td><?= $comment->getContent() ?></td>
@@ -40,8 +40,8 @@
                                                 <div class="dropdown">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                                     <div class="dropdown-menu" aria-labelledby="actionMenuButton">
-                                                    <?php
-                                                       if ($comment->isValid()) {
+                                                <?php
+                                                if ($comment->isValid()) {
                                                     ?>
                                                          <a class="dropdown-item">
                                                             <form class="form-comment" action="/?action=invalidateComment&id=<?= $comment->getId() ?>"  method="post">
@@ -54,7 +54,7 @@
                                                         <button class="btn btn-lg btn-warning btn-block" type="submit">Masquer</button>
                                                     </form> -->
                                                     <?php
-                                                        }else{
+                                                } else {
                                                     ?>
                                                         <a class="dropdown-item">
                                                             <form class="form-comment" action="/?action=validateComment&id=<?= $comment->getId() ?>"    method="post">
@@ -62,9 +62,9 @@
                                                                 <button class="btn btn-success btn-block" type="submit">Valider</button>
                                                             </form>
                                                         </a>
-                                                    <?php
-                                                        }
-                                                    ?>
+                                                        <?php
+                                                }
+                                                ?>
                                                         <a class="dropdown-item">
                                                             <form class="form-comment" action="/?action=removeComment&id=<?= $comment->getId() ?>"    method="post">
                                                                 <input type="hidden" name="token" value="<?= $token ?>">
@@ -78,9 +78,9 @@
                                             
 
                                         </tr>
-											<?php
-    											}
-                                            ?>
+                                            <?php
+                                        }
+                                        ?>
                                     </tbody>
 
 
@@ -102,18 +102,18 @@
                                     </tfoot>
                                 </table>
                             </div>
-							<div id="usersManagement" class="tab-pane fade">
-								<h2>Gestion des utilisateurs</h2>
-								
+                            <div id="usersManagement" class="tab-pane fade">
+                                <h2>Gestion des utilisateurs</h2>
+                                
 
 
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php
 ob_start();

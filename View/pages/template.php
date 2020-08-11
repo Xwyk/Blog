@@ -1,4 +1,5 @@
 <?php
+
 use Blog\Framework\Session;
 ?>
 <!DOCTYPE html>

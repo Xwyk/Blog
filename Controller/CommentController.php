@@ -10,12 +10,13 @@ use Blog\Model\Comment;
 use Blog\Framework\View;
 use Blog\Framework\Session;
 
-class CommentController extends Controller{
+class CommentController extends Controller
+{
     
     public function addComment()
     {
 
-        $postId = filter_input(INPUT_GET, 'postId',FILTER_VALIDATE_INT);
+        $postId = filter_input(INPUT_GET, 'postId', FILTER_VALIDATE_INT);
         if ($postId == false) {
             throw new PostNotFoundException($postId);
         }
@@ -28,14 +29,15 @@ class CommentController extends Controller{
         $this->redirect($this::URL_POST.$postId);
     }
 
-    public function validateComment(){
-        $id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+    public function validateComment()
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $resultCheck = $this->session->checkToken($token);
         
         switch ($resultCheck) {
             case TokenManager::TOKEN_VALID:
-            break;
+                break;
             case TokenManager::TOKEN_EXPIRED:
                 throw new \Exception("Token Expiré");
                 break;
@@ -50,14 +52,15 @@ class CommentController extends Controller{
         // $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
     }
 
-    public function invalidateComment(){
-        $id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+    public function invalidateComment()
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $resultCheck = $this->session->checkToken($token);
         
         switch ($resultCheck) {
             case TokenManager::TOKEN_VALID:
-            break;
+                break;
             case TokenManager::TOKEN_EXPIRED:
                 throw new \Exception("Token Expiré");
                 break;
@@ -74,7 +77,7 @@ class CommentController extends Controller{
 
     public function removeComment()
     {
-        $commentId = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+        $commentId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $comment = (new CommentManager($this->config))->getCommentById($commentId);
         (new CommentManager($this->config))->remove($comment);
     }

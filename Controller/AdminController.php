@@ -1,13 +1,16 @@
 <?php
 
 namespace Blog\Controller;
+
 use Blog\Framework\Controller;
 use Blog\Model\Manager\CommentManager;
 use Blog\Framework\Configuration;
 use Blog\Framework\Session;
 use Blog\Framework\View;
 use Blog\Exceptions\NotEnoughRightsException;
-class AdminController extends Controller{
+
+class AdminController extends Controller
+{
 
     public function display()
     {

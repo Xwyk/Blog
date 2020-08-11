@@ -10,10 +10,10 @@ use Blog\Model\Comment;
 class CommentManager extends Manager
 {
 
-    const COMMENTS_VALID = 1;
-    const COMMENTS_INVALID = 2;
-    const COMMENTS_ALL = 3;
-    const BASE_REQUEST = 'SELECT comment.id AS commentId,
+    public const COMMENTS_VALID = 1;
+    public const COMMENTS_INVALID = 2;
+    public const COMMENTS_ALL = 3;
+    protected const BASE_REQUEST = 'SELECT comment.id AS commentId,
                                       comment.content AS commentContent,
                                       comment.isValid AS commentValid,
                                       comment.author AS commentAuthor,

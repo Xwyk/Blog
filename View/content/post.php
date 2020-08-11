@@ -32,8 +32,8 @@
                     <div class="modal-body">
                         <div class="container-fluid">
 <?php
-                        foreach ($post->getComments() as $comment) {
-?>
+foreach ($post->getComments() as $comment) {
+    ?>
                             <div class="row">
                                 <div class="col-lg-2 text-left">
                                     <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar " alt="user profile image">
@@ -50,19 +50,19 @@
                             </div>
                             <hr>
 
-<?php
-                        }
-                        if($session->existAttribute("user")){
-                            if($session->getAttribute("user")->getType()>0){
-?>
+    <?php
+}
+if ($session->existAttribute("user")) {
+    if ($session->getAttribute("user")->getType()>0) {
+        ?>
                             <form class="form-comment" action="/?action=addComment&postId=<?= $post->getId() ?>" method="post">
                                 <label for="commentText" class="sr-only">Mot de passe</label>
                                 <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>
                             </form>
-<?php
-                            }
-                        }
+        <?php
+    }
+}
 ?>
                         </div>
                     </div>
