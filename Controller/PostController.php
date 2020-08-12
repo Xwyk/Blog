@@ -12,6 +12,7 @@ use Blog\Framework\Session;
 use Blog\Exceptions\NotEnoughRightsException;
 use Blog\Exceptions\TooLargeImageException;
 use Blog\Exceptions\MoveImageException;
+
 class PostController extends Controller
 {
     
