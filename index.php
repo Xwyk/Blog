@@ -20,7 +20,6 @@ try {
     $view    = new View();
     $config  = new Configuration(__DIR__.'/config/config.local.php');
     $session = new Session($config);
-    $bite=(filter_input_array(INPUT_GET));
     switch ($action) {
         case 'home':
                 (new HomeController($view, $session, $config))->display();
