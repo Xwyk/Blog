@@ -182,7 +182,7 @@ class Post extends Entity
      * @param string newChapo New chapo to set
      * @throws UnexpectedValueException If newChapo contain html or php code
      */
-    protected function setChapo(string $newChapo)
+    public function setChapo(string $newChapo)
     {
         if ($newChapo != strip_tags($newChapo)) {
             throw new UnexpectedValueException('Can\'t set chapo : value contain html/PHP code');
@@ -195,7 +195,7 @@ class Post extends Entity
      * @param string newTitle New title to set
      * @throws UnexpectedValueException If newTitle contain html or php code
      */
-    protected function setTitle(string $newTitle)
+    public function setTitle(string $newTitle)
     {
         if ($newTitle != strip_tags($newTitle)) {
             throw new UnexpectedValueException('Can\'t set title : value contain html/PHP code');
@@ -207,7 +207,7 @@ class Post extends Entity
      * Set comments
      * @param array newComments New title to set
      */
-    protected function setComments(array $newComments)
+    public function setComments(array $newComments)
     {
         $this->comments = $newComments;
     }
@@ -216,7 +216,7 @@ class Post extends Entity
      * Set picture
      * @param string newPicture New image to set
      */
-    protected function setPicture(string $newPicture)
+    public function setPicture(string $newPicture)
     {
         $this->picture = $newPicture;
     }

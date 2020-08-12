@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4">
-                    <form class="form-signin" action="/?action=login" method="post">
+                    <form class="form-signin" action="<?= $formUrl ?? ""?>" method="post">
                         <p class="text-danger"><?= $error ?? ""?></p>
                         <img class="mb-4" src="/Signin Template for Bootstrap_files/bootstrap-solid.svg" alt="" width="72" height="72">
                         <h1 class="h3 mb-3 font-weight-normal">Authentification</h1>

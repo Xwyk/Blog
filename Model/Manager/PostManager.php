@@ -87,11 +87,11 @@ class PostManager extends Manager
                             :author);';
                     
         $result = $this->executeRequest($request, [
-            'chapo' => $post->getChapo(),
-            'title' => $post->getTitle(),
+            'chapo'   => $post->getChapo(),
+            'title'   => $post->getTitle(),
             'content' => $post->getContent(),
             'picture' => $post->getPicture(),
-            'author' => $post->getAuthor()->getId()
+            'author'  => $post->getAuthor()->getId()
         ]);
         return $result;
     }
@@ -99,16 +99,16 @@ class PostManager extends Manager
     public function createFromArray(array $data, array $comments = null)
     {
         return new Post([
-            'id' => $data['postId']??null,
-            'chapo' => $data['postChapo'],
-            'title' => $data['postTitle'],
-            'content' => $data['postContent'],
-            'picture' => $data['postPicture']??null,
-            'creation_date' => $data['postCreationDate']??null,
+            'id'                => $data['postId']??null,
+            'chapo'             => $data['postChapo'],
+            'title'             => $data['postTitle'],
+            'content'           => $data['postContent'],
+            'picture'           => $data['postPicture']??null,
+            'creation_date'     => $data['postCreationDate']??null,
             'modification_date' => $data['postModificationDate']??null,
-            'picture' => $data['postPicture']??null,
-            'author' => (new UserManager($this->config))->createFromArray($data),
-            'comments' => $comments
+            'picture'           => $data['postPicture']??null,
+            'author'            => (new UserManager($this->config))->createFromArray($data),
+            'comments'          => $comments
         ]);
     }
     
@@ -118,6 +118,24 @@ class PostManager extends Manager
         $request = 'DELETE FROM post
                     WHERE id = :id ;';
         $result = $this->executeRequest($request, ['id'=>$post->getId()]);
+        return $result;
+    }
+
+    public function update(Post $post)
+    {
+        $request = 'UPDATE post
+                    SET chapo     = :chapo,
+                        title     = :title,
+                        content   = :content,
+                        picture   = :picture
+                    WHERE id = :id;';
+        $result = $this->executeRequest($request, [
+            'chapo'   => $post->getChapo(),
+            'title'   => $post->getTitle(),
+            'content' => $post->getContent(),
+            'picture' => $post->getPicture(),
+            'id'      => $post->getId()
+        ]);
         return $result;
     }
 }

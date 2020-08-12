@@ -20,9 +20,17 @@
                                 <strong><?= htmlspecialchars($post->getModificationDate()->format('Y-m-d H:i')) ?></strong>
                             </li>
                             <li>Service:
-                                <strong><a href="http://startbootstrap.com">Web Development</a>
-                                </strong>
+                                <strong><a href="http://startbootstrap.com">Web Development</a></strong>
                             </li>
+                            <?php
+                            if ($session->isAdmin()) {
+                                ?>
+                            <li>Modification :
+                                <strong><a href="/?action=editPost&id=<?= $post->getid() ?>">Editer l'article</a></strong>
+                            </li>
+                            <?php 
+                                }
+                            ?>
                         </ul>
                     </div>
                 </div>

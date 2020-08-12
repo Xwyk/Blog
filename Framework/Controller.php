@@ -15,6 +15,7 @@ abstract class Controller
     public const URL_POST       =    "/?action=post&id=";
     public const URL_ADDPOST    =    "/?action=addPost";
     public const URL_ADDCOMMENT =    "/?action=addComment&postId=";
+    public const URL_EDITPOST   =    "/?action=editPost&id=";
     
     public const VIEW_ADDPOST   =    "addPost";
     public const VIEW_ADMIN     =    "admin";
@@ -27,7 +28,7 @@ abstract class Controller
     public $templating;
     public $session;
     public $config;
-
+    protected $redirection;
     public function __construct(View $view, Session $session, Configuration $config)
     {
         $this->templating = $view;
@@ -41,8 +42,22 @@ abstract class Controller
         $this->templating::render($path, $params);
     }
 
+    protected function setRedirection(string $redirection)
+    {
+        $this->redirection=urlencode($redirection);
+    }
+
+    public function isRedirectionConfigured(): bool
+    {
+        return isset($this->redirection);
+    }
+
     protected function redirect($path)
     {
+        if ($this->isRedirectionConfigured()) {
+            header("Location: ".urldecode($this->redirection));
+            return;
+        }
         header("Location: ".$path);
     }
 

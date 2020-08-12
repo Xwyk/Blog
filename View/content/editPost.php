@@ -4,25 +4,19 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="modal-body">
-                        <h2><?= htmlspecialchars(strtoupper($post->getTitle())) ?></h2>
-                        <hr class="star-primary">
-                        <img src="/Common/themes/img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
-                        <p><?= htmlspecialchars(nl2br($post->getContent())) ?></p>
-                        <ul class="list-inline item-details">
-                            <li>Auteur:
-                                <strong><?= htmlspecialchars($post->getAuthor()->getFirstName()).' '.htmlspecialchars($post->getAuthor()->getLastName()).' ('.htmlspecialchars($post->getAuthor()->getPseudo()).')' ?></strong>
-                            </li>
-                            <li>Date de création:
-                                <strong><?= htmlspecialchars($post->getCreationDate()->format('Y-m-d H:i')) ?></strong>
-                            </li>
-                            <li>Date de modification:
-                                <strong><?= htmlspecialchars($post->getModificationDate()->format('Y-m-d H:i')) ?></strong>
-                            </li>
-                            <li>Service:
-                                <strong><a href="http://startbootstrap.com">Web Development</a>
-                                </strong>
-                            </li>
-                        </ul>
+                         <form class="form-comment" action="/?action=editPost&id=<?=$post->getId()?>" method="post" enctype="multipart/form-data">
+                            <label for="postTitle" class="text-left">Titre de l'article</label>
+                            <input type="text" class="form-control" placeholder="Titre de l'article" required="" name="postTitle" value="<?=$post->getTitle()?>"></input>
+                            <label for="postChapo" class="text-left">Chapo</label>
+                            <input type="text" class="form-control" placeholder="Chapo" required="" name="postChapo" value="<?=$post->getChapo()?>"></input>
+                            <label for="postImage" class="text-left">Image</label>
+                            <input type="file" name="postImage">
+                            <label for="postContent" class="text-left">Contenu de l'article</label>
+                            <textarea style="resize: none;" class="form-control" placeholder="Texte de l'article" required="" name="postContent"><?=$post->getContent()?></textarea>
+                            <input type="hidden" name="validate" value="1"></input>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button>
+                        </form>
+                        
                     </div>
                 </div>
             </div>
