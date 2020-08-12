@@ -7,7 +7,7 @@ namespace Blog\Framework;
  */
 abstract class Manager
 {
-    private $database;
+    private   $database;
     protected $config;
 
     public function __construct(Configuration $config)
