@@ -61,4 +61,5 @@ try {
             break;
     }
 } catch (PostNotFoundException $e) {
+    //Call page
 }
