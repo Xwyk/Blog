@@ -3,10 +3,9 @@
 namespace Blog\Framework;
 
 /**
- * summary
+ * Represents an entity in database
  */
-
-class Entity
+abstract class Entity
 {
     /**
      * Hydrate object by setting values passed by an array. Doesn't affect directly variables, passing by setters
@@ -15,8 +14,9 @@ class Entity
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {
+            //Configure setter name to setXxx
             $method = 'set'.ucfirst($key);
-            // If db's attribute name contains '_', split name
+            // If db's attribute name contains '_', split name, and configure setter name to setXxx
             if (strpos($key, "_")) {
                 $keyName = explode("_", $key);
                 $method = 'set';
