@@ -95,8 +95,8 @@ class PostController extends Controller
 
     protected function getPicturePath()
     {
-        if (isset($_FILES['postImage'])) {
-            $image = $_FILES['postImage'];
+        $image = $_FILES['postImage'] ?? null;
+        if ($image !== null) {
             $imageDir = '.\images\\';
             $imageName=md5(uniqid());
             $imageExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
