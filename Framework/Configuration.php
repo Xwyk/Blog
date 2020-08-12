@@ -24,11 +24,11 @@ class Configuration
         $this->config = $iniArray;
     }
 
-    public function getHost()
+    public function getDbHost()
     {
         return $this->config['database']['host'];
     }
-    public function getPort()
+    public function getDbPort()
     {
         return $this->config['database']['port'];
     }
@@ -36,11 +36,11 @@ class Configuration
     {
         return $this->config['database']['dbname'];
     }
-    public function getUsername()
+    public function getDbUsername()
     {
         return $this->config['database']['username'];
     }
-    public function getPassword()
+    public function getDbPassword()
     {
         return $this->config['database']['password'];
     }

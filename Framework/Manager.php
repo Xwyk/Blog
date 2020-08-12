@@ -19,11 +19,11 @@ abstract class Manager
     private function getDatabase(): \PDO
     {
         if ($this->database === null) {
-            $host     = $this->config->getHost();
-            $port     = $this->config->getPort();
+            $host     = $this->config->getDbHost();
+            $port     = $this->config->getDbPort();
             $dbname   = $this->config->getDbName();
-            $username = $this->config->getUsername();
-            $password = $this->config->getPassword();
+            $username = $this->config->getDbUsername();
+            $password = $this->config->getDbPassword();
             $this->database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);
         }
         return $this->database;
