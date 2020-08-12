@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <div class="modal-body">
-                         <form class="form-comment" action="/?action=editPost&id=<?=$post->getId()?>" method="post" enctype="multipart/form-data">
+                        <form class="form-comment" action="/?action=editPost&id=<?=$post->getId()?>" method="post" enctype="multipart/form-data">
                             <label for="postTitle" class="text-left">Titre de l'article</label>
                             <input type="text" class="form-control" placeholder="Titre de l'article" required="" name="postTitle" value="<?=$post->getTitle()?>"></input>
                             <label for="postChapo" class="text-left">Chapo</label>
@@ -16,7 +16,6 @@
                             <input type="hidden" name="validate" value="1"></input>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button>
                         </form>
-                        
                     </div>
                 </div>
             </div>

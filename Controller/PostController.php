@@ -9,7 +9,9 @@ use Blog\Model\Comment;
 use Blog\Framework\View;
 use Blog\Framework\Configuration;
 use Blog\Framework\Session;
-
+use Blog\Exceptions\NotEnoughRightsException;
+use Blog\Exceptions\TooLargeImageException;
+use Blog\Exceptions\MoveImageException;
 class PostController extends Controller
 {
     
@@ -36,15 +38,11 @@ class PostController extends Controller
             if (!$this->isUser()) {
                 $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_ADDPOST));
             }
-            throw new \Exception("Les droits administrateur sont nécéssaires", 1);
+            throw new NotEnoughRightsException();
         }
 
         $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
         if (!$validate) {
-            $this->render($this::VIEW_ADDPOST);
-            return;
-        }
-        if (!isset($_FILES['postImage'])) {
             $this->render($this::VIEW_ADDPOST);
             return;
         }
@@ -71,7 +69,7 @@ class PostController extends Controller
             if (!$this->isUser()) {
                 $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
             }
-            throw new \Exception("Les droits administrateur sont nécéssaires", 1);
+            throw new NotEnoughRightsException();
         }
 
         $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
@@ -105,10 +103,10 @@ class PostController extends Controller
             //  throw new \Exception("Extension non authorisée", 1);
             // }
             if ($image['size'] > $this::IMAGE_MAX_SIZE) {
-                throw new \Exception("L'image est trop grande", 1);
+                throw new TooLargeImageException();
             }
             if (!move_uploaded_file($image['tmp_name'], $imageDir.$imageName.'.'.$imageExtension)) {
-                throw new \Exception("Impossible de déplacer l'image", 1);
+                throw new MoveImageException();
             }
             return $imageDir.$imageName.'.'.$imageExtension;
         }
