@@ -18,7 +18,6 @@
                         <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required="" name="password">
                         <div class="checkbox mb-3">
                         <label>
-                            <!-- <input type="checkbox" value="remember-me"> Remember me -->
                         </label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
