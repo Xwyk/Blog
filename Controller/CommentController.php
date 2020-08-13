@@ -2,11 +2,13 @@
 
 namespace Blog\Controller;
 
-use Blog\Framework\Controller;
+use Blog\Framework\SecuredController;
 use Blog\Model\Manager\CommentManager;
 use Blog\Model\Manager\TokenManager;
 use Blog\Model\Comment;
 use Blog\Exceptions\ExpiredTokenException;
+use Blog\Exceptions\NotEnoughRightsException;
+use Blog\Exceptions\NotConnectedUserException;
 
 /**
  * Manages actions on comments :
@@ -15,15 +17,15 @@ use Blog\Exceptions\ExpiredTokenException;
  *     - invalidate : admin rights
  *     - remove     : admin rights
  */
-class CommentController extends Controller
+class CommentController extends SecuredController
 {
     /**
      * Add a comment for a post. Gets post id in 'postId' value in url (GET) and datas by form (POST)
-     * @todo add session verification for authenticated user
      * @throws PostNotFoundException If id isn't valid : <= 0
      */
     public function addComment()
     {
+        $this->checkUserRights();
         //Get and check post id via GET
         $postId = filter_input(INPUT_GET, 'postId', FILTER_VALIDATE_INT);
         if ($postId == false) {
@@ -71,13 +73,13 @@ class CommentController extends Controller
      * Checks token by comparing POST token and session token
      * @param  bool   $valid validation status : true => valid, false => invalid
      * @todo add exceptions classes
-     * @todo add session verification for authenticated user
      * @throws ExpiredTokenException If token is valid but expired
      * @throws NotValidTokenException If token isn't valid
      * @throws NotValidCommentIdException If comment id isn't valid
      */
     protected function updateCommentValidation(bool $valid)
     {
+        $this->checkAdminRights();
         //Get values from GET and POST, checks token  
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -111,6 +113,7 @@ class CommentController extends Controller
      */
     public function removeComment()
     {
+        $this->checkAdminRights();
         //Gets comment id
         $commentId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         //Create comment object

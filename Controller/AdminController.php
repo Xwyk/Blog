@@ -2,6 +2,7 @@
 
 namespace Blog\Controller;
 
+use Blog\Framework\SecuredController;
 use Blog\Framework\Controller;
 use Blog\Model\Manager\CommentManager;
 use Blog\Exceptions\NotEnoughRightsException;
@@ -9,7 +10,7 @@ use Blog\Exceptions\NotEnoughRightsException;
 /**
  * Manages admin display on website
  */
-class AdminController extends Controller
+class AdminController extends SecuredController
 {
     /**
      * Displays admin view if user is connected and admin
@@ -19,13 +20,7 @@ class AdminController extends Controller
      */
     public function display()
     {
-        //If user isn't admin, redirect to login if not connected, generate exception if no rights
-        if (!$this->isAdmin()) {
-            if (!$this->isUser()) {
-                $this->redirect($this::URL_LOGIN);
-            }
-            throw new NotEnoughRightsException();
-        }
+        $this->checkAdminRights();
         //Render admin view with all comments and create new token for actions
         $this->render($this::VIEW_ADMIN, [
             'comments' => $this->getAllComments(),
@@ -39,6 +34,7 @@ class AdminController extends Controller
      */
     protected function getAllInvalidComments()
     {
+        $this->checkAdminRights();
         return (new CommentManager($this->config))->getAllInvalidComments();
     }
     /**
@@ -47,6 +43,7 @@ class AdminController extends Controller
      */
     protected function getAllComments()
     {
+        $this->checkAdminRights();
         return (new CommentManager($this->config))->getAllComments();
     }
     /**

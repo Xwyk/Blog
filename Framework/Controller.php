@@ -94,8 +94,8 @@ abstract class Controller
     }
 
     /**
-     * Admin status
-     * @return boolean true => connected user is admin; false => connected user isn't admin
+     * Admin rights status
+     * @return boolean true => user is admin; false => user isn't admin or isn't onnected
      */
     public function isAdmin(): bool
     {
@@ -103,8 +103,8 @@ abstract class Controller
     }
 
     /**
-     * User status
-     * @return boolean true => connected user is user; false => user isn't connected
+     * User rights status
+     * @return boolean true => user is connected, can be admin; false => user isn't connected
      */
     public function isUser(): bool
     {
