@@ -193,6 +193,7 @@ class Session
      */
     private function retardInactivity()
     {
+        //Create a new DateTime of current and add SESSION_INACTIVITY_LOGOUT_MINUTES minutes to thius time 
         $sessionInactivity = new \DateTime();
         $sessionInactivity->modify('+ '.$this::SESSION_INACTIVITY_LOGOUT_MINUTES.' minutes');
         $this->addAttribute($this::SESSION_INACTIVITY_TIME_KEY, $sessionInactivity);

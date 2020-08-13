@@ -58,7 +58,6 @@ class CommentController extends SecuredController
     /**
      * Invalidate a comment in database
      * @todo redirection
-     * @return [type] [description]
      */
     public function invalidateComment()
     {
@@ -109,7 +108,6 @@ class CommentController extends SecuredController
 
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
-     * @todo  add security
      */
     public function removeComment()
     {
