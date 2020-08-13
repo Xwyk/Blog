@@ -11,9 +11,6 @@ use Twig\Environment;
  */
 class View
 {
-    //Primary template for the view
-    protected const VIEW_TEMPLATE='template.twig';
-    
     public function __construct()
     {
         # code...
