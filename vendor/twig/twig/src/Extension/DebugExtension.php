@@ -54,9 +54,9 @@ function twig_var_dump(Environment $env, $context, ...$vars)
             }
         }
 
-        
+        var_dump($vars);
     } else {
-        
+        var_dump(...$vars);
     }
 
     return ob_get_clean();

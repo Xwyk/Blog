@@ -3,6 +3,8 @@
 namespace Blog\Framework;
 
 use Blog\Exceptions\FileNotFoundException;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 
 /**
  * Create view for end-user
@@ -10,8 +12,13 @@ use Blog\Exceptions\FileNotFoundException;
 class View
 {
     //Primary template for the view
-    protected const VIEW_TEMPLATE=__DIR__.'/../View/pages/template.php';
+    protected const VIEW_TEMPLATE='template.twig';
     
+    public function __construct()
+    {
+        # code...
+    }
+
     /**
      * Create a view for end user by calling file passed in parameters
      * @param  string     $view       PHP view to call
@@ -19,20 +26,25 @@ class View
      */
     public static function render(string $view, array $parameters = null)
     {
-        //Create variables from passed array
-        if (isset($parameters)) {
-            extract($parameters);
-        }
-        //If view exists, call it and store content
-        $contentFile = __DIR__.'/../View/content/'.$view.'.php';
-        if (!file_exists($contentFile)) {
-            throw new FileNotFoundException($view);
-        }
-        ob_start();
-        require $contentFile;
-        $content=ob_get_clean();
 
+        $loader = new FilesystemLoader('./View/content');
+        $twig = new Environment($loader);
+        //Create variables from passed array
+        // if (isset($parameters)) {
+        //     extract($parameters);
+        // }
+        // //If view exists, call it and store content
+        // $contentFile = __DIR__.'/../View/content/'.$view.'.php';
+        // if (!file_exists($contentFile)) {
+        //     throw new FileNotFoundException($view);
+        // }
+        // ob_start();
+        // require $contentFile;
+        // $content=ob_get_clean();
+
+        // $parameters['content'] = $content;
         //Call primary template
-        require self::VIEW_TEMPLATE;
+        // require self::VIEW_TEMPLATE;
+        echo $twig->render($view.'.twig', $parameters);
     }
 }
