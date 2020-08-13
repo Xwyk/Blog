@@ -5,7 +5,7 @@ namespace Blog\Model;
 use Blog\Framework\Entity;
 
 /**
- * 
+ * Token
  */
 class Token extends Entity
 {
