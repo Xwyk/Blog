@@ -47,7 +47,7 @@ class Configuration
      * Return database port value in .ini
      * @return int ['database']['port']
      */
-    public function getDbPort():int
+    public function getDbPort(): int
     {
         return $this->config['database']['port'];
     }

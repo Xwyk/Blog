@@ -10,7 +10,7 @@ use Blog\Model\User;
  */
 abstract class SecuredController extends Controller
 {
-     /**
+    /**
      * Constructor. Check if user is connected. If no connection, throw exception
      * @param View          $view    Templating engine
      * @param Session       $session Session object
