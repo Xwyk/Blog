@@ -7,7 +7,7 @@ use Blog\Model\User;
 use Blog\Model\Manager\UserManager;
 
 class RegisterController extends Controller
-{   
+{
     public function register()
     {
         try {
