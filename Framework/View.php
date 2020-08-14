@@ -32,6 +32,6 @@ class View
     public function render(string $view, array $parameters = null)
     {
         //Print on screen twig template
-        echo $this->templatingEngine->render($view.$this::TEMPLATING_TWIG_EXTENSION, $parameters);
+        print($this->templatingEngine->render($view.$this::TEMPLATING_TWIG_EXTENSION, $parameters));
     }
 }
