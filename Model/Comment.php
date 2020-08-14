@@ -5,7 +5,7 @@ namespace Blog\Model;
 use Blog\Framework\Entity;
 
 /**
- * public class who define an user. Extends TextContent
+ * public class who define an user
  *
  * @author     Florian LEBOUL
  */
@@ -21,7 +21,7 @@ class Comment extends Entity
     private $postId;
 
     /**
-     * Construct object
+     * Constructor. Call hydrate function
      * @param array data Associative array containing values for variables
      */
     public function __construct(array $data)
@@ -173,7 +173,6 @@ class Comment extends Entity
      * @param string newValidatorId New author to set. This can be set once
      * @throws RangeException If newValidatorId isn't bigger than 0
      * @throws Exception If newValidatorId is already set
-     * @throws InvalidArgumentException If newValidatorId isn't a number
      */
     protected function setValidatorId(int $newValidatorId)
     {
@@ -192,7 +191,6 @@ class Comment extends Entity
      * @param string newPostId New post id to set. This can be set once
      * @throws RangeException If newPostId isn't bigger than 0
      * @throws Exception If newPostId is already set
-     * @throws InvalidArgumentException If newPostId isn't a number
      */
     protected function setPostId(int $newPostId)
     {
