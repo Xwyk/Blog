@@ -2,7 +2,11 @@
     "name": "flo/blog-p5",
     "type": "project",
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "components/jquery": ">=3.5.0",
+        "twbs/bootstrap": "^4.5",
+        "components/font-awesome": "^5.14",
+        "datatables/datatables": "^1.10"
     },
     "autoload": {
         "psr-4": {
