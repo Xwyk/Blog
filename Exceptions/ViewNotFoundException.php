@@ -2,6 +2,9 @@
 
 namespace Blog\Exceptions;
 
+/**
+ * Exception who tells that view file can't be found
+ */
 class ViewNotFoundException extends \Exception
 {
     public $message = "La vue suivante n'a pas pu être trouvée : ";

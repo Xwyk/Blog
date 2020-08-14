@@ -2,6 +2,9 @@
 
 namespace Blog\Exceptions;
 
+/**
+ * Exception who tells that image move failed
+ */
 class MoveImageException extends \Exception
 {
     public $message = "Impossible de déplacer l'image";

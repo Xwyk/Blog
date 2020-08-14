@@ -2,6 +2,9 @@
 
 namespace Blog\Exceptions;
 
+/**
+ * Exception who tells that file isn't valid
+ */
 class FileNotValidException extends \Exception
 {
     public $message = "Le fichier n'est pas valide : ";

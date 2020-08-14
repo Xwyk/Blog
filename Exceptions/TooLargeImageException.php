@@ -2,6 +2,9 @@
 
 namespace Blog\Exceptions;
 
+/**
+ * Exception who tells that image size is too big
+ */
 class TooLargeImageException extends \Exception
 {
     public $message = "L'image est trop grande";
