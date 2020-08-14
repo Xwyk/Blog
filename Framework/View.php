@@ -12,7 +12,7 @@ use Twig\Environment;
 class View
 {
     protected const TEMPLATING_TWIG_DIRECTORY = './templates';
-    protected const TEMPLATING_TWIG_EXTENSION = './twig';
+    protected const TEMPLATING_TWIG_EXTENSION = '.twig';
     protected $templatingEngine;
 
     /**
@@ -20,7 +20,7 @@ class View
      */
     public function __construct()
     {
-        $loader = new FilesystemLoader($this->TEMPLATING_TWIG_DIRECTORY);
+        $loader = new FilesystemLoader($this::TEMPLATING_TWIG_DIRECTORY);
         $this->templatingEngine = new Environment($loader);
     }
 
@@ -32,6 +32,6 @@ class View
     public function render(string $view, array $parameters = null)
     {
         //Print on screen twig template
-        echo $this->templatingEngine->render($view.$this->TEMPLATING_TWIG_EXTENSION, $parameters);
+        echo $this->templatingEngine->render($view.$this::TEMPLATING_TWIG_EXTENSION, $parameters);
     }
 }
