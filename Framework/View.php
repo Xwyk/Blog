@@ -11,9 +11,16 @@ use Twig\Environment;
  */
 class View
 {
+    protected const TEMPLATING_TWIG_DIRECTORY = './View/content';
+    protected $templatingEngine;
+
+    /**
+     * Constructor. Instanciate templating engine
+     */
     public function __construct()
     {
-        # code...
+        $loader = new FilesystemLoader('./View/content');
+        $this->templatingEngine = new Environment($loader);
     }
 
     /**
@@ -21,27 +28,9 @@ class View
      * @param  string     $view       PHP view to call
      * @param  array|null $parameters Parameters to pass to view
      */
-    public static function render(string $view, array $parameters = null)
+    public function render(string $view, array $parameters = null)
     {
-
-        $loader = new FilesystemLoader('./View/content');
-        $twig = new Environment($loader);
-        //Create variables from passed array
-        // if (isset($parameters)) {
-        //     extract($parameters);
-        // }
-        // //If view exists, call it and store content
-        // $contentFile = __DIR__.'/../View/content/'.$view.'.php';
-        // if (!file_exists($contentFile)) {
-        //     throw new FileNotFoundException($view);
-        // }
-        // ob_start();
-        // require $contentFile;
-        // $content=ob_get_clean();
-
-        // $parameters['content'] = $content;
-        //Call primary template
-        // require self::VIEW_TEMPLATE;
-        echo $twig->render($view.'.twig', $parameters);
+        //Print on screen twig template
+        echo $this->templatingEngine->render($view.'.twsig', $parameters);
     }
 }

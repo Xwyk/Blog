@@ -2,6 +2,9 @@
 
 namespace Blog\Framework;
 
+use Blog\Exceptions\ViewNotFoundException;
+use Twig\Error\LoaderError;
+
 /**
  *
  */
@@ -51,14 +54,19 @@ abstract class Controller
 
     /**
      * Render page through templating engine
-     * @param  string $path   Path to php file 
+     * @param  string $view   Name of the view 
      * @param  array  $params Array of parameters to send to templating engine
      */
-    protected function render(string $path, array $params = [])
+    protected function render(string $view, array $params = [])
     {
         //Adding session object to parameters for view access and call templating render
         $params += ['session'=> $this->session];
-        $this->templating::render($path, $params);
+        //If file can't be found, throw exception
+        try{
+            $this->templating->render($view, $params);
+        } catch (LoaderError $e) {
+            throw new ViewNotFoundException($view);
+        }
     }
 
     /**
@@ -129,6 +137,4 @@ abstract class Controller
     {
         return $this->session->checkToken($tokenToCheck, $this->config);
     }
-    
-    //abstract public function display();
 }
