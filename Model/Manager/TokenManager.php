@@ -128,7 +128,7 @@ class TokenManager extends Manager
     public function removeOldTokens()
     {
         $request = 'DELETE FROM token WHERE expiration_date < :expDate;';
-        $result = $this->executeRequest($request, [':expDate'=>(new \DateTime)->format('Y-m-d H:i:s')]);
+        $result = $this->executeRequest($request, [':expDate'=>(new \DateTime())->format('Y-m-d H:i:s')]);
         return $result;
     }
 }
