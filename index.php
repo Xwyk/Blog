@@ -11,7 +11,6 @@ use Blog\Controller\AdminController;
 use Blog\Framework\Session;
 use Blog\Framework\View;
 use Blog\Framework\Configuration;
-use Blog\Model\User;
 use Blog\Exceptions\PostNotFoundException;
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
