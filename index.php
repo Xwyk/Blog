@@ -21,16 +21,16 @@ try {
     $session = new Session($config);
     switch ($action) {
         case 'home':
-                (new HomeController($view, $session, $config))->display();
+            (new HomeController($view, $session, $config))->display();
             break;
         case 'login':
-                (new LoginController($view, $session, $config))->display();
+            (new LoginController($view, $session, $config))->display();
             break;
         case 'logout':
-                (new LoginController($view, $session, $config))->logout();
+            (new LoginController($view, $session, $config))->logout();
             break;
         case 'register':
-                (new RegisterController($view, $session, $config))->display();
+            (new RegisterController($view, $session, $config))->display();
             break;
         case 'post':
             (new PostController($view, $session, $config))->display();
