@@ -11,7 +11,7 @@ use Twig\Environment;
  */
 class View
 {
-    protected const TEMPLATING_TWIG_DIRECTORY = './templates';
+    protected const TEMPLATING_TWIG_DIRECTORY = './templates_v2';
     protected const TEMPLATING_TWIG_EXTENSION = '.twig';
     protected $templatingEngine;
 

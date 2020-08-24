@@ -60,7 +60,10 @@ abstract class Controller
     protected function render(string $view, array $params = [])
     {
         //Adding session object to parameters for view access and call templating render
-        $params += ['session'=> $this->session];
+        $params += [
+            'session'=> $this->session,
+            'themeDirectory' => $this->config->getThemeDirectory()    
+        ];
         //If file can't be found, throw exception
         try{
             $this->templating->render($view, $params);

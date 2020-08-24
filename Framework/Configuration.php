@@ -78,4 +78,8 @@ class Configuration
     {
         return $this->config['database']['password'];
     }
+
+    public function getThemeDirectory(){
+        return $this->config['theme']['directory'];
+    }
 }

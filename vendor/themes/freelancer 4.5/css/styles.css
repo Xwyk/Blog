@@ -5546,7 +5546,9 @@ a.close.disabled {
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 500px;
-    margin: 1.75rem auto;
+    /*Modification for article title*/
+    /*margin: 1.75rem auto;*/
+    margin: 3rem auto;
   }
 
   .modal-dialog-scrollable {

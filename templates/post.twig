@@ -40,7 +40,7 @@
                             {% for comment in post.getComments %}
                             <div class="row">
                                 <div class="col-lg-2 text-left">
-                                    <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar " alt="user profile image">
+                                    <img src="https://robohash.org/{{ comment.getAuthor.getFirstName }}-{{ comment.getAuthor.getLastName }}.png/?set=any" class="img-circle avatar " alt="user profile image">
                                 </div>
                                 <div class="col-lg-3 text-left">
                                     <h5><a href="/?action=user&id={{ comment.getAuthor.getId }}"><b>{{ comment.getAuthor.getPseudo }}</b></a></h5>
