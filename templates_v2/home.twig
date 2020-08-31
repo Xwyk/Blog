@@ -5,9 +5,9 @@
 <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
-        <img class="masthead-avatar mb-5" src="/vendor/themes/freelancer 4.5/assets/img/avataaars.svg" alt="" />
+        <img class="masthead-avatar mb-5" src="themes\freelancer 4.5\assets\img\avataaars.svg" alt="" />
         <!-- Masthead Heading-->
-        <h1 class="masthead-heading text-uppercase mb-0">Start Bootstrap</h1>
+        <h1 class="masthead-heading text-uppercase mb-0">Florian LEBOUL</h1>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -15,14 +15,14 @@
             <div class="divider-custom-line"></div>
         </div>
         <!-- Masthead Subheading-->
-        <p class="masthead-subheading font-weight-light mb-0">Graphic Artist - Web Designer - Illustrator</p>
+        <p class="masthead-subheading font-weight-light mb-0">Développeur PHP / C#</p>
     </div>
 </header>
 <!-- Portfolio Grid Section -->
 <section class="page-section portfolio" id="portfolio">
     <div class="container">
         <!-- Portfolio Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Projets</h2>
         <!-- Icon Divider-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -38,7 +38,7 @@
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img src="{{ article.getPicture ?? '/Common/themes/img/portfolio/cabin.png'}}" class="img-fluid" alt="">
+                        <img src="{{ article.getPicture ?? 'images/cabin.png'}}" class="img-fluid" alt="">
                         <p>{{ article.getChapo }}</p>
                     </div>
                 </a>
@@ -47,37 +47,11 @@
         </div>
     </div>
 </section>
-
-<!-- About Section -->
-<section class="success" id="about">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>About</h2>
-                <hr class="star-light">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-lg-offset-2">
-                <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
-            </div>
-            <div class="col-lg-4">
-                <p>Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
-            </div>
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <a href="#" class="btn btn-lg btn-outline">
-                    <i class="fa fa-download"></i> Download Theme
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Contact Section -->
  <section class="page-section bg-primary text-white mb-0" id="about">
     <div class="container">
         <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">About</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-white">A propos</h2>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -86,15 +60,8 @@
         </div>
         <!-- About Section Content-->
         <div class="row">
-            <div class="col-lg-4 ml-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p></div>
-            <div class="col-lg-4 mr-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div>
-        </div>
-        <!-- About Section Button-->
-        <div class="text-center mt-4">
-            <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/themes/freelancer/">
-                <i class="fas fa-download mr-2"></i>
-                Free Download!
-            </a>
+            <div class="col-lg-4 ml-auto"><p class="lead">Technicien support avec formation développeur, je suis actuellement une formation de développeur PHP en vue d'obtention d'un diplôme de niveau 6 et d'une réorientation dans un domaine qui me permettrait un épanouissement professionnel.</p></div>
+            <div class="col-lg-4 mr-auto"><p class="lead">Passionné de développement depuis des années, embarqué (C), applicatif (C++ / Java / C#), scripting (VBS / PS), j'ai acquis le fonctionnement de la POO sur différents langages, ainsi que leur différences. C'est ce cheminement qui m'a poussé vers le développement PHP, afin d'apprendre une technologie supplémentaire, largement utilisée.</p></div>
         </div>
     </div>
 </section>
@@ -102,7 +69,7 @@
 <section class="page-section" id="contact">
     <div class="container">
         <!-- Contact Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact</h2>
         <!-- Icon Divider-->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
@@ -116,22 +83,22 @@
                 <form id="contactForm" name="sentMessage" novalidate="novalidate">
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Name</label>
-                            <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name." />
+                            <label>Nom</label>
+                            <input class="form-control" id="name" type="text" placeholder="Nom" required="required" data-validation-required-message="Please enter your name." />
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Email Address</label>
-                            <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address." />
+                            <label>Adresse mail</label>
+                            <input class="form-control" id="email" type="email" placeholder="Adresse mail" required="required" data-validation-required-message="Please enter your email address." />
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Phone Number</label>
-                            <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number." />
+                            <label>Téléphone</label>
+                            <input class="form-control" id="phone" type="tel" placeholder="Téléphone" required="required" data-validation-required-message="Please enter your phone number." />
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -144,7 +111,7 @@
                     </div>
                     <br />
                     <div id="success"></div>
-                    <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">Send</button></div>
+                    <div class="form-group"><button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">Envoyer</button></div>
                 </form>
             </div>
         </div>

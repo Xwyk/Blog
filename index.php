@@ -16,8 +16,8 @@ use Blog\Exceptions\PostNotFoundException;
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
 try {
-    $view    = new View();
     $config  = new Configuration(__DIR__.'/config/config.local.php');
+    $view    = new View($config);
     $session = new Session($config);
     switch ($action) {
         case 'home':

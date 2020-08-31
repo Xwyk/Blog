@@ -18,9 +18,9 @@ class View
     /**
      * Constructor. Instanciate templating engine
      */
-    public function __construct()
+    public function __construct(Configuration $config)
     {
-        $loader = new FilesystemLoader($this::TEMPLATING_TWIG_DIRECTORY);
+        $loader = new FilesystemLoader($config->getThemeDirectory());
         $this->templatingEngine = new Environment($loader);
     }
 
