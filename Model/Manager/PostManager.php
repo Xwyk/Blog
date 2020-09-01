@@ -4,8 +4,6 @@ namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
 use Blog\Model\Post;
-use Blog\Model\User;
-use Blog\Model\Comment;
 use Blog\Exceptions\PostNotFoundException;
 
 /**

@@ -4,11 +4,6 @@ namespace Blog\Controller;
 
 use Blog\Framework\Controller;
 use Blog\Model\Manager\PostManager;
-use Blog\Model\Manager\CommentManager;
-use Blog\Model\Comment;
-use Blog\Framework\View;
-use Blog\Framework\Configuration;
-use Blog\Framework\Session;
 use Blog\Exceptions\NotEnoughRightsException;
 use Blog\Exceptions\TooLargeImageException;
 use Blog\Exceptions\MoveImageException;

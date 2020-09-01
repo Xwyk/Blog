@@ -7,8 +7,6 @@ use Blog\Model\Manager\CommentManager;
 use Blog\Model\Manager\TokenManager;
 use Blog\Model\Comment;
 use Blog\Exceptions\ExpiredTokenException;
-use Blog\Exceptions\NotEnoughRightsException;
-use Blog\Exceptions\NotConnectedUserException;
 
 /**
  * Manages actions on comments :

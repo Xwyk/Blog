@@ -3,7 +3,6 @@
 namespace Blog\Controller;
 
 use Blog\Model\Manager\PostManager;
-use Blog\Model\Manager\TokenManager;
 use Blog\Framework\Controller;
 
 /**

@@ -3,7 +3,6 @@
 namespace Blog\Controller;
 
 use Blog\Framework\SecuredController;
-use Blog\Framework\Controller;
 use Blog\Model\Manager\CommentManager;
 use Blog\Exceptions\NotEnoughRightsException;
 

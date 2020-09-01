@@ -3,7 +3,6 @@
 namespace Blog\Framework;
 
 use Blog\Exceptions\UserNotConnectedException;
-use Blog\Model\User;
 
 /**
  * Represent a secured controller, admin or user rights are required for create object

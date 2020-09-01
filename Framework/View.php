@@ -2,7 +2,6 @@
 
 namespace Blog\Framework;
 
-use Blog\Exceptions\FileNotFoundException;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
