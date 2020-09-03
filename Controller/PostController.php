@@ -7,6 +7,7 @@ use Blog\Model\Manager\PostManager;
 use Blog\Exceptions\NotEnoughRightsException;
 use Blog\Exceptions\TooLargeImageException;
 use Blog\Exceptions\MoveImageException;
+use Blog\Exceptions\PostNotFoundException;
 
 class PostController extends Controller
 {

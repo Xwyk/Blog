@@ -14,6 +14,7 @@ class PostNotFoundException extends \Exception
     public function __construct($id)
     {
         $this->postId = $id;
+        $this->code = 404;
         parent::__construct();
     }
 }

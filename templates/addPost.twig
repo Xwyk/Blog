@@ -1,49 +1,23 @@
 {% set mainTitle = 'Ajout d\'un article' %}
 {% extends "template.twig" %}
+{% block preBody %}
+    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+{% endblock %}
 {% block content %}
-<div class="portfolio-modal" >
-    <div class="modal-content">
-        <h1>{{ mainTitle }}</h1>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <div class="modal-body">
-                        <form class="form-comment form-horizontal" action="/?action=addPost" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="postTitle">Title</label>  
-                                <div class="col-md-8">
-                                    <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="postChapo">Chapo</label>
-                                <div class="col-md-8">                     
-                                    <input id="postChapo" name="postChapo" type="text" placeholder="Chapo" class="form-control input-md">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="postImage">Image</label>
-                                <div class="col-md-8">
-                                    <input id="postImage" name="postImage" class="input-file" type="file">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="postContent">Description</label>
-                                <div class="col-md-8">                     
-                                    <textarea class="form-control" id="postContent" name="postContent"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-4 col-md-offset-4">                     
-                                    <input type="hidden" name="validate" value="1"></input>
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="addPost" class="text-center" cz-shortcut-listen="true">
+    <form class="form-comment" action="/?action=addPost" method="post" enctype="multipart/form-data">
+        <h1 class="h3 mb-3 font-weight-normal">Ajout d'un Article</h1>
+        <p class="text-danger">{{ error ?? "" }}</p>
+            <label for="postTitle" class="sr-only">Title</label>  
+        <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md">
+            <label for="postChapo" class="sr-only">Chapo</label>
+        <input id="postChapo" name="postChapo" type="text" placeholder="Chapo" class="form-control input-md">
+            <label for="postImage" class="sr-only">Image</label>
+        <input id="postImage" name="postImage" class="input-file" type="file">
+            <label for="postContent" class="sr-only">Description</label>
+        <textarea class="form-control" id="postContent" name="postContent"></textarea>
+        <input type="hidden" name="validate" value="1"></input>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button></textarea>
+    </form>
 </div>
 {% endblock %}

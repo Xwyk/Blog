@@ -8,17 +8,21 @@ use Blog\Controller\CommentController;
 use Blog\Controller\LoginController;
 use Blog\Controller\RegisterController;
 use Blog\Controller\AdminController;
+use Blog\Controller\ErrorController;
 use Blog\Framework\Session;
 use Blog\Framework\View;
 use Blog\Framework\Configuration;
 use Blog\Exceptions\PostNotFoundException;
+use Blog\Exceptions\ExpiredSessionException;
+use Blog\Exceptions\UserNotConnectedException;
+use Blog\Exceptions\ViewNotFoundException;
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
-try {
     $config  = new Configuration(__DIR__.'/../config/config.local.php');
     $view    = new View($config);
     $session = new Session($config);
+try {
     switch ($action) {
         case 'home':
             (new HomeController($view, $session, $config))->display();
@@ -57,8 +61,13 @@ try {
             (new PostController($view, $session, $config))->editPost();
             break;
         default:
+            throw new Exception("La page demandée n'existe pas ou a été déplacée", $code=404);
             break;
     }
-} catch (PostNotFoundException $e) {
-    //Call page
+} catch (ExpiredSessionException $e) {
+    header("Location: /?action=login");
+} catch (UserNotConnectedException $e) {
+    header("Location: /?action=login");
+} catch (\Exception $e){
+    (new ErrorController($view, $session, $config))->display($e);
 }

@@ -1,0 +1,14 @@
+{% set mainTitle = 'Erreur' %}
+{% extends "template.twig" %}
+{% block preBody %}
+    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+<div class="text-center padding" cz-shortcut-listen="true">
+    <h1>Erreur {{ error.getCode }}</h1>
+    <div>
+        <p>Une erreur a été détectée. Le message de l'erreur est le suivant : {{ error.getMessage }}</p>
+    </div>
+
+</div>
+{% endblock %}

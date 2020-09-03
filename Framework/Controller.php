@@ -29,6 +29,7 @@ abstract class Controller
     public const VIEW_LOGIN     =    "login";
     public const VIEW_POST      =    "post";
     public const VIEW_REGISTER  =    "register";
+    public const VIEW_ERROR     =    "error";
 
     //Templating engine
     public $templating;
