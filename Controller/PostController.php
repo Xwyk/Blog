@@ -2,14 +2,14 @@
 
 namespace Blog\Controller;
 
-use Blog\Framework\Controller;
+use Blog\Framework\SecuredController;
 use Blog\Model\Manager\PostManager;
 use Blog\Exceptions\NotEnoughRightsException;
 use Blog\Exceptions\TooLargeImageException;
 use Blog\Exceptions\MoveImageException;
 use Blog\Exceptions\PostNotFoundException;
 
-class PostController extends Controller
+class PostController extends SecuredController
 {
     
     protected const IMAGE_MAX_SIZE = 10000000;
@@ -108,5 +108,21 @@ class PostController extends Controller
             return $imageDir.$imageName.'.'.$imageExtension;
         }
         return null;
+    }
+
+    /**
+     * Remove a comment in database. Gets comment id value by url (GET)
+     */
+    public function removePost()
+    {
+        $this->checkAdminRights();
+        //Gets comment id
+        $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        //Create comment object
+        $post = (new PostManager($this->config))->getPostById($postId);
+        //remove object from database
+        (new PostManager($this->config))->remove($post);
+        print(true);
+        //$this->redirect($this::URL_ADMIN);
     }
 }

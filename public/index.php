@@ -60,6 +60,9 @@ try {
         case 'editPost':
             (new PostController($view, $session, $config))->editPost();
             break;
+        case 'removePost':
+            (new PostController($view, $session, $config))->removePost();
+            break;
         default:
             throw new Exception("La page demandée n'existe pas ou a été déplacée", $code=404);
             break;

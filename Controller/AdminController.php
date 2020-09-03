@@ -4,6 +4,7 @@ namespace Blog\Controller;
 
 use Blog\Framework\SecuredController;
 use Blog\Model\Manager\CommentManager;
+use Blog\Model\Manager\PostManager;
 use Blog\Exceptions\NotEnoughRightsException;
 
 /**
@@ -23,7 +24,8 @@ class AdminController extends SecuredController
         //Render admin view with all comments and create new token for actions
         $this->render($this::VIEW_ADMIN, [
             'comments' => $this->getAllComments(),
-            'token'    => $this->getToken()
+            'token'    => $this->getToken(),
+            'posts'    => $this->getAllPosts()
         ]);
     }
 
@@ -68,5 +70,10 @@ class AdminController extends SecuredController
     protected function getNonAdminUsers()
     {
         //return (new CommentManager($this->config))->getAllInvalidComments();
+    }
+
+    protected function getAllPosts()
+    {
+        return (new PostManager($this->config))->getAllPosts();
     }
 }
