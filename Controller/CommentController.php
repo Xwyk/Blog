@@ -48,7 +48,7 @@ class CommentController extends SecuredController
     public function validateComment()
     {
         //Validate comment
-        $this->updateCommentValidation(true);
+        print($this->updateCommentValidation(true)->rowCount());
         //Redirect
         // $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
     }
@@ -60,7 +60,7 @@ class CommentController extends SecuredController
     public function invalidateComment()
     {
         //Invalidate comment
-        $this->updateCommentValidation(false);
+        print($this->updateCommentValidation(false)->rowCount());
         //Redirect
         // $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
     }
@@ -98,10 +98,9 @@ class CommentController extends SecuredController
         }
         //Change comment validation in database
         if ($valid) {
-            (new CommentManager($this->config))->validateComment($id);
-            return;
+            return (new CommentManager($this->config))->validateComment($id);
         }
-        (new CommentManager($this->config))->invalidateComment($id);
+        return (new CommentManager($this->config))->invalidateComment($id);
     }
 
     /**

@@ -111,10 +111,17 @@ class PostManager extends Manager
     }
     
 
+
     public function remove(Post $post)
     {
-        $request = 'DELETE FROM post
-                    WHERE id = :id ;';
+        // $request = 'DELETE blog.comment.*, blog.post.*
+        //             FROM blog.comment 
+        //             INNER JOIN blog.post 
+        //             ON blog.post.id = blog.comment.post 
+        //             WHERE blog.post.id = :id';
+        $request = 'DELETE blog.post.*
+                    FROM blog.post 
+                    WHERE blog.post.id = :id';
         $result = $this->executeRequest($request, ['id'=>$post->getId()]);
         return $result;
     }

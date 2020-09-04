@@ -35,11 +35,11 @@
                         </thead>
                         <tbody>
                         {% for comment in comments %}
-                            <tr>
+                            <tr id="comment_{{ comment.id }}">
                                 <td>{{ comment.getAuthor.getPseudo }}</td>
                                 <td>{{ comment.getContent }}</td>
                                 <td>{{ comment.getCreationDate.format('Y-m-d H:i') }}</td>
-                                <td><i class="fa fa-eye{{ comment.isValid?"":"-slash"}}" aria-hidden="true"></i></td>
+                                <td><i id="visibilityIcon" class="fa fa-eye{{ comment.isValid?"":"-slash"}}" aria-hidden="true"></i></td>
                                 <td>
                                     <a href="/?action=post&id={{ comment.getPostId }}">Lien</a>
                                 </td>
@@ -49,24 +49,15 @@
                                         <div class="dropdown-menu" aria-labelledby="actionMenuButton">
                                     {% if comment.isValid %}
                                             <a class="dropdown-item">
-                                                <form class="form-comment" action="/?action=invalidateComment&id={{ comment.getId }}"  method="post">
-                                                    <input type="hidden" name="token" value="<?= $token ?>">
-                                                    <button class="btn btn-warning btn-block" type="submit">Masquer</button>
-                                                </form>
+                                                <button id="commentButton" class="btn btn-warning btn-block" type="submit" onclick="invalidateComment({{ comment.id }})">Masquer</button>
                                             </a>
                                     {% else %}
                                             <a class="dropdown-item">
-                                                <form class="form-comment" action="/?action=validateComment&id={{ comment.getId }}"    method="post">
-                                                    <input type="hidden" name="token" value="<?= $token ?>">
-                                                    <button class="btn btn-success btn-block" type="submit">Valider</button>
-                                                </form>
+                                                <button id="commentButton" class="btn btn-success btn-block" type="submit" onclick="validateComment({{ comment.id }})">Valider</button>
                                             </a>
                                     {% endif %}
                                             <a class="dropdown-item">
-                                                <form class="form-comment" action="/?action=removeComment&id={{ comment.getId }}"    method="post">
-                                                    <input type="hidden" name="token" value="<?= $token ?>">
-                                                    <button class="btn btn-danger btn-block" type="submit">Supprimer</button>
-                                                </form>
+                                                <button class="btn btn-danger btn-block" type="submit" onclick="removeComment({{ comment.id }})">Supprimer</button>
                                             </a>
                                         </div>
                                     </div>
@@ -101,7 +92,7 @@
                         </thead>
                         <tbody>
                         {% for post in posts %}
-                            <tr>
+                            <tr id="post_{{post.id}}">
                                 <td>{{ post.getTitle }}</td>
                                 <td>{{ post.getAuthor.getPseudo }}</td>
                                 <td>{{ post.getCreationDate.format('Y-m-d H:i') }}</td>
@@ -114,10 +105,7 @@
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                         <div class="dropdown-menu" aria-labelledby="actionMenuButton">
                                             <a class="dropdown-item">
-                                                <form class="form-comment removePost" action="/?action=removePost&id={{ post.getId }}"    method="post">
-                                                    <input type="hidden" name="token" value="<?= $token ?>">
-                                                    <button class="btn btn-danger btn-block" type="submit" >Supprimer</button>
-                                                </form>
+                                                <button class="btn btn-danger btn-block" type="submit" onclick="remove({{ post.id }})">Supprimer</button>
                                             </a>
                                         </div>
                                     </div>
@@ -186,16 +174,98 @@
             );
         $(".dataTables_length").addClass("bs-select");
 
-        $(".removePost").submit(function(event){
-            event.preventDefault();
+        function remove(id){
             $.ajax({
                 type: "POST",
-                url: "/index.php",
-                data: "action=removePost&id={{ post.getId }}",
+                url: "/?action=removePost&id="+id,
+                data: {
+                    token: "{{ token }}"
+                },
                 success : function(data){
-                    alert(data);
+                    console.log(data);
+                    if (data>=1) {
+                        $("#post_"+id).remove()
+                        $('#dtOrderExample').DataTable().ajax.reload();
+                        return;
+                    }
+                    alert("Une erreur est survenue lors de la suppression");
+                },
+                error : function(argument) {
+                    console.log(argument);
                 }
             });
-        });
+        }
+
+        function validateComment(id){
+            console.log("{{token}}"+" "+id);
+            $.ajax({
+                type: "POST",
+                url: "/?action=validateComment&id="+id,
+                data: {
+                    token: "{{ token }}"
+                },
+                success : function(data){
+                    console.log(data);
+                    if (data) {
+                        // $("#post_"+id).remove()
+                        $('#visibilityIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+                        $('#commentButton').removeClass('btn-success').addClass('btn-warning');
+                        $('#commentButton').html('Masquer');
+                        $('#commentButton').removeAttr('onclick');
+                        $('#commentButton').attr('onClick', 'invalidateComment('+id+')');
+                        $('#dtOrderExample').DataTable().ajax.reload();
+                    }
+                },
+                error : function(argument) {
+                    console.log("error:" + argument);
+                }
+            });
+        }
+
+        function invalidateComment(id){
+            console.log("{{token}}"+" "+id);
+            $.ajax({
+                type: "POST",
+                url: "/?action=invalidateComment&id="+id,
+                data: {
+                    token: "{{ token }}"
+                },
+                success : function(data){
+                    console.log(data);
+                    if (data) {
+                        // $("#post_"+id).remove()
+                        $('#visibilityIcon').removeClass('fa-eye').addClass('fa-eye-slash');
+                        $('#commentButton').removeClass('btn-warning').addClass('btn-success');
+                        $('#commentButton').html('Afficher');
+                        $('#commentButton').removeAttr('onclick');
+                        $('#commentButton').attr('onClick', 'validateComment('+id+');');
+                        $('#dtOrderExample').DataTable().ajax.reload();
+                    }
+                },
+                error : function(argument) {
+                    console.log(argument);
+                }
+            });
+        }
+
+        function removeComment(id){
+            $.ajax({
+                type: "POST",
+                url: "/?action=invalidateComment&id="+id,
+                data: {
+                    token: "{{ token }}"
+                },
+                success : function(data){
+                    console.log(data);
+                    if (data) {
+                        $("#comment_"+id).remove()
+                        $('.dtOrderExample').DataTable().ajax.reload();
+                    }
+                },
+                error : function(argument) {
+                    console.log(argument);
+                }
+            });
+        }
     </script> 
 {% endblock %}

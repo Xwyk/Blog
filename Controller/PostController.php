@@ -121,8 +121,8 @@ class PostController extends SecuredController
         //Create comment object
         $post = (new PostManager($this->config))->getPostById($postId);
         //remove object from database
-        (new PostManager($this->config))->remove($post);
-        print(true);
+        // (new PostManager($this->config))->remove($post);
+        print((new PostManager($this->config))->remove($post)->rowCount());
         //$this->redirect($this::URL_ADMIN);
     }
 }
