@@ -16,13 +16,12 @@ use Blog\Exceptions\PostNotFoundException;
 use Blog\Exceptions\ExpiredSessionException;
 use Blog\Exceptions\UserNotConnectedException;
 use Blog\Exceptions\ViewNotFoundException;
-
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
     $config  = new Configuration(__DIR__.'/../config/config.local.php');
     $view    = new View($config);
-    $session = new Session($config);
 try {
+    $session = new Session($config);
     switch ($action) {
         case 'home':
             (new HomeController($view, $session, $config))->display();

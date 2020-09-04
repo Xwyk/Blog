@@ -4,8 +4,33 @@
     <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
-<div id="editPost" class="text-center" cz-shortcut-listen="true">
-    <form class="form-comment form-horizontal" action="/?action=editPost&id={{ post.getId }}" method="post" enctype="multipart/form-data">
+<div id="editPost" class="text-center padding" cz-shortcut-listen="true">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form class="form-comment form-horizontal" action="/?action=editPost&id={{ post.getId }}" method="post" enctype="multipart/form-data">
+                    <!-- Portfolio Modal - Title-->
+                    <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md portfolio-modal-title text-secondary text-uppercase mb-0" value="{{ post.getTitle|upper }}" required>
+                    <input id="postChapo" name="postChapo" type="text" placeholder="Chapo de l'article" class="form-control input-md portfolio-modal-title text-secondary text-uppercase mb-0" value="{{ post.getChapo|upper }}" required>
+                    <!-- Icon Divider-->
+                    <div class="divider-custom">
+                        <div class="divider-custom-line"></div>
+                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                        <div class="divider-custom-line"></div>
+                    </div>
+                    <!-- Portfolio Modal - Image-->
+                    <img class="img-fluid rounded mb-5" src="{{ post.getPicture ?? 'images/cabin.png' }}" alt="" />
+                    <input id="postImage" name="postImage" class="input-file" type="file">
+
+                    <!-- Portfolio Modal - Text-->
+                    <textarea class="form-control" id="postContent" name="postContent" name="postContent" required>{{ post.getContent }}</textarea>
+                    <input type="hidden" name="validate" value="1"></input>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {# <form class="form-comment form-horizontal" action="/?action=editPost&id={{ post.getId }}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-md-4 control-label" for="postTitle">Title</label>  
             <div class="col-md-8">
@@ -36,6 +61,6 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button></textarea>
             </div>
         </div>
-    </form>
+    </form> #}
 </div>
 {% endblock %}

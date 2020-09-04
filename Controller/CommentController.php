@@ -90,6 +90,7 @@ class CommentController extends SecuredController
             case TokenManager::TOKEN_VALID:
                 break;
             case TokenManager::TOKEN_EXPIRED:
+                print("no");
                 throw new ExpiredTokenException();
                 break;
             case TokenManager::TOKEN_INVALID:

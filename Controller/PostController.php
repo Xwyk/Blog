@@ -92,7 +92,7 @@ class PostController extends SecuredController
     protected function getPicturePath()
     {
         $image = $_FILES['postImage'] ?? null;
-        if ($image !== null) {
+        if ($image['error'] == 0) {
             $imageDir = '.\images\\';
             $imageName=md5(uniqid());
             $imageExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
