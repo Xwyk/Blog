@@ -39,7 +39,7 @@
                                 <td>{{ comment.getAuthor.getPseudo }}</td>
                                 <td>{{ comment.getContent }}</td>
                                 <td>{{ comment.getCreationDate.format('Y-m-d H:i') }}</td>
-                                <td><i id="visibilityIcon" class="fa fa-eye{{ comment.isValid?"":"-slash"}}" aria-hidden="true"></i></td>
+                                <td><i id="visibilityIcon_{{ comment.getId }}" class="fa fa-eye{{ comment.isValid?"":"-slash"}}" aria-hidden="true"></i></td>
                                 <td>
                                     <a href="/?action=post&id={{ comment.getPostId }}">Lien</a>
                                 </td>
@@ -49,11 +49,11 @@
                                         <div class="dropdown-menu" aria-labelledby="actionMenuButton">
                                     {% if comment.isValid %}
                                             <a class="dropdown-item">
-                                                <button id="commentButton" class="btn btn-warning btn-block" type="submit" onclick="invalidateComment({{ comment.id }})">Masquer</button>
+                                                <button id="commentButton_{{ comment.getId }}" class="btn btn-warning btn-block" type="submit" onclick="invalidateComment({{ comment.id }})">Masquer</button>
                                             </a>
                                     {% else %}
                                             <a class="dropdown-item">
-                                                <button id="commentButton" class="btn btn-success btn-block" type="submit" onclick="validateComment({{ comment.id }})">Valider</button>
+                                                <button id="commentButton_{{ comment.getId }}" class="btn btn-success btn-block" type="submit" onclick="validateComment({{ comment.id }})">Valider</button>
                                             </a>
                                     {% endif %}
                                             <a class="dropdown-item">
@@ -208,11 +208,11 @@
                     console.log(data);
                     if (data) {
                         // $("#post_"+id).remove()
-                        $('#visibilityIcon').removeClass('fa-eye-slash').addClass('fa-eye');
-                        $('#commentButton').removeClass('btn-success').addClass('btn-warning');
-                        $('#commentButton').html('Masquer');
-                        $('#commentButton').removeAttr('onclick');
-                        $('#commentButton').attr('onClick', 'invalidateComment('+id+')');
+                        $('#visibilityIcon_'+id).removeClass('fa-eye-slash').addClass('fa-eye');
+                        $('#commentButton_'+id).removeClass('btn-success').addClass('btn-warning');
+                        $('#commentButton_'+id).html('Masquer');
+                        $('#commentButton_'+id).removeAttr('onclick');
+                        $('#commentButton_'+id).attr('onClick', 'invalidateComment('+id+')');
                         $('#dtOrderExample').DataTable().ajax.reload();
                     }
                 },
@@ -234,11 +234,11 @@
                     console.log(data);
                     if (data) {
                         // $("#post_"+id).remove()
-                        $('#visibilityIcon').removeClass('fa-eye').addClass('fa-eye-slash');
-                        $('#commentButton').removeClass('btn-warning').addClass('btn-success');
-                        $('#commentButton').html('Afficher');
-                        $('#commentButton').removeAttr('onclick');
-                        $('#commentButton').attr('onClick', 'validateComment('+id+');');
+                        $('#visibilityIcon_'+id).removeClass('fa-eye').addClass('fa-eye-slash');
+                        $('#commentButton_'+id).removeClass('btn-warning').addClass('btn-success');
+                        $('#commentButton_'+id).html('Afficher');
+                        $('#commentButton_'+id).removeAttr('onclick');
+                        $('#commentButton_'+id).attr('onClick', 'validateComment('+id+');');
                         $('#dtOrderExample').DataTable().ajax.reload();
                     }
                 },
