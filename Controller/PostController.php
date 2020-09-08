@@ -110,6 +110,7 @@ class PostController extends SecuredController
         return null;
     }
 
+
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
      */
