@@ -7,6 +7,7 @@ use Blog\Model\Manager\CommentManager;
 use Blog\Model\Manager\TokenManager;
 use Blog\Model\Comment;
 use Blog\Exceptions\ExpiredTokenException;
+use Blog\Exceptions\InvalidTokenException;
 
 /**
  * Manages actions on comments :
@@ -48,9 +49,17 @@ class CommentController extends SecuredController
     public function validateComment()
     {
         //Validate comment
-        print($this->updateCommentValidation(true)->rowCount());
-        //Redirect
-        // $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
+        try{
+            $response = json_encode(array('rowAffecteds' => $this->updateCommentValidation(true)));
+        } catch (\Exception $e){
+            $error    = $e->getCode();
+        }
+        if (isset($error)) {
+            $response = $error;
+        }
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 
     /**
@@ -60,9 +69,17 @@ class CommentController extends SecuredController
     public function invalidateComment()
     {
         //Invalidate comment
-        print($this->updateCommentValidation(false)->rowCount());
-        //Redirect
-        // $this->redirect($this::URL_POST.(new CommentManager($this->config))->getCommentById($id)->getPostId());
+        try{
+            $response = json_encode(array('rowAffecteds' => $this->updateCommentValidation(false)));
+        } catch (\Exception $e){
+            $error    = $e->getCode();
+        }
+        if (isset($error)) {
+            $response = $error;
+        }
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 
     /**
@@ -93,14 +110,14 @@ class CommentController extends SecuredController
                 throw new ExpiredTokenException();
                 break;
             case TokenManager::TOKEN_INVALID:
-                throw new \Exception("Token non valide");
+                throw new InvalidTokenException();
                 break;
         }
         //Change comment validation in database
         if ($valid) {
-            return (new CommentManager($this->config))->validateComment($id);
+            return (new CommentManager($this->config))->validateComment($id)->rowCount();
         }
-        return (new CommentManager($this->config))->invalidateComment($id);
+        return (new CommentManager($this->config))->invalidateComment($id)->rowCount();
     }
 
     /**

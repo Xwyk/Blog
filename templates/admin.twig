@@ -105,7 +105,7 @@
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                         <div class="dropdown-menu" aria-labelledby="actionMenuButton">
                                             <a class="dropdown-item">
-                                                <button class="btn btn-danger btn-block" type="submit" onclick="remove({{ post.id }})">Supprimer</button>
+                                                <button class="btn btn-danger btn-block" type="submit" onclick="removePost({{ post.id }})">Supprimer</button>
                                             </a>
                                         </div>
                                     </div>
@@ -174,10 +174,11 @@
             );
         $(".dataTables_length").addClass("bs-select");
 
-        function remove(id){
+        function removePost(id){
             $.ajax({
                 type: "POST",
                 url: "/?action=removePost&id="+id,
+                dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
@@ -201,6 +202,7 @@
             $.ajax({
                 type: "POST",
                 url: "/?action=validateComment&id="+id,
+                dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
@@ -227,6 +229,7 @@
             $.ajax({
                 type: "POST",
                 url: "/?action=invalidateComment&id="+id,
+                dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
@@ -252,6 +255,7 @@
             $.ajax({
                 type: "POST",
                 url: "/?action=invalidateComment&id="+id,
+                dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
