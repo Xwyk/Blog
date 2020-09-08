@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function display()
     {
         //Get posts list
-        $articles = (new PostManager($this->config))->getAllPosts();
+        $articles = (new PostManager($this->config))->getAll();
         //Dipslay Home view
         $this->render($this::VIEW_HOME, ['articles' => $articles]);
     }

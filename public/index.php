@@ -39,16 +39,16 @@ try {
             (new PostController($view, $session, $config))->display();
             break;
         case 'addComment':
-            (new CommentController($view, $session, $config))->addComment();
+            (new CommentController($view, $session, $config))->add();
             break;
         case 'validateComment':
-            (new CommentController($view, $session, $config))->validateComment();
+            (new CommentController($view, $session, $config))->validate();
             break;
         case 'invalidateComment':
-            (new CommentController($view, $session, $config))->invalidateComment();
+            (new CommentController($view, $session, $config))->invalidate();
             break;
         case 'removeComment':
-            (new CommentController($view, $session, $config))->removeComment();
+            (new CommentController($view, $session, $config))->remove();
             break;
         case 'admin':
             (new AdminController($view, $session, $config))->display();

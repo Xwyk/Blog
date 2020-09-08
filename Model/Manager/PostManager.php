@@ -34,7 +34,7 @@ class PostManager extends Manager
                                 INNER JOIN user
                                 ON post.author = user.id ';
 
-    public function getAllPosts()
+    public function getAll()
     {
         $request = $this::BASE_REQUEST;
 
@@ -46,7 +46,7 @@ class PostManager extends Manager
         return $postsArray;
     }
 
-    public function getPostById(int $postId, int $commentsValidity = PostManager::COMMENTS_VALID)
+    public function getById(int $postId, int $commentsValidity = PostManager::COMMENTS_VALID)
     {
         $requestPosts = $this::BASE_REQUEST.'WHERE post.id = :id ;';
         $posts = $this->executeRequest($requestPosts, ['id'=>$postId]);

@@ -22,7 +22,7 @@ class CommentController extends SecuredController
      * Add a comment for a post. Gets post id in 'postId' value in url (GET) and datas by form (POST)
      * @throws PostNotFoundException If id isn't valid : <= 0
      */
-    public function addComment()
+    public function add()
     {
         $this->checkUserRights();
         //Get and check post id via GET
@@ -37,20 +37,30 @@ class CommentController extends SecuredController
             'postId'  => $postId
         ]);
         //Add newly created object in database
-        (new CommentManager($this->config))->add($comment);
+        try{
+            $response = json_encode(array('rowAffecteds' => (new CommentManager($this->config))->add($comment)->rowCount()));
+        } catch (\Exception $e){
+            $error    = $e->getCode();
+        }
+        if (isset($error)) {
+            $response = $error;
+        }
+        $this->render('request', [
+            'response' => $response
+        ]);
         //Redirect to post page
-        $this->redirect($this::URL_POST.$postId);
+        // $this->redirect($this::URL_POST.$postId);
     }
 
     /**
      * Validate a comment in database
      * @todo redirection
      */
-    public function validateComment()
+    public function validate()
     {
         //Validate comment
         try{
-            $response = json_encode(array('rowAffecteds' => $this->updateCommentValidation(true)));
+            $response = json_encode(array('rowAffecteds' => $this->updateValidation(true)));
         } catch (\Exception $e){
             $error    = $e->getCode();
         }
@@ -66,11 +76,11 @@ class CommentController extends SecuredController
      * Invalidate a comment in database
      * @todo redirection
      */
-    public function invalidateComment()
+    public function invalidate()
     {
         //Invalidate comment
         try{
-            $response = json_encode(array('rowAffecteds' => $this->updateCommentValidation(false)));
+            $response = json_encode(array('rowAffecteds' => $this->updateValidation(false)));
         } catch (\Exception $e){
             $error    = $e->getCode();
         }
@@ -91,7 +101,7 @@ class CommentController extends SecuredController
      * @throws NotValidTokenException If token isn't valid
      * @throws NotValidCommentIdException If comment id isn't valid
      */
-    protected function updateCommentValidation(bool $valid)
+    protected function updateValidation(bool $valid)
     {
         $this->checkAdminRights();
         //Get values from GET and POST, checks token  
@@ -115,9 +125,9 @@ class CommentController extends SecuredController
         }
         //Change comment validation in database
         if ($valid) {
-            return (new CommentManager($this->config))->validateComment($id)->rowCount();
+            return (new CommentManager($this->config))->validate($id)->rowCount();
         }
-        return (new CommentManager($this->config))->invalidateComment($id)->rowCount();
+        return (new CommentManager($this->config))->invalidate($id)->rowCount();
     }
 
     /**
@@ -129,8 +139,18 @@ class CommentController extends SecuredController
         //Gets comment id
         $commentId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         //Create comment object
-        $comment = (new CommentManager($this->config))->getCommentById($commentId);
+        $comment = (new CommentManager($this->config))->getById($commentId);
         //remove object from database
-        (new CommentManager($this->config))->remove($comment);
+        try{
+            $response = json_encode(array('rowAffecteds' => (new CommentManager($this->config))->remove($comment)->rowCount()));
+        } catch (\Exception $e){
+            $error    = $e->getCode();
+        }
+        if (isset($error)) {
+            $response = $error;
+        }
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 }

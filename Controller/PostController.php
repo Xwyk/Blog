@@ -25,11 +25,11 @@ class PostController extends SecuredController
         if ($postId == false) {
             throw new PostNotFoundException($postId);
         }
-        $post = (new PostManager($this->config))->getPostById($postId);
+        $post = (new PostManager($this->config))->getById($postId);
         $this->render($this::VIEW_POST, ['post' => $post, "mainTitle"=>$post->getTitle()]);
     }
 
-    public function addPost()
+    public function add()
     {
         if (!$this->isAdmin()) {
             if (!$this->isUser()) {
@@ -71,11 +71,11 @@ class PostController extends SecuredController
 
         $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
         if (!$validate) {
-            $this->render($this::VIEW_EDITPOST, ["post"=>(new PostManager($this->config))->getPostById($postId)]);
+            $this->render($this::VIEW_EDITPOST, ["post"=>(new PostManager($this->config))->getById($postId)]);
             return;
         }
 
-        $postToUpdate = (new PostManager($this->config))->getPostById($postId);
+        $postToUpdate = (new PostManager($this->config))->getById($postId);
         $postToUpdate->setTitle(filter_input(INPUT_POST, 'postTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $postToUpdate->setChapo(filter_input(INPUT_POST, 'postChapo', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $postToUpdate->setContent(filter_input(INPUT_POST, 'postContent', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -119,7 +119,7 @@ class PostController extends SecuredController
         //Gets comment id
         $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         //Create comment object
-        $post = (new PostManager($this->config))->getPostById($postId);
+        $post = (new PostManager($this->config))->getById($postId);
         //remove object from database
         // (new PostManager($this->config))->remove($post);
         print((new PostManager($this->config))->remove($post)->rowCount());
