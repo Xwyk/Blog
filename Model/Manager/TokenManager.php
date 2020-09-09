@@ -62,7 +62,7 @@ class TokenManager extends Manager
         
         $tokenExpiration = clone $tokenGeneration;
         $tokenExpiration->modify('+ '.$this::TOKEN_VALIDITY_MINUTES.' minutes');
-        $this->removeOldTokens();
+        $this->removeOld();
         $this->removeForUser($user);
         $this->add($this->createFromArray([
             'tokenValue'          => $tokenValue,
@@ -98,10 +98,10 @@ class TokenManager extends Manager
 
     public function check(string $tokenToCheck, User $user)
     {
-        if (strcmp($this->getTokenByUser($user)->getValue(), $tokenToCheck) !== 0) {
+        if (strcmp($this->getByUser($user)->getValue(), $tokenToCheck) !== 0) {
             return $this::TOKEN_INVALID;
         }
-        if ($this->getTokenByUser($user)->getExpirationDate() < (new \DateTime())->format('Y-m-d H:i:s')) {
+        if ($this->getByUser($user)->getExpirationDate() < (new \DateTime())->format('Y-m-d H:i:s')) {
             return $this::TOKEN_EXPIRED;
         }
         return $this::TOKEN_VALID;

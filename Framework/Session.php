@@ -157,7 +157,7 @@ class Session
     public function getToken(): string
     {
         $connectedUser = $this->getAttribute($this::AUTHENTICATED_KEY);
-        return $this->tokenManager->createToken(32, $connectedUser);
+        return $this->tokenManager->create(32, $connectedUser);
     }
 
     /**
@@ -168,7 +168,7 @@ class Session
     public function checkToken(string $tokenToCheck)
     {
         $connectedUser = $this->getAttribute($this::AUTHENTICATED_KEY);
-        return $this->tokenManager->checkToken($tokenToCheck, $connectedUser);
+        return $this->tokenManager->check($tokenToCheck, $connectedUser);
     }
 
     /**

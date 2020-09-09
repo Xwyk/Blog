@@ -9,6 +9,7 @@ use Blog\Framework\Controller;
  */
 class ErrorController extends Controller
 {
+    public const VIEW_ERROR     =    "error";
     /**
      * Gets posts list, and displays home view
      */

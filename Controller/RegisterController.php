@@ -8,6 +8,8 @@ use Blog\Model\Manager\UserManager;
 
 class RegisterController extends Controller
 {
+    public const URL_LOGIN      =    "/?action=login";
+    public const VIEW_REGISTER  =    "register";
     public function register()
     {
         try {

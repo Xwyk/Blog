@@ -10,27 +10,6 @@ use Twig\Error\LoaderError;
  */
 abstract class Controller
 {
-    //Constants for URLs
-    public const URL_ADMIN      =    "/?action=admin";
-    public const URL_HOME       =    "/?action=home";
-    public const URL_LOGIN      =    "/?action=login";
-    public const URL_LOGOUT     =    "/?action=logout";
-    public const URL_REGISTER   =    "/?action=register";
-    public const URL_POST       =    "/?action=post&id=";
-    public const URL_ADDPOST    =    "/?action=addPost";
-    public const URL_ADDCOMMENT =    "/?action=addComment&postId=";
-    public const URL_EDITPOST   =    "/?action=editPost&id=";
-    
-    //Constants for views (filenames)
-    public const VIEW_ADDPOST   =    "addPost";
-    public const VIEW_ADMIN     =    "admin";
-    public const VIEW_EDITPOST  =    "editPost";
-    public const VIEW_HOME      =    "home";
-    public const VIEW_LOGIN     =    "login";
-    public const VIEW_POST      =    "post";
-    public const VIEW_REGISTER  =    "register";
-    public const VIEW_ERROR     =    "error";
-
     //Templating engine
     public $templating;
     //Session object
@@ -140,5 +119,20 @@ abstract class Controller
     public function checkToken(string $tokenToCheck): int
     {
         return $this->session->checkToken($tokenToCheck, $this->config);
+    }
+
+    public function jsonRender(array $data)
+    {
+        try{
+            $response = json_encode(array('rowAffecteds' => $this->updateValidation(true)));
+        } catch (\Exception $e){
+            $error    = $e->getCode();
+        }
+        if (isset($error)) {
+            $response = $error;
+        }
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 }

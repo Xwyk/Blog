@@ -12,8 +12,14 @@ use Blog\Exceptions\PostNotFoundException;
 class PostController extends SecuredController
 {
     
-    protected const IMAGE_MAX_SIZE = 10000000;
-    protected const ALLOWED_EXTENSIONS = [
+        public const URL_ADDPOST   = "/?action=addPost";
+        public const URL_EDITPOST  = "/?action=editPost&id=";
+        public const URL_POST      = "/?action=post&id=";
+        public const VIEW_ADDPOST  = "addPost";
+        public const VIEW_EDITPOST = "editPost";
+        public const VIEW_POST     = "post";
+        protected const IMAGE_MAX_SIZE     = 10000000;
+        protected const ALLOWED_EXTENSIONS = [
         'png',
         'jpg',
         'jpeg',
@@ -124,6 +130,9 @@ class PostController extends SecuredController
         //remove object from database
         // (new PostManager($this->config))->remove($post);
         print((new PostManager($this->config))->remove($post)->rowCount());
+        $this->render('request', [
+            'response' => $response
+        ]);
         //$this->redirect($this::URL_ADMIN);
     }
 }

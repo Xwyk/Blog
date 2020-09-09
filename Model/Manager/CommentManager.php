@@ -71,32 +71,32 @@ class CommentManager extends Manager
 
     public function getAll(): array
     {
-        return $this->getComments($this::COMMENTS_ALL);
+        return $this->get($this::COMMENTS_ALL);
     }
 
     public function getAllValid(): array
     {
-        return $this->getComments($this::COMMENTS_VALID);
+        return $this->get($this::COMMENTS_VALID);
     }
 
     public function getAllInvalid(): array
     {
-        return $this->getComments($this::COMMENTS_INVALID);
+        return $this->get($this::COMMENTS_INVALID);
     }
 
     public function getAllByPost(int $postId): array
     {
-        return $this->getComments($this::COMMENTS_ALL, $postId);
+        return $this->get($this::COMMENTS_ALL, $postId);
     }
 
     public function getValidByPost(int $postId): array
     {
-        return $this->getComments($this::COMMENTS_VALID, $postId);
+        return $this->get($this::COMMENTS_VALID, $postId);
     }
 
     public function getInvalidByPost(int $postId): array
     {
-        return $this->getComments($this::COMMENTS_INVALID, $postId);
+        return $this->get($this::COMMENTS_INVALID, $postId);
     }
 
     private function formatResponse($comments): array

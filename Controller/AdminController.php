@@ -12,6 +12,11 @@ use Blog\Exceptions\NotEnoughRightsException;
  */
 class AdminController extends SecuredController
 {
+    public const URL_ADMIN      =    "/?action=admin";
+
+    public const URL_HOME       =    "/?action=home";
+
+    public const VIEW_ADMIN = "admin";
     /**
      * Displays admin view if user is connected and admin
      * Redirects to login if user isn't connected
@@ -36,7 +41,7 @@ class AdminController extends SecuredController
     protected function getAllInvalidComments()
     {
         $this->checkAdminRights();
-        return (new CommentManager($this->config))->getAllInvalidComments();
+        return (new CommentManager($this->config))->getAllInvalid();
     }
     /**
      * Call CommentManager for getting all comments
@@ -45,7 +50,7 @@ class AdminController extends SecuredController
     protected function getAllComments()
     {
         $this->checkAdminRights();
-        return (new CommentManager($this->config))->getAllComments();
+        return (new CommentManager($this->config))->getAll();
     }
     /**
      * [getAllComments description]
@@ -74,6 +79,6 @@ class AdminController extends SecuredController
 
     protected function getAllPosts()
     {
-        return (new PostManager($this->config))->getAllPosts();
+        return (new PostManager($this->config))->getAll();
     }
 }

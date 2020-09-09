@@ -7,6 +7,10 @@ use Blog\Model\Manager\UserManager;
 
 class LoginController extends Controller
 {
+    public const URL_ADMIN      =    "/?action=admin";
+    public const URL_HOME       =    "/?action=home";
+    public const URL_LOGIN      =    "/?action=login";
+    public const VIEW_LOGIN     =    "login";
     
     public function display()
     {

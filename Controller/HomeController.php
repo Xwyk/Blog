@@ -10,6 +10,7 @@ use Blog\Framework\Controller;
  */
 class HomeController extends Controller
 {
+    public const VIEW_HOME = "home";
     /**
      * Gets posts list, and displays home view
      */

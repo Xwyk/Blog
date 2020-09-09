@@ -67,9 +67,10 @@ class CommentController extends SecuredController
         if (isset($error)) {
             $response = $error;
         }
-        $this->render('request', [
-            'response' => $response
-        ]);
+        print($response);
+        // $this->render('request', [
+        //     'response' => $response
+        // ]);
     }
 
     /**
@@ -87,9 +88,10 @@ class CommentController extends SecuredController
         if (isset($error)) {
             $response = $error;
         }
-        $this->render('request', [
-            'response' => $response
-        ]);
+        print($response);
+        // $this->render('request', [
+        //     'response' => $response
+        // ]);
     }
 
     /**

@@ -192,7 +192,7 @@
                     alert("Une erreur est survenue lors de la suppression");
                 },
                 error : function(argument) {
-                    console.log(argument);
+                    console.log(JSON.stringify(argument));
                 }
             });
         }
@@ -219,7 +219,7 @@
                     }
                 },
                 error : function(argument) {
-                    console.log("error:" + argument);
+                    console.log("error:" + JSON.stringify(argument));
                 }
             });
         }
