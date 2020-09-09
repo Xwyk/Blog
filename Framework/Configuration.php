@@ -31,6 +31,7 @@ class Configuration
         if (!$iniArray) {
             throw new NotValidFileException($path);
         }
+        var_dump($iniArray['controllers']['home']);
         $this->config = $iniArray;
     }
 
@@ -80,6 +81,16 @@ class Configuration
     }
 
     public function getThemeDirectory(){
-        return $this->config['theme']['directory'];
+        return $this->config['templates']['directory'];
+    }
+
+    public function getURLs()
+    {
+    	return $this->config['urls'];
+    }
+
+    public function getViews()
+    {
+    	return $this->config['views'];
     }
 }

@@ -18,7 +18,7 @@ use Blog\Exceptions\UserNotConnectedException;
 use Blog\Exceptions\ViewNotFoundException;
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
-    $config  = new Configuration(__DIR__.'/../config/config.local.php');
+    $config  = new Configuration(__DIR__.'/../config/config.local.ini');
     $view    = new View($config);
 try {
     $session = new Session($config);
