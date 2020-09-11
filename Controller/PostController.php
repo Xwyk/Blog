@@ -65,7 +65,7 @@ class PostController extends SecuredController
         //$this->redirect(self::URL_HOME);
     }
 
-    public function editPost()
+    public function edit()
     {
         $postId   = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if (!$this->isAdmin()) {
@@ -120,7 +120,7 @@ class PostController extends SecuredController
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
      */
-    public function removePost()
+    public function remove()
     {
         $this->checkAdminRights();
         //Gets comment id

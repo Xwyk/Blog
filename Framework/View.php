@@ -20,7 +20,9 @@ class View
     public function __construct(Configuration $config)
     {
         $loader = new FilesystemLoader($config->getThemeDirectory());
-        $this->templatingEngine = new Environment($loader);
+        $this->templatingEngine = new Environment($loader, [
+            'debug' => true
+        ]);
     }
 
     /**

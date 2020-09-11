@@ -38,7 +38,7 @@ class CommentController extends SecuredController
         ]);
         //Add newly created object in database
         try{
-            $response = json_encode(array('rowAffecteds' => (new CommentManager($this->config))->add($comment)->rowCount()));
+            $response = (array('rowAffecteds' => (new CommentManager($this->config))->add($comment)->rowCount()));
         } catch (\Exception $e){
             $error    = $e->getCode();
         }
@@ -60,17 +60,16 @@ class CommentController extends SecuredController
     {
         //Validate comment
         try{
-            $response = json_encode(array('rowAffecteds' => $this->updateValidation(true)));
+            $response = (array('rowAffecteds' => $this->updateValidation(true)));
         } catch (\Exception $e){
             $error    = $e->getCode();
         }
         if (isset($error)) {
             $response = $error;
         }
-        print($response);
-        // $this->render('request', [
-        //     'response' => $response
-        // ]);
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 
     /**
@@ -81,17 +80,16 @@ class CommentController extends SecuredController
     {
         //Invalidate comment
         try{
-            $response = json_encode(array('rowAffecteds' => $this->updateValidation(false)));
+            $response = (array('rowAffecteds' => $this->updateValidation(false)));
         } catch (\Exception $e){
             $error    = $e->getCode();
         }
         if (isset($error)) {
             $response = $error;
         }
-        print($response);
-        // $this->render('request', [
-        //     'response' => $response
-        // ]);
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 
     /**

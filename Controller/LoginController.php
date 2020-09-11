@@ -42,7 +42,6 @@ class LoginController extends Controller
             ));
             $redirect = filter_input(INPUT_GET, 'redirect');
             if ($redirect) {
-                var_dump($redirect);
                 $this->setRedirection($redirect);
             }
             if ($this->session->isAdmin()) {

@@ -31,7 +31,6 @@ class Configuration
         if (!$iniArray) {
             throw new NotValidFileException($path);
         }
-        var_dump($iniArray['controllers']['home']);
         $this->config = $iniArray;
     }
 

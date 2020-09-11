@@ -61,15 +61,33 @@
                     <hr>
                     {% endfor %}
                     {% if session.isAuthenticated %}
-                    <form class="form-comment" action="/?action=addComment&postId={{ post.getId }}" method="post">
                         <label for="commentText" class="sr-only">Commentaire :</label>
-                        <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>
-                    </form>
+                        <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText" id="commentText"></textarea>
+                        <button class="btn btn-lg btn-primary btn-block" onclick="addComment()" type="submit">Ajouter un commentaire</button>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block postBody %}
+    <script type="text/javascript">
+        function addComment(){
+            $.ajax({
+                type: "POST",
+                url: "/?action=addComment&postId={{ post.getId }}",
+                dataType : 'json',
+                data: {
+                    commentText: $('#commentText').val()
+                },
+                success : function(data){
+                    console.log(data);
+                },
+                error : function(argument) {
+                    console.log('error:'+JSON.stringify(argument));
+                }
+            });
+        }
+    </script>
 {% endblock %}
