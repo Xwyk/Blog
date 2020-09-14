@@ -3,6 +3,7 @@
 namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
+use Blog\Exceptions\CommentNotFoundException;
 use Blog\Model\Comment;
 
 /**
@@ -116,7 +117,7 @@ class CommentManager extends Manager
         $ret=null;
         $resultRequest = $comments->fetch();
         if (!$resultRequest) {
-            throw new \Exception('commentaire non trouvé');
+            throw new CommentNotFoundException($commentId);
         }
         $ret = $this->createFromArray($resultRequest);
         

@@ -254,17 +254,19 @@
         function removeComment(id){
             $.ajax({
                 type: "POST",
-                url: "/?action=invalidateComment&id="+id,
+                url: "/?action=removeComment&id="+id,
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
                 success : function(data){
                     console.log(data);
-                    if (data) {
-                        $("#comment_"+id).remove()
-                        $('.dtOrderExample').DataTable().ajax.reload();
+                    if (data.rowAffecteds == 1) {
+                        // $("#comment_"+id).remove()
+                        $('#dtOrderExample').DataTable().ajax.reload();
+                        return;
                     }
+                    alert("Erreur de suppression : "+data.code+" : "+data.message);
                 },
                 error : function(argument) {
                     console.log(argument);

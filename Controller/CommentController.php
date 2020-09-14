@@ -133,22 +133,28 @@ class CommentController extends SecuredController
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
      */
-    public function removeComment()
+    public function remove()
     {
         $this->checkAdminRights();
         //Gets comment id
         $commentId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        //Create comment object
-        $comment = (new CommentManager($this->config))->getById($commentId);
-        //remove object from database
         try{
-            $response = json_encode(array('rowAffecteds' => (new CommentManager($this->config))->remove($comment)->rowCount()));
+            //Create comment object
+            $comment = (new CommentManager($this->config))->getById($commentId);
+            //remove object from database
+            $response['rowAffecteds'] = (new CommentManager($this->config))->remove($comment)->rowCount();
+            $response['code']    = 1;
         } catch (\Exception $e){
-            $error    = $e->getCode();
+            $response['message'] = $e->getMessage();
+            $response['code']    = $e->getCode();
         }
-        if (isset($error)) {
-            $response = $error;
-        }
+        $this->render('request', [
+            'response' => $response
+        ]);
+    }
+
+    protected function ajaxResponse($response)
+    {
         $this->render('request', [
             'response' => $response
         ]);
