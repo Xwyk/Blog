@@ -153,7 +153,7 @@ class CommentController extends SecuredController
         ]);
     }
 
-    protected function ajaxResponse($response)
+    protected function ajaxResponse(array $response)
     {
         $this->render('request', [
             'response' => $response

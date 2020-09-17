@@ -19,6 +19,7 @@ use Blog\Exceptions\ViewNotFoundException;
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
     $config  = new Configuration(__DIR__.'/../config/config.local.ini');
+    var_dump($config->getRoutes());
     $view    = new View($config);
 try {
     $session = new Session($config);

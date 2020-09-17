@@ -83,13 +83,8 @@ class Configuration
         return $this->config['templates']['directory'];
     }
 
-    public function getURLs()
+    public function getRoutes()
     {
-    	return $this->config['urls'];
-    }
-
-    public function getViews()
-    {
-    	return $this->config['views'];
+    	return $this->config['routes'];
     }
 }
