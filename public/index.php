@@ -42,7 +42,10 @@ try {
     $router->post('/posts/:id/addComment', 'Comment#add');
     $router->get('/register', 'Register#display');
     $router->post('/register', 'Register#display');
-
+    foreach ($config->getRoutes() as $routeName => $route) {
+        var_dump($route);
+        var_dump($routeName);
+    }
 
     $router->run();
 // } catch (ExpiredSessionException $e) {
