@@ -12,10 +12,6 @@ use Blog\Exceptions\NotEnoughRightsException;
  */
 class AdminController extends SecuredController
 {
-    public const URL_ADMIN      =    "/?action=admin";
-
-    public const URL_HOME       =    "/?action=home";
-
     public const VIEW_ADMIN = "admin";
     /**
      * Displays admin view if user is connected and admin

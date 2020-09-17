@@ -24,55 +24,25 @@ $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) 
     $view    = new View($config);
 try {
     $session = new Session($config);
-    // switch ($action) {
-    //     case 'home':
-    //         (new HomeController($view, $session, $config))->display();
-    //         break;
-    //     case 'login':
-    //         (new LoginController($view, $session, $config))->display();
-    //         break;
-    //     case 'logout':
-    //         (new LoginController($view, $session, $config))->logout();
-    //         break;
-    //     case 'register':
-    //         (new RegisterController($view, $session, $config))->display();
-    //         break;
-    //     case 'post':
-    //         (new PostController($view, $session, $config))->display();
-    //         break;
-    //     case 'addComment':
-    //         (new CommentController($view, $session, $config))->add();
-    //         break;
-    //     case 'validateComment':
-    //         (new CommentController($view, $session, $config))->validate();
-    //         break;
-    //     case 'invalidateComment':
-    //         (new CommentController($view, $session, $config))->invalidate();
-    //         break;
-    //     case 'removeComment':
-    //         (new CommentController($view, $session, $config))->remove();
-    //         break;
-    //     case 'admin':
-    //         (new AdminController($view, $session, $config))->display();
-    //         break;
-    //     case 'addPost':
-    //         (new PostController($view, $session, $config))->addPost();
-    //         break;
-    //     case 'editPost':
-    //         (new PostController($view, $session, $config))->editPost();
-    //         break;
-    //     case 'removePost':
-    //         (new PostController($view, $session, $config))->removePost();
-    //         break;
-    //     default:
-    //         throw new Exception("La page demandée n'existe pas ou a été déplacée", $code=404);
-    //         break;
-    // }
-    $router = new Router($_GET['url']); 
-    $router->get('/', 'Home#display'); 
-    $router->get('/home', 'Home#display'); 
-    $router->get('/posts/:id', 'Post#display'); 
-    $router->get('/login', 'Login#display'); 
+    $router = new Router($_GET['url']);
+    $router->get('/', 'Home#display');
+    $router->get('/admin', 'Admin#display');
+    $router->post('/comments/:id/validate', 'Comment#validate');
+    $router->post('/comments/:id/invalidate', 'Comment#invalidate');
+    $router->post('/comments/:id/remove', 'Comment#remove');
+    $router->get('/home', 'Home#display');
+    $router->get('/login', 'Login#display');
+    $router->post('/login', 'Login#login');
+    $router->get('/logout', 'Login#logout');
+    $router->get('/posts/add', 'Post#add');
+    $router->post('/posts/add', 'Post#add');
+    $router->get('/posts/:id', 'Post#display');
+    $router->post('/posts/:id/edit', 'Post#edit');
+    $router->post('/posts/:id/remove', 'Post#remove');
+    $router->post('/posts/:id/addComment', 'Comment#add');
+    $router->get('/register', 'Register#display');
+    $router->post('/register', 'Register#display');
+
 
     $router->run();
 // } catch (ExpiredSessionException $e) {

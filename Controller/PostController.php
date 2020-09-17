@@ -12,9 +12,6 @@ use Blog\Exceptions\PostNotFoundException;
 class PostController extends Controller
 {
     
-        public const URL_ADDPOST   = "/?action=addPost";
-        public const URL_EDITPOST  = "/?action=editPost&id=";
-        public const URL_POST      = "/?action=post&id=";
         public const VIEW_ADDPOST  = "addPost";
         public const VIEW_EDITPOST = "editPost";
         public const VIEW_POST     = "post";
@@ -38,7 +35,7 @@ class PostController extends Controller
     {
         if (!$this->isAdmin()) {
             if (!$this->isUser()) {
-                $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_ADDPOST));
+                // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_ADDPOST));
             }
             throw new NotEnoughRightsException();
         }
@@ -68,10 +65,10 @@ class PostController extends Controller
     {
         $postId   = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if (!$this->isAdmin()) {
-            if (!$this->isUser()) {
-                $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
+            if ($this->isUser()) {
+                // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
+                throw new NotEnoughRightsException();
             }
-            throw new NotEnoughRightsException();
         }
 
         $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
