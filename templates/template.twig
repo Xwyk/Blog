@@ -12,12 +12,12 @@
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="images/logo.png" />
         <!-- Font Awesome icons (free version)-->
-        <link href="plugins/components/font-awesome/css/all.css" rel="stylesheet" />
+        <link href="/plugins/components/font-awesome/css/all.css" rel="stylesheet" />
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="themes/freelancer 4.5/css/styles.css" rel="stylesheet" />
+        <link href="/themes/freelancer 4.5/css/styles.css" rel="stylesheet" />
 
     {% block preBody %}{% endblock %}
 </head>
@@ -37,9 +37,9 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/#contact">Contact</a></li>
                         <li class="nav-item mx-0 mx-lg-1">
                             {% if session.isAuthenticated %}
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/?action=logout">Déconnexion</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Déconnexion</a>
                             {% else %}
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/?action=login">Connexion</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Connexion</a>
                             {% endif %}
                         </li>
                     </ul>
@@ -72,11 +72,12 @@
                     <h3>Accès membre</h3>
                     {% if session.isAuthenticated %}
                         {% if session.isAdmin %}
-                            <p>Accéder à <a href="/?action=admin">l'interface d'administration</a>.</p>
+                            <p>Accéder à <a href="/admin">l'interface d'administration</a>.</p>
                         {% endif %}
-                        <p><a href="/?action=logout">Déconnexion</a>.</p>
+                        <p><a href="/logout">Déconnexion</a>.</p>
                     {% else %}
-                    <p>Se <a href="/?action=login">connecter</a>.</p>
+                    <p>Se <a href="/login">connecter</a>.</p>
+                    <p>S'<a href="/register">enregistrer</a>.</p>
                     {% endif %}
                 </div>
             </div>
@@ -92,15 +93,15 @@
         </div>
 
     <!-- Bootstrap core JS-->
-        <script src="plugins/components/jquery/jquery.min.js"></script>
-        <script src="plugins/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/plugins/components/jquery/jquery.min.js"></script>
+        <script src="/plugins/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Contact form JS-->
-        <script src="themes/freelancer 4.5/assets/mail/jqBootstrapValidation.js"></script>
-        <script src="themes/freelancer 4.5/assets/mail/contact_me.js"></script>
+        <script src="/themes/freelancer 4.5/assets/mail/jqBootstrapValidation.js"></script>
+        <script src="/themes/freelancer 4.5/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
-        <script src="themes/freelancer 4.5/js/scripts.js"></script>
+        <script src="/themes/freelancer 4.5/js/scripts.js"></script>
     {% block postBody %}{% endblock %}
 </body>
 </html> 

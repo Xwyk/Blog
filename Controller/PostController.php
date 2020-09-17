@@ -2,14 +2,14 @@
 
 namespace Blog\Controller;
 
-use Blog\Framework\SecuredController;
+use Blog\Framework\Controller;
 use Blog\Model\Manager\PostManager;
 use Blog\Exceptions\NotEnoughRightsException;
 use Blog\Exceptions\TooLargeImageException;
 use Blog\Exceptions\MoveImageException;
 use Blog\Exceptions\PostNotFoundException;
 
-class PostController extends SecuredController
+class PostController extends Controller
 {
     
         public const URL_ADDPOST   = "/?action=addPost";
@@ -25,10 +25,9 @@ class PostController extends SecuredController
         'jpeg',
         'webp'
     ];
-    public function display()
+    public function display(int $postId)
     {
-        $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        if ($postId == false) {
+        if ($postId <= 0) {
             throw new PostNotFoundException($postId);
         }
         $post = (new PostManager($this->config))->getById($postId);
