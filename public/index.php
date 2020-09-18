@@ -20,34 +20,22 @@ use Blog\Exceptions\ViewNotFoundException;
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
     $config  = new Configuration(__DIR__.'/../config/config.local.ini');
-    // var_dump($config->getRoutes());
     $view    = new View($config);
 try {
     $session = new Session($config);
     $router = new Router($_GET['url']);
-    $router->get('/', 'Home#display');
-    $router->get('/admin', 'Admin#display');
-    $router->post('/comments/:id/validate', 'Comment#validate');
-    $router->post('/comments/:id/invalidate', 'Comment#invalidate');
-    $router->post('/comments/:id/remove', 'Comment#remove');
-    $router->get('/home', 'Home#display');
-    $router->get('/login', 'Login#display');
-    $router->post('/login', 'Login#login');
-    $router->get('/logout', 'Login#logout');
-    $router->get('/posts/add', 'Post#add');
-    $router->post('/posts/add', 'Post#add');
-    $router->get('/posts/:id', 'Post#display');
-    $router->post('/posts/:id/edit', 'Post#edit');
-    $router->post('/posts/:id/remove', 'Post#remove');
-    $router->post('/posts/:id/addComment', 'Comment#add');
-    $router->get('/register', 'Register#display');
-    $router->post('/register', 'Register#display');
     foreach ($config->getRoutes() as $routeName => $route) {
-        var_dump($route);
-        var_dump($routeName);
+        try{
+            $type = $route['type'];
+            $url = $route['url'];
+            $controller = $route['controller'];
+            $method = $route['method'];
+        } catch (Exception $e){
+            throw new FileNotValidException(".ini");
+        }
+        $router->$type($url, $controller.'#'.$method, $routeName);
     }
-
-    $router->run();
+    $router->run($view, $session, $config);
 // } catch (ExpiredSessionException $e) {
 //     header("Location: /login");
 // } catch (UserNotConnectedException $e) {

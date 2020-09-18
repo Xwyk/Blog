@@ -43,12 +43,7 @@ class Route
         return '([^/]+)';
     }
 
-    public function call(){
-        $config  = new Configuration(__DIR__.'/../config/config.local.ini');
-
-    $view    = new View($config);
-
-    $session = new Session($config);
+    public function call($view, $session, $config){
         if(is_string($this->callable)){
             $params = explode('#', $this->callable);
             $controller = "Blog\\Controller\\" . $params[0] . "Controller";
