@@ -35,5 +35,6 @@ try {
 // } catch (UserNotConnectedException $e) {
 //     header("Location: /login");
 } catch (\Exception $e){
-    (new ErrorController($view, $session, $config))->display($e);
+    header("Location: /");
+    // (new ErrorController($view, $session, $config))->display($e);
 }

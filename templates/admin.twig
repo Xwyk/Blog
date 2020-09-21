@@ -208,7 +208,7 @@
                 },
                 success : function(data){
                     console.log(data);
-                    if (data) {
+                    if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye-slash').addClass('fa-eye');
                         $('#commentButton_'+id).removeClass('btn-success').addClass('btn-warning');
@@ -235,7 +235,7 @@
                 },
                 success : function(data){
                     console.log(data);
-                    if (data) {
+                    if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye').addClass('fa-eye-slash');
                         $('#commentButton_'+id).removeClass('btn-warning').addClass('btn-success');

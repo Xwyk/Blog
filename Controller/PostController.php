@@ -116,16 +116,19 @@ class PostController extends Controller
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
      */
-    public function remove()
+    public function remove(int $postId)
     {
-        $this->checkAdminRights();
-        //Gets comment id
-        $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        //Create comment object
-        $post = (new PostManager($this->config))->getById($postId);
-        //remove object from database
-        // (new PostManager($this->config))->remove($post);
-        print((new PostManager($this->config))->remove($post)->rowCount());
+        $error = null;
+        //Validate comment
+        try{
+            $this->checkAdminRights();
+            $post = (new PostManager($this->config))->getById($postId);
+            $response['rowAffecteds'] =  (new PostManager($this->config))->remove($post)->rowCount();
+        } catch (\Exception $e){
+            $error = $e;
+        }
+        $response['message'] = $error? $error->getMessage():'OK';
+        $response['code']    = $error? $error->getCode() : '0';
         $this->render('request', [
             'response' => $response
         ]);
