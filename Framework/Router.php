@@ -55,5 +55,4 @@ class Router
         }
         return $this->namedRoutes[$name]->getUrl($params);
     }
-
 }

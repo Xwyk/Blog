@@ -12,9 +12,6 @@ class Route
     protected $matches = [];
     protected $params = [];
 
-    
-
-
     public function __construct(string $path, $callable){
         $this->path = trim($path, '/');  // On retire les / inutils
         $this->callable = $callable;

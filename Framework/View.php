@@ -13,7 +13,7 @@ class View
     protected const TEMPLATING_TWIG_DIRECTORY = './templates_v2';
     protected const TEMPLATING_TWIG_EXTENSION = '.twig';
     protected $templatingEngine;
-
+    // protected $routesNames;
     /**
      * Constructor. Instanciate templating engine
      */
@@ -23,6 +23,7 @@ class View
         $this->templatingEngine = new Environment($loader, [
             'debug' => true
         ]);
+        // $this->routesNames = $config->getRoutes();
     }
 
     /**
@@ -32,6 +33,7 @@ class View
      */
     public function render(string $view, array $parameters = null)
     {
+        // $parameters["routes"] = $this->routesNames;
         //Print on screen twig template
         $this->templatingEngine->display($view.$this::TEMPLATING_TWIG_EXTENSION, $parameters);
     }

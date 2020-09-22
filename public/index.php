@@ -14,7 +14,6 @@ use Blog\Exceptions\ViewNotFoundException;
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
     $config  = new Configuration(__DIR__.'/../config/config.local.ini');
-    $view    = new View($config);
 try {
     $session = new Session($config);
     $router = new Router($_GET['url']);
@@ -29,12 +28,15 @@ try {
         }
         $router->$type($url, $controller.'#'.$method, $routeName);
     }
-    $router->run($view, $session, $config);
+    $view    = new View($config);
+    // $view    = new View($config, $router->getRoutes());
+    $t= ($router->run($view, $session, $config));
+    header("Location: /".$router->url($t->getName(),$t->getParams()));
 // } catch (ExpiredSessionException $e) {
 //     header("Location: /login");
 // } catch (UserNotConnectedException $e) {
 //     header("Location: /login");
 } catch (\Exception $e){
-    header("Location: /");
+    // header("Location: /");
     // (new ErrorController($view, $session, $config))->display($e);
 }

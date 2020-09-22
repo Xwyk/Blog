@@ -39,6 +39,9 @@ abstract class Controller
      */
     protected function render(string $view, array $params = [])
     {
+        if ($this->isRedirectionConfigured()) {
+            return $this->redirection;
+        }
         //Adding session object to parameters for view access and call templating render
         $params += [
             'session'=> $this->session,
@@ -52,14 +55,19 @@ abstract class Controller
         }
     }
 
-    /**
-     * Set redirection URL to redirect after treatment
-     * @param string $redirection URL to redirect to
-     */
-    protected function setRedirection(string $redirection)
+    public function redirectTo(string $name, array $params = [])
     {
-        $this->redirection=urlencode($redirection);
+        $this->redirection = new Redirection($name, $params);
     }
+
+    // /**
+    //  * Set redirection URL to redirect after treatment
+    //  * @param string $redirection URL to redirect to
+    //  */
+    // protected function setRedirection(string $redirection)
+    // {
+    //     $this->redirection=urlencode($redirection);
+    // }
 
     /**
      * Return redirection activation status
@@ -77,10 +85,10 @@ abstract class Controller
     protected function redirect(string $path)
     {
         //If there is an activated redirection, redirect it, else, redirect to pssed value
-        if ($this->isRedirectionConfigured()) {
-            header("Location: ".urldecode($this->redirection));
-            return;
-        }
+        // if ($this->isRedirectionConfigured()) {
+            // header("Location: ".urldecode($this->redirection));
+            // return;
+        // }
         header("Location: ".$path);
     }
 
