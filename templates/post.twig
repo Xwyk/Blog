@@ -34,7 +34,7 @@
                     </li>
                     {% if session.isAdmin %}
                     <li>Modification :
-                        <strong><a href="/?action=editPost&id={{ post.getid }}">Editer l'article</a></strong>
+                        <strong><a href="/{{ router.url('post_edit_page', {'id' : post.getId}) }}">Editer l'article</a></strong>
                     </li>
                     {% endif %}
                 </ul>
@@ -49,7 +49,7 @@
                             <img src="https://robohash.org/{{ comment.getAuthor.getPseudo }}/?size=100x100&set=any" class="img-circle avatar " alt="user profile image">
                         </div>
                         <div class="col-lg-3 text-left">
-                            <h5><a href="/?action=user&id={{ comment.getAuthor.getId }}"><b>{{ comment.getAuthor.getPseudo }}</b></a></h5>
+                            <h5><b>{{ comment.getAuthor.getPseudo }}</b></a></h5>
                             <h6 class="text-muted time">{{ comment.getCreationDate.format('Y-m-d H:i') }}</h6>
                         </div>
                     </div>

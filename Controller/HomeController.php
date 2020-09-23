@@ -18,10 +18,10 @@ class HomeController extends Controller
     {
         //Get posts list
         $articles = (new PostManager($this->config))->getAll();
-        if ($_GET['action'] == 'login') {
-        $this->redirectTo("login_page");
-            # code...
-        }
+        // if ($_GET['action'] == 'login') {
+        // $this->redirectTo("login_page");
+        //     # code...
+        // }
         //Dipslay Home view
         // return $this->namedRedirect();
         return $this->render($this::VIEW_HOME, ['articles' => $articles]);

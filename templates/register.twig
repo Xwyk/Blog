@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 <div id="register" class="text-center" cz-shortcut-listen="true">
-    <form class="form-signin" action="/?action=register" method="post">
+    <form class="form-signin" action="/{{ router.url('register_request') }}" method="post">
         <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
         <p class="text-danger">{{ error ?? "" }}</p>
         <label for="inputFirstName" class="sr-only">Prénom</label>
@@ -23,7 +23,7 @@
         </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
-        <p>Déjà membre ? <a href="/?action=login">Se connecter</a></p>
+        <p>Déjà membre ? <a href="/{{ router.url('login_page') }}">Se connecter</a></p>
     </form>
 </div>
 {% endblock %}

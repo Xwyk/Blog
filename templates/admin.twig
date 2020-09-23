@@ -17,7 +17,7 @@
                 <a class="nav-link" data-toggle="pill" href="#postsManagement" role="tab" aria-selected="false">Gestion des articles</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/?action=addPost" aria-selected="false">Ajouter un article</a>
+                <a class="nav-link" href="/{{ router.url('post_add_page') }}" aria-selected="false">Ajouter un article</a>
               </li>
             </ul>
             <div class="tab-content">
@@ -41,7 +41,7 @@
                                 <td>{{ comment.getCreationDate.format('Y-m-d H:i') }}</td>
                                 <td><i id="visibilityIcon_{{ comment.getId }}" class="fa fa-eye{{ comment.isValid?"":"-slash"}}" aria-hidden="true"></i></td>
                                 <td>
-                                    <a href="/?action=post&id={{ comment.getPostId }}">Lien</a>
+                                    <a href="/{{ router.url('post_page', {'id' : comment.getPostId}) }}">Lien</a>
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -98,7 +98,7 @@
                                 <td>{{ post.getCreationDate.format('Y-m-d H:i') }}</td>
                                 <td>{{ post.getModificationDate.format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <a href="/?action=post&id={{ post.getId }}">Lien</a>
+                                    <a href="/{{ router.url('post_page', {'id' : comment.getPostId}) }}">Lien</a>
                                 </td>
                                 <td>
                                     <div class="dropdown">
