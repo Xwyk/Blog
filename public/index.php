@@ -17,6 +17,7 @@ $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) 
 try {
     $session = new Session($config);
     $router = new Router($_GET['url']);
+    $view    = new View($config, $router);
     foreach ($config->getRoutes() as $routeName => $route) {
         try{
             $type = $route['type'];
@@ -28,10 +29,10 @@ try {
         }
         $router->$type($url, $controller.'#'.$method, $routeName);
     }
-    $view    = new View($config);
     // $view    = new View($config, $router->getRoutes());
     $t= ($router->run($view, $session, $config));
-    header("Location: /".$router->url($t->getName(),$t->getParams()));
+    var_dump($router->url('comment_remove_request', ['id' => 12]));
+    // header("Location: /".$router->url($t->getName(),$t->getParams()));
 // } catch (ExpiredSessionException $e) {
 //     header("Location: /login");
 // } catch (UserNotConnectedException $e) {
