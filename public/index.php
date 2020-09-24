@@ -4,6 +4,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 use Blog\Framework\Session;
 use Blog\Framework\View;
+use Blog\Framework\Request;
 use Blog\Framework\Configuration;
 use Blog\Framework\Router;
 use Blog\Exceptions\ExpiredSessionException;
@@ -11,6 +12,7 @@ use Blog\Exceptions\ExpiredSessionException;
 
 $config  = new Configuration(__DIR__.'/../config/config.local.ini');
 try {
+    $req = new Request($_GET, $_POST);
     $session = new Session($config);
     $router = new Router($_GET['url']);
     $view    = new View($config, $router);
