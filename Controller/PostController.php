@@ -11,12 +11,11 @@ use Blog\Exceptions\PostNotFoundException;
 
 class PostController extends Controller
 {
-    
-        public const VIEW_ADDPOST  = "addPost";
-        public const VIEW_EDITPOST = "editPost";
-        public const VIEW_POST     = "post";
-        protected const IMAGE_MAX_SIZE     = 10000000;
-        protected const ALLOWED_EXTENSIONS = [
+    public const VIEW_ADDPOST  = "addPost";
+    public const VIEW_EDITPOST = "editPost";
+    public const VIEW_POST     = "post";
+    protected const IMAGE_MAX_SIZE     = 10000000;
+    protected const ALLOWED_EXTENSIONS = [
         'png',
         'jpg',
         'jpeg',
@@ -61,14 +60,14 @@ class PostController extends Controller
         //$this->redirect(self::URL_HOME);
     }
 
-    public function edit()
+    public function edit(int $postId)
     {
-        $postId   = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if (!$this->isAdmin()) {
             if ($this->isUser()) {
                 // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
                 throw new NotEnoughRightsException();
             }
+            // throw new NotEnoughRightsException();
         }
 
         $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);

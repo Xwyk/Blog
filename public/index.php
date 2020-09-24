@@ -6,14 +6,10 @@ use Blog\Framework\Session;
 use Blog\Framework\View;
 use Blog\Framework\Configuration;
 use Blog\Framework\Router;
-use Blog\Exceptions\PostNotFoundException;
 use Blog\Exceptions\ExpiredSessionException;
-use Blog\Exceptions\UserNotConnectedException;
-use Blog\Exceptions\ViewNotFoundException;
 
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 'home';
 
-    $config  = new Configuration(__DIR__.'/../config/config.local.ini');
+$config  = new Configuration(__DIR__.'/../config/config.local.ini');
 try {
     $session = new Session($config);
     $router = new Router($_GET['url']);
@@ -31,7 +27,7 @@ try {
     }
     // $view    = new View($config, $router->getRoutes());
     $t= ($router->run($view, $session, $config));
-    var_dump($router->url('comment_remove_request', ['id' => 12]));
+    // var_dump($router->url('comment_remove_request', ['id' => 12]));
     // header("Location: /".$router->url($t->getName(),$t->getParams()));
 // } catch (ExpiredSessionException $e) {
 //     header("Location: /login");

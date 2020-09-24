@@ -12,7 +12,7 @@ class RouteNotFoundException extends \Exception
 
     public function __construct()
     {
-        $this->code = 404;
+        $this->code = 400;
         parent::__construct();
     }
 }

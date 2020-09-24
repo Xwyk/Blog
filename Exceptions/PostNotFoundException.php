@@ -8,13 +8,12 @@ namespace Blog\Exceptions;
 class PostNotFoundException extends \Exception
 {
     public $message = "L'article demandé n'existe pas";
-
+    public $code	= 404.1;
     public $postId;
 
     public function __construct($id)
     {
         $this->postId = $id;
-        $this->code = 404;
         parent::__construct();
     }
 }
