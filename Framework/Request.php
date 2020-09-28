@@ -10,44 +10,49 @@ use Blog\Framework\Request\Redirection;
  */
 class Request
 {
-	protected $url;
-	protected $get;
-	protected $post;
-	protected $redirection;
+	const REDIRECTION_KEY = "redirect";
+	protected $getArray;
+	protected $postArray;
 
 	public function __construct(array $get, array $post = [])
 	{
-		$this->url         = $get['url'];
-		$this->get         = new EnvironmentArray($get);
+		$this->getArray    = new EnvironmentArray($get);
 		if (!empty($post)) {
-			$this->post        = new EnvironmentArray($post);
+			$this->postArray = new EnvironmentArray($post);
 		}
 	}
 
 	public function getGetValue(string $key)
 	{
-		return $this->get->get($key);
+		return $this->getArray->get($key);
 	}
 
 	public function getPostValue(string $key)
 	{
-		return $this->get->post($key);
+		return $this->postArray->get($key);
 	}
 
 	public function getUrl()
 	{
-		return $this->url;
+		return $this->getArray->get($url);
 	}
 
 	public function isRedirectionConfigured()
 	{
-		return isset($this->redirection);
+		return $this->getArray->get($this::REDIRECTION_KEY) !== null;
 	}
 
-	protected function setRedirection(string $name, array $params = [])
+	public function getRawRedirection()
 	{
-		$this->redirection = new Redirection($name, $params);
+		if ($this->isRedirectionConfigured()) {
+			return $this->getArray->get($this::REDIRECTION_KEY);
+		}
 	}
 
-
+	public function getDecodedRedirection()
+	{
+		if ($this->isRedirectionConfigured()) {
+			return urldecode($this->getArray->get($this::REDIRECTION_KEY));
+		}
+	}
 }

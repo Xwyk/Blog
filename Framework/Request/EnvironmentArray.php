@@ -23,9 +23,8 @@ class EnvironmentArray
 	}
 
 	public function get(string $key){
-		if (!$this->exists($key)) {
-			throw new Exception("La clé demandée n'existe pas", 1);
+		if ($this->exists($key)) {
+			return $this->array[$key];
 		}
-		return $this->array[$key];
 	}
 }
