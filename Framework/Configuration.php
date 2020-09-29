@@ -2,8 +2,9 @@
 
 namespace Blog\Framework;
 
-use Blog\Exceptions\NotValidFileException;
+use Blog\Exceptions\FileNotValidException;
 use Blog\Exceptions\FileNotFoundException;
+use Blog\Exceptions\ValueNotExistsException;
 
 /**
  * Create object from .ini file
@@ -17,7 +18,7 @@ class Configuration
      * Constructor. Read ini file and parse it into an array 
      * @param string $path Path to the ini file
      * @throws FileNotFoundException If ini file doesn't exists or isn't accessible
-     * @throws NotValidFileException If ini file isn't valid
+     * @throws FileNotValidException If ini file isn't valid
      */
     public function __construct(string $path)
     {
@@ -29,7 +30,7 @@ class Configuration
         $iniArray = parse_ini_file($path, true);
         //Throw exception if file isn't valid
         if (!$iniArray) {
-            throw new NotValidFileException($path);
+            throw new FileNotValidException($path);
         }
         $this->config = $iniArray;
     }
@@ -40,6 +41,9 @@ class Configuration
      */
     public function getDbHost(): string
     {
+        if (! isset($this->config['database']['host'])) {
+            throw new ValueNotExistsException();
+        }
         return $this->config['database']['host'];
     }
 
@@ -49,6 +53,9 @@ class Configuration
      */
     public function getDbPort(): int
     {
+        if (! isset($this->config['database']['port'])) {
+            throw new ValueNotExistsException();
+        }
         return $this->config['database']['port'];
     }
 
@@ -58,6 +65,9 @@ class Configuration
      */
     public function getDbName(): string
     {
+        if (! isset($this->config['database']['dbname'])) {
+            throw new ValueNotExistsException();
+        }
         return $this->config['database']['dbname'];
     }
 
@@ -67,6 +77,9 @@ class Configuration
      */
     public function getDbUsername(): string
     {
+        if (! isset($this->config['database']['username'])) {
+            throw new ValueNotExistsException();
+        }
         return $this->config['database']['username'];
     }
 
@@ -76,10 +89,26 @@ class Configuration
      */
     public function getDbPassword(): string
     {
+        if (! isset($this->config['database']['password'])) {
+            throw new ValueNotExistsException();
+        }
         return $this->config['database']['password'];
     }
 
     public function getThemeDirectory(){
-        return $this->config['theme']['directory'];
+        if (! isset($this->config['templates']['directory'])) {
+            throw new ValueNotExistsException();
+        }
+        return $this->config['templates']['directory'];
+        
     }
+
+    public function getRoutes()
+    {
+    	if (! isset($this->config['routes'])) {
+            throw new ValueNotExistsException();
+        }
+        return $this->config['routes'];
+    }
+
 }

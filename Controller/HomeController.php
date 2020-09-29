@@ -10,14 +10,20 @@ use Blog\Framework\Controller;
  */
 class HomeController extends Controller
 {
+    public const VIEW_HOME = "home";
     /**
      * Gets posts list, and displays home view
      */
     public function display()
     {
         //Get posts list
-        $articles = (new PostManager($this->config))->getAllPosts();
+        $articles = (new PostManager($this->config))->getAll();
+        // if ($_GET['action'] == 'login') {
+        // $this->redirectTo("login_page");
+        //     # code...
+        // }
         //Dipslay Home view
-        $this->render($this::VIEW_HOME, ['articles' => $articles]);
+        // return $this->namedRedirect();
+        return $this->render($this::VIEW_HOME, ['articles' => $articles]);
     }
 }

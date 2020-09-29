@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 <div id="addPost" class="text-center" cz-shortcut-listen="true">
-    <form class="form-comment" action="/?action=addPost" method="post" enctype="multipart/form-data">
+    <form class="form-comment" action="/{{ router.url('post_add_request') }}" method="post" enctype="multipart/form-data">
         <h1 class="h3 mb-3 font-weight-normal">Ajout d'un Article</h1>
         <p class="text-danger">{{ error ?? "" }}</p>
             <label for="postTitle" class="sr-only">Title</label>  

@@ -31,7 +31,7 @@ class TokenManager extends Manager
                             INNER JOIN user
                             ON token.user=user.id ';
 
-    public function getTokenByUser(User $user)
+    public function getByUser(User $user)
     {
         $sqlRequest = self::BASE_REQUEST.'WHERE user = :user;';
         $token     = $this->executeRequest($sqlRequest, [':user'=>$user->getId()]);
@@ -43,7 +43,7 @@ class TokenManager extends Manager
         return $result;
     }
 
-    public function getTokensByValue(string $tokenValue)
+    public function getByValue(string $tokenValue)
     {
         $sqlRequest = self::BASE_REQUEST.'WHERE value = :value;';
         $token      = $this->executeRequest($sqlRequest, [':value'=>$tokenValue]);
@@ -54,7 +54,7 @@ class TokenManager extends Manager
         return $result;
     }
 
-    public function createToken($tokenLength = 32, User $user)
+    public function create($tokenLength = 32, User $user)
     {
         $tokenValue = bin2hex(openssl_random_pseudo_bytes($tokenLength));
             
@@ -62,7 +62,7 @@ class TokenManager extends Manager
         
         $tokenExpiration = clone $tokenGeneration;
         $tokenExpiration->modify('+ '.$this::TOKEN_VALIDITY_MINUTES.' minutes');
-        $this->removeOldTokens();
+        $this->removeOld();
         $this->removeForUser($user);
         $this->add($this->createFromArray([
             'tokenValue'          => $tokenValue,
@@ -77,7 +77,7 @@ class TokenManager extends Manager
         return $tokenValue;
     }
 
-    public function add($tokenToAdd)
+    protected function add($tokenToAdd)
     {
         $request = 'INSERT INTO token (user, 
                                       value,
@@ -96,12 +96,12 @@ class TokenManager extends Manager
         return $result;
     }
 
-    public function checkToken(string $tokenToCheck, User $user)
+    public function check(string $tokenToCheck, User $user)
     {
-        if (strcmp($this->getTokenByUser($user)->getValue(), $tokenToCheck) !== 0) {
+        if (strcmp($this->getByUser($user)->getValue(), $tokenToCheck) !== 0) {
             return $this::TOKEN_INVALID;
         }
-        if ($this->getTokenByUser($user)->getExpirationDate() < (new \DateTime())->format('Y-m-d H:i:s')) {
+        if ($this->getByUser($user)->getExpirationDate() < (new \DateTime())->format('Y-m-d H:i:s')) {
             return $this::TOKEN_EXPIRED;
         }
         return $this::TOKEN_VALID;
@@ -125,7 +125,7 @@ class TokenManager extends Manager
         return $result;
     }
 
-    public function removeOldTokens()
+    public function removeOld()
     {
         $request = 'DELETE FROM token WHERE expiration_date < :expDate;';
         $result = $this->executeRequest($request, [':expDate'=>(new \DateTime())->format('Y-m-d H:i:s')]);

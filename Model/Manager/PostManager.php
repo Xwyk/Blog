@@ -34,7 +34,7 @@ class PostManager extends Manager
                                 INNER JOIN user
                                 ON post.author = user.id ';
 
-    public function getAllPosts()
+    public function getAll()
     {
         $request = $this::BASE_REQUEST;
 
@@ -46,7 +46,7 @@ class PostManager extends Manager
         return $postsArray;
     }
 
-    public function getPostById(int $postId, int $commentsValidity = PostManager::COMMENTS_VALID)
+    public function getById(int $postId, int $commentsValidity = PostManager::COMMENTS_VALID)
     {
         $requestPosts = $this::BASE_REQUEST.'WHERE post.id = :id ;';
         $posts = $this->executeRequest($requestPosts, ['id'=>$postId]);
@@ -57,14 +57,14 @@ class PostManager extends Manager
         $commentManager = new CommentManager($this->config);
         switch ($commentsValidity) {
             case $this::COMMENTS_INVALID:
-                $resultComments = $commentManager->getInvalidCommentsByPost($postId);
+                $resultComments = $commentManager->getInvalidByPost($postId);
                 break;
             case $this::COMMENTS_ALL:
-                $resultComments = $commentManager->getAllCommentsByPost($postId);
+                $resultComments = $commentManager->getAllByPost($postId);
                 break;
             case $this::COMMENTS_VALID:
             default:
-                $resultComments = $commentManager->getValidCommentsByPost($postId);
+                $resultComments = $commentManager->getValidByPost($postId);
                 break;
         }
         $ret = $this->createFromArray($resultPosts, $resultComments);
@@ -110,8 +110,6 @@ class PostManager extends Manager
         ]);
     }
     
-
-
     public function remove(Post $post)
     {
         // $request = 'DELETE blog.comment.*, blog.post.*

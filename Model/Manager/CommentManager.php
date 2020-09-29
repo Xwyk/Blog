@@ -3,6 +3,7 @@
 namespace Blog\Model\Manager;
 
 use Blog\Framework\Manager;
+use Blog\Exceptions\CommentNotFoundException;
 use Blog\Model\Comment;
 
 /**
@@ -35,7 +36,7 @@ class CommentManager extends Manager
     
     
 
-    protected function getComments(int $selector, int $postId = -1)
+    protected function get(int $selector, int $postId = -1)
     {
         switch ($selector) {
             case $this::COMMENTS_ALL:
@@ -69,34 +70,34 @@ class CommentManager extends Manager
         return $this->formatResponse($this->executeRequest($requestComments, [':id'=>$postId]));
     }
 
-    public function getAllComments(): array
+    public function getAll(): array
     {
-        return $this->getComments($this::COMMENTS_ALL);
+        return $this->get($this::COMMENTS_ALL);
     }
 
-    public function getAllValidComments(): array
+    public function getAllValid(): array
     {
-        return $this->getComments($this::COMMENTS_VALID);
+        return $this->get($this::COMMENTS_VALID);
     }
 
-    public function getAllInvalidComments(): array
+    public function getAllInvalid(): array
     {
-        return $this->getComments($this::COMMENTS_INVALID);
+        return $this->get($this::COMMENTS_INVALID);
     }
 
-    public function getAllCommentsByPost(int $postId): array
+    public function getAllByPost(int $postId): array
     {
-        return $this->getComments($this::COMMENTS_ALL, $postId);
+        return $this->get($this::COMMENTS_ALL, $postId);
     }
 
-    public function getValidCommentsByPost(int $postId): array
+    public function getValidByPost(int $postId): array
     {
-        return $this->getComments($this::COMMENTS_VALID, $postId);
+        return $this->get($this::COMMENTS_VALID, $postId);
     }
 
-    public function getInvalidCommentsByPost(int $postId): array
+    public function getInvalidByPost(int $postId): array
     {
-        return $this->getComments($this::COMMENTS_INVALID, $postId);
+        return $this->get($this::COMMENTS_INVALID, $postId);
     }
 
     private function formatResponse($comments): array
@@ -108,7 +109,7 @@ class CommentManager extends Manager
         return $result;
     }
 
-    public function getCommentById(int $commentId)
+    public function getById(int $commentId)
     {
         $requestComments = $this::BASE_REQUEST.'WHERE comment.id = :id ;';
 
@@ -116,14 +117,14 @@ class CommentManager extends Manager
         $ret=null;
         $resultRequest = $comments->fetch();
         if (!$resultRequest) {
-            throw new \Exception('commentaire non trouvé');
+            throw new CommentNotFoundException($commentId);
         }
         $ret = $this->createFromArray($resultRequest);
         
         return $ret;
     }
 
-    public function validateComment(int $commentId)
+    public function validate(int $commentId)
     {
         $request = 'UPDATE comment
                     SET isValid = 1
@@ -132,7 +133,7 @@ class CommentManager extends Manager
         return $result;
     }
 
-    public function invalidateComment(int $commentId)
+    public function invalidate(int $commentId)
     {
         $request = 'UPDATE comment
                     SET isValid = 0

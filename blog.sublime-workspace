@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"res",
+				"response"
+			],
+			[
+				"json_",
+				"json_encode"
+			],
+			[
+				"Invali",
+				"InvalidTokenException"
+			],
+			[
+				"URL",
+				"URL_POST"
+			],
+			[
+				"getAll",
+				"getAllPosts"
+			],
+			[
+				"Pos",
+				"PostNotFoundException"
+			],
+			[
+				"View",
+				"ViewNotFoundException"
+			],
+			[
+				"padd",
+				"padding-top\tproperty"
+			],
+			[
+				"templ",
+				"templatingEngine"
+			],
+			[
 				"administr",
 				"administration"
 			],
@@ -46,10 +82,6 @@
 			[
 				"sessio",
 				"session_destroy"
-			],
-			[
-				"res",
-				"result"
 			],
 			[
 				"token",
@@ -124,10 +156,6 @@
 				"contentFile"
 			],
 			[
-				"URL",
-				"URL_BASE"
-			],
-			[
 				"INPUT",
 				"INPUT_POST"
 			],
@@ -149,19 +177,41 @@
 			}
 		},
 		{
-			"contents": "anniv568E1W2B\n\nhttps://traveler.socamaine.fr/servlet/traveler\nhttps://traveler.scanormande.fr/servlet/traveler\nhttps://traveler.scaouest.fr/servlet/traveler\nhttps://traveler.leclerc.groupe-sigma.com\n\ncomptadrive > standard\n\nvadredi 4 --",
+			"contents": "anniv568E1W2B\n\nhttps://traveler.socamaine.fr/servlet/traveler\nhttps://traveler.scanormande.fr/servlet/traveler\nhttps://traveler.scaouest.fr/servlet/traveler\nhttps://traveler.leclerc.groupe-sigma.com\n\n\npour scaouest : 205.0.211.27\n\npour scachap : 207.0.211.27\n\npour socamaine : 206.0.211.27\n\nPour scanormande : 212.0.211.27\n\nPour scacentre : 214.0.211.27\n\n",
 			"settings":
 			{
-				"buffer_size": 236,
+				"buffer_size": 355,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "index.php",
+			"contents": "https://sigmainformatique.sharepoint.com/_layouts/15/userphoto.aspx?size=L&username=\nhttps://eur.delve.office.com/mt/v3/people/profileimage?userId=\n",
 			"settings":
 			{
-				"buffer_size": 2225,
+				"buffer_size": 148,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "; Database parameters\n[database]\nhost=\"localhost\"\nport=\"3306\"\ndbname=\"blog\"\nusername=\"root\"\npassword=\"\"\n\n; Templates parameters\n[templates]\ndirectory=\"../templates\"\n\n; Application parameters\n[application]\nimagePath=\"../public/images\"\n\n; Urls for redirections\n[urls]\naddcomment = \"/?action=addComment&postId=\"\naddpost    = \"/?action=addPost\"\nadmin      = \"/?action=admin\";\neditpost   = \"/?action=editPost&id=\"\nhome       = \"/?action=home\"\nlogin      = \"/?action=login\"\nlogout     = \"/?action=logout\"\npost       = \"/?action=post&id=\"\nregister   = \"/?action=register\"\nremovepost = \"/?action=editPost&id=\"\n\n; Filenames for views\n[views]\naddpost  = \"addPost\"\nadmin    = \"admin\"\neditpost = \"editPost\"\nerror    = \"error\"\nhome     = \"home\"\nlogin    = \"login\"\npost     = \"post\"\nregister = \"register\"\n\n; Routages for controllers\n[routages]\naddComment[controller]=\"CommentController\"\naddComment[method]=\"add\"\naddPost[controller]=\"PostController\"\naddPost[method]=\"add\"\nadmin[controller]=\"AdminController\"\nadmin[method]=\"display\"\neditPost[controller]=\"PostController\"\neditPost[method]=\"edit\"\nhome[controller]=\"HomeController\"\nhome[method]=\"display\"\ninvalidateComment[controller]=\"CommentController\"\ninvalidateComment[method]=\"invalidate\"\nlogin[controller]=\"LoginController\"\nlogin[method]=\"display\"\nlogout[controller]=\"LoginController\"\nlogout[method]=\"logout\"\npost[controller]=\"PostController\"\npost[method]=\"display\"\nregister[controller]=\"RegisterController\"\nregister[method]=\"display\"\nremoveComment[controller]=\"CommentController\"\nremoveComment[method]=\"remove\"\nvalidateComment[controller]=\"CommentController\"\nvalidateComment[method]=\"validate\"\nremovePost[controller]=\"PostController\"\nremovePost[method]=\"remove\"\n",
+			"file": "config/config.local.ini",
+			"file_size": 1800,
+			"file_write_time": 132441911345749144,
+			"settings":
+			{
+				"buffer_size": 1700,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php\n\nnamespace Blog\\Controller;\n\nuse Blog\\Framework\\SecuredController;\nuse Blog\\Model\\Manager\\CommentManager;\nuse Blog\\Model\\Manager\\PostManager;\nuse Blog\\Exceptions\\NotEnoughRightsException;\n\n/**\n * Manages admin display on website\n */\nclass AdminController extends SecuredController\n{\n    public const URL_ADMIN = \"/?action=admin\";\n    public const URL_HOME = \"/?action=home\";\n\n    public const VIEW_ADMIN = \"admin\";\n    /**\n     * Displays admin view if user is connected and admin\n     * Redirects to login if user isn't connected\n     * Throw exception if user is connected and isn't admin\n     * @throws Blog\\Exceptions\\NotEnoughRightsException if user is connected and isn't admin \n     */\n    public function display()\n    {\n        $this->checkAdminRights();\n        //Render admin view with all comments and create new token for actions\n        $this->render($this::VIEW_ADMIN, [\n            'comments' => $this->getAllComments(),\n            'token'    => $this->getToken(),\n            'posts'    => $this->getAllPosts()\n        ]);\n    }\n\n    /**\n     * Call CommentManager for getting all invalids comments\n     * @return array Returns an array, empty or filled with all invalids comments\n     */\n    protected function getAllInvalidComments()\n    {\n        $this->checkAdminRights();\n        return (new CommentManager($this->config))->getAllInvalid();\n    }\n    /**\n     * Call CommentManager for getting all comments\n     * @return array Returns an array, empty or filled with all comments\n     */\n    protected function getAllComments()\n    {\n        $this->checkAdminRights();\n        return (new CommentManager($this->config))->getAll();\n    }\n    /**\n     * [getAllComments description]\n     * @return [type] [description]\n     */\n    protected function getAllUsers()\n    {\n        //return (new CommentManager($this->config))->getAllInvalidComments();\n    }\n    /**\n     * [getAllComments description]\n     * @return [type] [description]\n     */\n    protected function getAdminUsers()\n    {\n        //return (new CommentManager($this->config))->getAllInvalidComments();\n    }\n    /**\n     * [getAllComments description]\n     * @return [type] [description]\n     */\n    protected function getNonAdminUsers()\n    {\n        //return (new CommentManager($this->config))->getAllInvalidComments();\n    }\n\n    protected function getAllPosts()\n    {\n        return (new PostManager($this->config))->getAll();\n    }\n}\n",
+			"file": "Controller/AdminController.php",
+			"file_size": 2534,
+			"file_write_time": 132441244228295533,
+			"settings":
+			{
+				"buffer_size": 2432,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -177,20 +227,68 @@
 		"selected_items":
 		[
 			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"alignmen",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"",
+				"File: Save All"
+			],
+			[
+				"git status",
+				"Set Syntax: SublimeGit Status"
+			],
+			[
+				"status",
+				"Indexing Status"
+			],
+			[
 				"push",
 				"Git: Push"
 			],
 			[
-				"status",
+				"stat",
 				"Git: Status"
+			],
+			[
+				"branch",
+				"Git: New Branch"
+			],
+			[
+				"gi",
+				"Git: Status"
+			],
+			[
+				"statu",
+				"Git: Status"
+			],
+			[
+				"staut",
+				"Git: Status"
+			],
+			[
+				"staus",
+				"Git: Status"
+			],
+			[
+				"st",
+				"Git: Status"
+			],
+			[
+				"sta",
+				"Git: Status"
+			],
+			[
+				"pus",
+				"Git: Push"
 			],
 			[
 				"inst",
 				"Package Control: Install Package"
-			],
-			[
-				"stat",
-				"Git: Status"
 			],
 			[
 				"package",
@@ -243,10 +341,6 @@
 			[
 				"install",
 				"Package Control: Install Package"
-			],
-			[
-				"packa",
-				"Install Package Control"
 			]
 		],
 		"width": 0.0
@@ -256,6 +350,7 @@
 		"height": 124.0,
 		"history":
 		[
+			"alignment"
 		]
 	},
 	"distraction_free":
@@ -269,22 +364,117 @@
 	},
 	"expanded_folders":
 	[
-		"/C/wamp64/www/Blog"
+		"/C/wamp64/www/Blog",
+		"/C/wamp64/www/Blog/config",
+		"/C/wamp64/www/Blog/Controller",
+		"/C/wamp64/www/Blog/Framework",
+		"/C/wamp64/www/Blog/Model",
+		"/C/wamp64/www/Blog/Model/Manager",
+		"/C/wamp64/www/Blog/public",
+		"/C/wamp64/www/Blog/public/themes",
+		"/C/wamp64/www/Blog/templates"
 	],
 	"file_history":
 	[
-		"/C/wamp64/www/Blog/sftp-config.json",
+		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Alignment/Default (Windows).sublime-keymap",
+		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Terminal/Base File.sublime-settings",
+		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Base File.sublime-settings",
+		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/wamp64/www/Blog/Controller/PostController.php",
+		"/C/wamp64/www/Blog/Framework/Configuration.php",
+		"/C/wamp64/www/Blog/config/redirections.ini",
+		"/C/wamp64/www/Blog/config/config.local.ini",
+		"/C/wamp64/www/Blog/config/dv",
+		"/C/wamp64/www/Blog/.gitignore",
+		"/C/wamp64/www/Blog/Controller/AdminController.php",
+		"/C/wamp64/www/Blog/templates/admin.twig",
+		"/C/wamp64/www/Blog/Controller/CommentController.php",
+		"/C/wamp64/www/Blog/public/index.php",
+		"/C/wamp64/www/Blog/Model/Manager/CommentManager.php",
+		"/C/wamp64/www/Blog/Model/Manager/TokenManager.php",
+		"/C/wamp64/www/Blog/Model/Manager/PostManager.php",
+		"/C/wamp64/www/Blog/templates/template.twig",
+		"/C/wamp64/www/Blog/templates/request.twig",
+		"/C/wamp64/www/Blog/config/config.local.php",
+		"/C/wamp64/www/Blog/Framework/Session.php",
+		"/C/wamp64/www/Blog/Model/Manager/UserManager.php",
+		"/C/wamp64/www/Blog/Controller/LoginController.php",
+		"/C/wamp64/www/Blog/Controller/RegisterController.php",
+		"/C/wamp64/www/Blog/Framework/Controller.php",
+		"/C/wamp64/www/Blog/Controller/ErrorController.php",
+		"/D/MySigma/fleboul/OneDrive - SIGMA Informatique/Bureau/export.csv",
+		"/C/wamp64/www/Blog/Controller/HomeController.php",
+		"/C/wamp64/www/Blog/Exceptions/InvalidTokenException.php",
+		"/C/wamp64/www/Blog/Exceptions/ExpiredSessionException.php",
+		"/C/wamp64/www/Blog - Copie/public/index.php",
+		"/C/wamp64/www/Blog/public/request.php",
+		"/C/wamp64/www/Blog/public/themes/freelancer 4.5/css/signin.css",
+		"/C/wamp64/www/Blog/templates/editPost.twig",
+		"/C/wamp64/www/Blog/v.html",
+		"/C/wamp64/www/Blog/templates/post.twig",
+		"/C/wamp64/www/Blog/public/plugins/datatables/datatables/Readme.md",
+		"/C/wamp64/www/Blog/templates/error.twig",
+		"/C/wamp64/www/Blog/Exceptions/AlreadyUsedMailAddressException.php",
+		"/D/MySigma/fleboul/OneDrive - SIGMA Informatique/Bureau/sdqd.csv",
+		"/C/wamp64/www/Blog/public/plugins/datatables/datatables/media/js/jquery.dataTables.min.js",
+		"/C/wamp64/www/Blog/Exceptions/PostNotFoundException.php",
+		"/C/wamp64/www/Blog/Exceptions/FileNotFoundException.php",
+		"/C/wamp64/www/Blog/templates/register.twig",
+		"/C/wamp64/www/Blog/templates/home.twig",
+		"/C/wamp64/www/Blog/templates/addPost.twig",
+		"/C/wamp64/www/Blog - Copie/Controller/PostController.php",
+		"/C/wamp64/www/Blog - Copie/Controller/RegisterController.php",
+		"/C/wamp64/www/Blog - Copie/Controller/LoginController.php",
+		"/C/wamp64/www/Blog - Copie/Controller/HomeController.php",
+		"/C/wamp64/www/Blog - Copie/Controller/CommentController.php",
+		"/C/wamp64/www/Blog - Copie/Controller/AdminController.php",
+		"/C/wamp64/www/Blog - Copie/Framework/View.php",
+		"/C/wamp64/www/Blog - Copie/Framework/SecuredController.php",
+		"/C/wamp64/www/Blog - Copie/Model/Manager/PostManager.php",
+		"/C/wamp64/www/Blog/templates_v2/login.twig",
 		"/C/wamp64/www/Blog/index.php",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/SFTP/SFTP.sublime-settings",
+		"/C/wamp64/www/PHP_UML-1.6.2/UML.php",
+		"/C/wamp64/www/Blog/sql/structures.sql",
+		"/C/wamp64/www/Blog/sql/structures_ovh.sql",
 		"/C/wamp64/www/Blog/Framework/View.php",
-		"/C/wamp64/www/Blog/View/content/register.twig",
-		"/C/wamp64/www/Blog/View/content/post.twig",
+		"/C/wamp64/www/Blog/templates_v2/post.twig",
+		"/C/wamp64/www/Blog/templates_v2/home.twig",
+		"/C/wamp64/www/Blog/templates_v2/template.twig",
+		"/D/MySigma/fleboul/OneDrive - SIGMA Informatique/Bureau/export_clerdis.csv",
+		"/C/Users/fleboul/Downloads/startbootstrap-freelancer-gh-pages (1)/startbootstrap-freelancer-gh-pages/css/styles.css",
+		"/C/wamp64/www/Blog/vendor/themes/freelancer 4.5/css/styles.css",
+		"/C/wamp64/www/Blog/composer.json",
+		"/C/wamp64/www/Blog/public/plugins/autoload.php",
+		"/C/wamp64/www/Blog/Common/themes/js/freelancer.js",
+		"/C/wamp64/www/Blog/Common/themes/js/freelancer.min.js",
+		"/C/wamp64/www/Blog/Common/themes/vendor/bootstrap/css/bootstrap.css",
+		"/C/tmp/mabite/vendor/symfony/http-foundation/Request.php",
+		"/C/tmp/mabite/vendor/symfony/http-foundation/Session/SessionInterface.php",
+		"/C/wamp64/www/Blog/vendor/twig/twig/src/Environment.php",
+		"/C/wamp64/www/Blog/vendor/twig/twig/src/TemplateWrapper.php",
+		"/C/wamp64/www/Blog/View/content/addPost.twig",
 		"/C/wamp64/www/Blog/View/content/editPost.twig",
+		"/C/wamp64/www/Blog/View/content/editPost_backup.twig",
+		"/C/wamp64/www/Blog/View/content/post.twig",
+		"/C/wamp64/www/Blog/Model/Comment.php",
+		"/C/wamp64/www/Blog/Exceptions/UserNotFoundException.php",
+		"/C/wamp64/www/Blog/Exceptions/ExpiredTokenException.php",
+		"/C/wamp64/www/Blog/Exceptions/FileNotValidException.php",
+		"/C/wamp64/www/Blog/Exceptions/MoveImageException.php",
+		"/C/wamp64/www/Blog/Exceptions/NotEnoughRightsException.php",
+		"/C/wamp64/www/Blog/Exceptions/TooLargeImageException.php",
+		"/C/wamp64/www/Blog/Exceptions/UserNotActiveException.php",
+		"/C/wamp64/www/Blog/Exceptions/UserNotConnectedException.php",
+		"/C/wamp64/www/Blog/Exceptions/ViewNotFoundException.php",
+		"/C/wamp64/www/Blog/Exceptions/WrongPasswordException.php",
+		"/C/wamp64/www/Blog/sftp-config.json",
+		"/D/MySigma/fleboul/OneDrive - SIGMA Informatique/Bureau/export_ld-responsables.txt",
+		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/SFTP/SFTP.sublime-settings",
+		"/C/wamp64/www/Blog/View/content/register.twig",
 		"/C/wamp64/www/Blog/View/content/template.twig",
 		"/C/wamp64/www/Blog/View/content/admin.twig",
 		"/C/wamp64/www/Blog/View/content/home.twig",
 		"/C/wamp64/www/Blog/View/content/login.twig",
-		"/C/wamp64/www/Blog/View/content/addPost.twig",
 		"/C/wamp64/www/Blog/vendor/twig/twig/src/Loader/FilesystemLoader.php",
 		"/C/wamp64/www/Blog/View/pages/template.twig",
 		"/C/wamp64/www/Blog/Model/Token.php",
@@ -292,97 +482,28 @@
 		"/C/wamp64/www/Blog/templates/demo.twig",
 		"/C/wamp64/www/Blog/View/content/register.php",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Git.sublime-settings",
-		"/C/wamp64/www/Blog/Framework/Session.php",
-		"/C/wamp64/www/Blog/Controller/CommentController.php",
 		"/C/wamp64/www/Blog/Framework/SecuredController.php",
-		"/C/wamp64/www/Blog/Framework/Configuration.php",
 		"/C/wamp64/www/Blog/Framework/Entity.php",
-		"/C/wamp64/www/Blog/Controller/AdminController.php",
 		"/C/wamp64/www/Blog/Framework/Manager.php",
-		"/C/wamp64/www/Blog/Framework/Controller.php",
-		"/C/wamp64/www/Blog/Controller/PostController.php",
-		"/C/wamp64/www/Blog/Controller/HomeController.php",
-		"/C/wamp64/www/Blog/Model/Manager/CommentManager.php",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/GotoDocumentation/Default (Windows).sublime-keymap",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
-		"/C/wamp64/www/Blog/Exceptions/FileNotFoundException.php",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/DocBlockr/Base File.sublime-settings",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/DocBlockr/README.md",
-		"/C/wamp64/www/Blog/Exceptions/TooLargeImageException.php",
-		"/C/wamp64/www/Blog/Exceptions/MoveImageException.php",
-		"/C/wamp64/www/Blog/Controller/LoginController.php",
 		"/C/wamp64/www/Blog/View/content/login.php",
 		"/C/wamp64/www/Blog/View/content/editPost.php",
-		"/C/wamp64/www/Blog/Exceptions/FileNotValidException.php",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Package Control.sublime-settings",
 		"/C/wamp64/www/Blog/View/content/post.php",
-		"/C/wamp64/www/Blog/Model/Manager/PostManager.php",
 		"/C/wamp64/www/Blog/Model/Post.php",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Git/Git.sublime-settings",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/BracketHighlighter/Example.sublime-keymap",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Phpcs/Default (Windows).sublime-keymap",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/GotoDocumentation/goto_documentation.sublime-settings",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/goto_documentation.sublime-settings",
-		"/C/tmp/mabite/vendor/symfony/http-foundation/Request.php",
 		"/C/wamp64/www/Blog/Model/User.php",
 		"/C/wamp64/www/Blog/View/content/admin.php",
-		"/C/wamp64/www/Blog/Controller/RegisterController.php",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Base File.sublime-settings",
 		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Alignment/Base File.sublime-settings",
 		"/C/wamp64/www/Blog/View/content/home.php",
-		"/C/wamp64/www/Blog/Model/Comment.php",
-		"/C/wamp64/www/Blog/Exceptions/PostNotFoundException.php",
-		"/C/wamp64/www/Blog/Model/Manager/UserManager.php",
-		"/C/wamp64/www/Blog/Model/Manager/TokenManager.php",
 		"/C/wamp64/www/Blog/View/pages/template.php",
-		"/C/wamp64/www/Blog/View/content/addPost.php",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Settings/SideBarEnhancements.json",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/SideBarEnhancements/Default (Windows).sublime-keymap",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/SideBarEnhancements/Side Bar.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Side Bar.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Emmet/Emmet.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/AutoFileName/autofilename.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Alignment/Default (Windows).sublime-keymap",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/SublimeGit/Default.sublime-keymap",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/phpcs.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/SublimeGit/SublimeGit.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/SublimeGit.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/Phpcs/phpcs.sublime-settings",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/phar/phpmd.bat",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/phar/phpcbf.bat",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/phar/php-cs-fixer.bat",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/phar/phpcs.bat",
-		"/C/Users/fleboul/AppData/Roaming/Sublime Text 3/Packages/User/Emmet.sublime-settings",
-		"/C/wamp64/www/Blog/Exceptions/AlreadyUsedMailAddressException.php",
-		"/C/wamp64/www/Blog/Exceptions/ExpiredSessionException.php",
-		"/C/wamp64/www/Blog/Exceptions/ExpiredTokenException.php",
-		"/C/wamp64/www/Blog/Exceptions/InvalidTokenException.php",
-		"/C/wamp64/www/Blog/Exceptions/NotEnoughRightsException.php",
-		"/C/wamp64/www/Blog/Exceptions/UserNotActiveException.php",
-		"/C/wamp64/www/Blog/Exceptions/UserNotConnectedException.php",
-		"/C/wamp64/www/Blog/Exceptions/UserNotFoundException.php",
-		"/C/wamp64/www/Blog/Exceptions/WrongPasswordException.php",
-		"/C/wamp64/www/Blog/composer.json",
-		"/C/wamp64/www/Blog/README.md",
-		"/C/wamp64/www/Blog/Framework/Token.php",
-		"/C/wamp64/www/Blog/vendor/twig/twig/src/Extension/DebugExtension.php",
-		"/C/wamp64/www/Blog/config/config.local.php",
-		"/C/wamp64/www/Blog/Common/themes/css/DataTables-1.10.21/js/jquery.dataTables.js",
-		"/C/wamp64/www/Blog/config/config.php",
-		"/C/wamp64/www/Blog/Common/themes/js/datatables.min.js",
-		"/C/wamp64/www/Blog/.gitignore",
-		"/C/Users/fleboul/Desktop/LD-Magasin-Paridis.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Administratif.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Textile-Chaussures.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Bazar Saisonnier.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Encadrement.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Equipement Maison.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Frais Trad.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-PFLS.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-PGC.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Resp. Rayon.txt",
-		"/C/Users/fleboul/Desktop/LD-Paridis-Restauration.txt"
+		"/C/wamp64/www/Blog/View/content/addPost.php"
 	],
 	"find":
 	{
@@ -393,6 +514,7 @@
 		"height": 104.8,
 		"where_history":
 		[
+			"<current file>",
 			"C:\\wamp64\\www\\Blog",
 			"C:\\tmp\\mabite\\vendor\\symfony",
 			"C:\\wamp64\\www\\Blog",
@@ -409,6 +531,56 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"URL_LOGIN",
+			"checkAdminRights",
+			"updateValidation",
+			"getComments",
+			",",
+			"URL_POST",
+			"lava",
+			"laval",
+			"visibilcityIcon",
+			"dtOrderExample",
+			"dataTables_length",
+			"dtOrderExample",
+			"tabContent",
+			"comment",
+			"user",
+			"view",
+			"MoveImageException",
+			"Session",
+			"Configuration",
+			"View",
+			"Comment",
+			"CommentManager",
+			"View",
+			"NotConnectedUserException",
+			"NotEnoughRightsException",
+			"ExpiredTokenException",
+			"Comment",
+			"TokenManager",
+			"NotEnoughRightsException",
+			"User",
+			"LoaderError",
+			"Post",
+			"User",
+			"Comment",
+			"PostNotFoundException",
+			"Session",
+			"Configuration",
+			"Comment",
+			"CommentManager",
+			"Configuration",
+			"commentaire_validateur_idx",
+			"blog",
+			"cabin.png",
+			",",
+			"body",
+			"portfolio-modal",
+			"affix",
+			"hover",
+			"View/",
+			"View\\",
 			"key",
 			"header",
 			"SecuredController",
@@ -479,6 +651,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"get",
+			";",
+			"florianlnfleb",
+			";",
 			"\\n",
 			"\"C:\\\\Users\\\\fleboul\\\\AppData\\\\Roaming\\\\Sublime Text 3\\\\phar\\\\",
 			"    ",
@@ -507,7 +683,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -523,8 +699,8 @@
 						"selection":
 						[
 							[
-								13649,
-								13682
+								13698,
+								13698
 							]
 						],
 						"settings":
@@ -547,51 +723,21 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -601,7 +747,37 @@
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"incomplete_sync": null,
 							"syntax": "Packages/Text/Plain text.tmLanguage",
@@ -609,10 +785,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1014.0,
+						"translation.y": 305.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -620,15 +796,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 236,
+						"buffer_size": 355,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								13
+								355,
+								355
 							]
 						],
 						"settings":
@@ -651,6 +827,11 @@
 							},
 							"bracket_highlighter.regions":
 							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -666,36 +847,16 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
@@ -705,7 +866,22 @@
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"incomplete_sync": null,
 							"sftp_new_server": true,
@@ -715,16 +891,15 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "index.php",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2225,
+						"buffer_size": 148,
 						"regions":
 						{
 						},
@@ -755,6 +930,11 @@
 							},
 							"bracket_highlighter.regions":
 							[
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -770,36 +950,16 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
@@ -809,14 +969,172 @@
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content"
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"default_dir": "C:\\wamp64\\www\\Blog\\config",
+							"incomplete_sync": null,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "config/config.local.ini",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1700,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1166,
+								1166
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 608.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Controller/AdminController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2432,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								420,
+								292
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										2430,
+										2431
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"region.purplish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										287,
+										288
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
 							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": true,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -834,7 +1152,7 @@
 	},
 	"input":
 	{
-		"height": 37.0
+		"height": 40.0
 	},
 	"layout":
 	{

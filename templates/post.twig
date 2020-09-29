@@ -1,6 +1,6 @@
 {% extends "template.twig" %}
 {% block preBody %}
-    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+    <link href="/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
 <div id="post" class="text-center padding" cz-shortcut-listen="true">
@@ -16,7 +16,7 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image-->
-                <img class="img-fluid rounded mb-5" src="{{ post.getPicture ?? 'images/cabin.png' }}" alt="" />
+                <img class="img-fluid rounded mb-5" src="/{{ post.getPicture ?? '/images/cabin.png' }}" alt="" />
                 <!-- Portfolio Modal - Text-->
                 <p class="mb-5">{{ post.getContent }}</p>
                  <ul class="list-inline item-details">
@@ -34,7 +34,7 @@
                     </li>
                     {% if session.isAdmin %}
                     <li>Modification :
-                        <strong><a href="/?action=editPost&id={{ post.getid }}">Editer l'article</a></strong>
+                        <strong><a href="/{{ router.url('post_edit_page', {'id' : post.getId}) }}">Editer l'article</a></strong>
                     </li>
                     {% endif %}
                 </ul>
@@ -49,7 +49,7 @@
                             <img src="https://robohash.org/{{ comment.getAuthor.getPseudo }}/?size=100x100&set=any" class="img-circle avatar " alt="user profile image">
                         </div>
                         <div class="col-lg-3 text-left">
-                            <h5><a href="/?action=user&id={{ comment.getAuthor.getId }}"><b>{{ comment.getAuthor.getPseudo }}</b></a></h5>
+                            <h5><b>{{ comment.getAuthor.getPseudo }}</b></a></h5>
                             <h6 class="text-muted time">{{ comment.getCreationDate.format('Y-m-d H:i') }}</h6>
                         </div>
                     </div>
@@ -61,15 +61,33 @@
                     <hr>
                     {% endfor %}
                     {% if session.isAuthenticated %}
-                    <form class="form-comment" action="/?action=addComment&postId={{ post.getId }}" method="post">
                         <label for="commentText" class="sr-only">Commentaire :</label>
-                        <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText"></textarea>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Ajouter un commentaire</button>
-                    </form>
+                        <textarea style="resize: none;" class="form-control" placeholder="Ajouter un commentaire" required="" name="commentText" id="commentText"></textarea>
+                        <button class="btn btn-lg btn-primary btn-block" onclick="addComment()" type="submit">Ajouter un commentaire</button>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block postBody %}
+    <script type="text/javascript">
+        function addComment(){
+            $.ajax({
+                type: "POST",
+                url: "/?action=addComment&postId={{ post.getId }}",
+                dataType : 'json',
+                data: {
+                    commentText: $('#commentText').val()
+                },
+                success : function(data){
+                    console.log(data);
+                },
+                error : function(argument) {
+                    console.log('error:'+JSON.stringify(argument));
+                }
+            });
+        }
+    </script>
 {% endblock %}

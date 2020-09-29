@@ -7,6 +7,10 @@ use Blog\Model\Manager\UserManager;
 
 class LoginController extends Controller
 {
+    public const URL_ADMIN      =    "/admin";
+    public const URL_HOME       =    "/home";
+    public const URL_LOGIN      =    "/login";
+    public const VIEW_LOGIN     =    "login";
     
     public function display()
     {
@@ -21,15 +25,15 @@ class LoginController extends Controller
         if (!(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) || !(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
             $formUrl=$this::URL_LOGIN;
             if ($redirect) {
-                $formUrl.='&redirect='.urlencode($redirect);
+                $formUrl.='/?redirect='.urlencode($redirect);
             }
             $this->render($this::VIEW_LOGIN, ['formUrl'=>$formUrl]);
             return;
         }
-        $this->login();
+        // $this->login();
     }
 
-    private function login()
+    public function login()
     {
         try {
             $this->session->login((new UserManager($this->config))->login(
@@ -38,7 +42,6 @@ class LoginController extends Controller
             ));
             $redirect = filter_input(INPUT_GET, 'redirect');
             if ($redirect) {
-                var_dump($redirect);
                 $this->setRedirection($redirect);
             }
             if ($this->session->isAdmin()) {

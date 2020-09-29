@@ -17,7 +17,7 @@
                 <a class="nav-link" data-toggle="pill" href="#postsManagement" role="tab" aria-selected="false">Gestion des articles</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/?action=addPost" aria-selected="false">Ajouter un article</a>
+                <a class="nav-link" href="/{{ router.url('post_add_page') }}" aria-selected="false">Ajouter un article</a>
               </li>
             </ul>
             <div class="tab-content">
@@ -41,7 +41,7 @@
                                 <td>{{ comment.getCreationDate.format('Y-m-d H:i') }}</td>
                                 <td><i id="visibilityIcon_{{ comment.getId }}" class="fa fa-eye{{ comment.isValid?"":"-slash"}}" aria-hidden="true"></i></td>
                                 <td>
-                                    <a href="/?action=post&id={{ comment.getPostId }}">Lien</a>
+                                    <a href="/{{ router.url('post_page', {'id' : comment.getPostId}) }}">Lien</a>
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -98,7 +98,7 @@
                                 <td>{{ post.getCreationDate.format('Y-m-d H:i') }}</td>
                                 <td>{{ post.getModificationDate.format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <a href="/?action=post&id={{ post.getId }}">Lien</a>
+                                    <a href="/{{ router.url('post_page', {'id' : comment.getPostId}) }}">Lien</a>
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -177,7 +177,7 @@
         function removePost(id){
             $.ajax({
                 type: "POST",
-                url: "/?action=removePost&id="+id,
+                url: "/posts/"+id+"/remove",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
@@ -192,7 +192,7 @@
                     alert("Une erreur est survenue lors de la suppression");
                 },
                 error : function(argument) {
-                    console.log(argument);
+                    console.log(JSON.stringify(argument));
                 }
             });
         }
@@ -201,14 +201,14 @@
             console.log("{{token}}"+" "+id);
             $.ajax({
                 type: "POST",
-                url: "/?action=validateComment&id="+id,
+                url: "/comments/"+id+"/validate",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
                 success : function(data){
                     console.log(data);
-                    if (data) {
+                    if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye-slash').addClass('fa-eye');
                         $('#commentButton_'+id).removeClass('btn-success').addClass('btn-warning');
@@ -219,7 +219,7 @@
                     }
                 },
                 error : function(argument) {
-                    console.log("error:" + argument);
+                    console.log("error:" + JSON.stringify(argument));
                 }
             });
         }
@@ -228,14 +228,14 @@
             console.log("{{token}}"+" "+id);
             $.ajax({
                 type: "POST",
-                url: "/?action=invalidateComment&id="+id,
+                url: "/comments/"+id+"/invalidate",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
                 success : function(data){
                     console.log(data);
-                    if (data) {
+                    if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye').addClass('fa-eye-slash');
                         $('#commentButton_'+id).removeClass('btn-warning').addClass('btn-success');
@@ -254,17 +254,19 @@
         function removeComment(id){
             $.ajax({
                 type: "POST",
-                url: "/?action=invalidateComment&id="+id,
+                url: "/comments/"+id+"/remove",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
                 },
                 success : function(data){
                     console.log(data);
-                    if (data) {
-                        $("#comment_"+id).remove()
-                        $('.dtOrderExample').DataTable().ajax.reload();
+                    if (data.rowAffecteds == 1) {
+                        // $("#comment_"+id).remove()
+                        $('#dtOrderExample').DataTable().ajax.reload();
+                        return;
                     }
+                    alert("Erreur de suppression : "+data.code+" : "+data.message);
                 },
                 error : function(argument) {
                     console.log(argument);

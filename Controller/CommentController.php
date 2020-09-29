@@ -22,41 +22,48 @@ class CommentController extends SecuredController
      * Add a comment for a post. Gets post id in 'postId' value in url (GET) and datas by form (POST)
      * @throws PostNotFoundException If id isn't valid : <= 0
      */
-    public function addComment()
+    public function add(int $postId)
     {
-        $this->checkUserRights();
-        //Get and check post id via GET
-        $postId = filter_input(INPUT_GET, 'postId', FILTER_VALIDATE_INT);
-        if ($postId == false) {
-            throw new PostNotFoundException($postId);
+        $error = null;
+        try{
+            $this->checkUserRights();
+            //Get and check post id via GET
+            if ($postId < 0) {
+                throw new PostNotFoundException($postId);
+            }
+            //Create comment object with POST value, session user, an post id
+            $comment = new Comment([
+                'content' => filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+                'author'  => $this->session->getAttribute('user'),
+                'postId'  => $postId
+            ]);
+            //Add newly created object in database
+            $response = (array('rowAffecteds' => (new CommentManager($this->config))->add($comment)->rowCount()));
+        } catch (\Exception $e){
+            $error = $e;
         }
-        //Create comment object with POST value, session user, an post id
-        $comment = new Comment([
-            'content' => filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            'author'  => $this->session->getAttribute('user'),
-            'postId'  => $postId
+        $response['message'] = $error? $error->getMessage():'OK';
+        $response['code']    = $error? $error->getCode() : '0';
+        $this->render('request', [
+            'response' => $response
         ]);
-        //Add newly created object in database
-        (new CommentManager($this->config))->add($comment);
-        //Redirect to post page
-        $this->redirect($this::URL_POST.$postId);
     }
 
     /**
      * Validate a comment in database
      * @todo redirection
      */
-    public function validateComment()
+    public function validate(int $id)
     {
+        $error = null;
         //Validate comment
         try{
-            $response = json_encode(array('rowAffecteds' => $this->updateCommentValidation(true)));
+            $response['rowAffecteds'] =  $this->updateValidation($id, true);
         } catch (\Exception $e){
-            $error    = $e->getCode();
+            $error = $e;
         }
-        if (isset($error)) {
-            $response = $error;
-        }
+        $response['message'] = $error? $error->getMessage():'OK';
+        $response['code']    = $error? $error->getCode() : '0';
         $this->render('request', [
             'response' => $response
         ]);
@@ -66,17 +73,17 @@ class CommentController extends SecuredController
      * Invalidate a comment in database
      * @todo redirection
      */
-    public function invalidateComment()
+    public function invalidate(int $id)
     {
+        $error = null;
         //Invalidate comment
         try{
-            $response = json_encode(array('rowAffecteds' => $this->updateCommentValidation(false)));
+            $response['rowAffecteds'] =  $this->updateValidation($id, false);
         } catch (\Exception $e){
-            $error    = $e->getCode();
+            $error = $e;
         }
-        if (isset($error)) {
-            $response = $error;
-        }
+        $response['message'] = $error? $error->getMessage():'OK';
+        $response['code']    = $error? $error->getCode() : '0';
         $this->render('request', [
             'response' => $response
         ]);
@@ -91,11 +98,10 @@ class CommentController extends SecuredController
      * @throws NotValidTokenException If token isn't valid
      * @throws NotValidCommentIdException If comment id isn't valid
      */
-    protected function updateCommentValidation(bool $valid)
+    protected function updateValidation(int $id, bool $valid)
     {
         $this->checkAdminRights();
         //Get values from GET and POST, checks token  
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $resultCheck = $this->session->checkToken($token);
         //If id is'nt valid, throw exception
@@ -115,22 +121,30 @@ class CommentController extends SecuredController
         }
         //Change comment validation in database
         if ($valid) {
-            return (new CommentManager($this->config))->validateComment($id)->rowCount();
+            return (new CommentManager($this->config))->validate($id)->rowCount();
         }
-        return (new CommentManager($this->config))->invalidateComment($id)->rowCount();
+        return (new CommentManager($this->config))->invalidate($id)->rowCount();
     }
 
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
      */
-    public function removeComment()
+    public function remove(int $commentId)
     {
-        $this->checkAdminRights();
-        //Gets comment id
-        $commentId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        //Create comment object
-        $comment = (new CommentManager($this->config))->getCommentById($commentId);
-        //remove object from database
-        (new CommentManager($this->config))->remove($comment);
+        $error = null;
+        try{
+            $this->checkAdminRights();
+            //Create comment object
+            $comment = (new CommentManager($this->config))->getById($commentId);
+            //remove object from database
+            $response['rowAffecteds'] = (new CommentManager($this->config))->remove($comment)->rowCount();
+        } catch (\Exception $e){
+            $error = $e;
+        }
+        $response['message'] = $error? $error->getMessage():'OK';
+        $response['code']    = $error? $error->getCode() : '0';
+        $this->render('request', [
+            'response' => $response
+        ]);
     }
 }

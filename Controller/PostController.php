@@ -2,38 +2,39 @@
 
 namespace Blog\Controller;
 
-use Blog\Framework\SecuredController;
+use Blog\Framework\Controller;
 use Blog\Model\Manager\PostManager;
 use Blog\Exceptions\NotEnoughRightsException;
 use Blog\Exceptions\TooLargeImageException;
 use Blog\Exceptions\MoveImageException;
 use Blog\Exceptions\PostNotFoundException;
 
-class PostController extends SecuredController
+class PostController extends Controller
 {
-    
-    protected const IMAGE_MAX_SIZE = 10000000;
+    public const VIEW_ADDPOST  = "addPost";
+    public const VIEW_EDITPOST = "editPost";
+    public const VIEW_POST     = "post";
+    protected const IMAGE_MAX_SIZE     = 10000000;
     protected const ALLOWED_EXTENSIONS = [
         'png',
         'jpg',
         'jpeg',
         'webp'
     ];
-    public function display()
+    public function display(int $postId)
     {
-        $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        if ($postId == false) {
+        if ($postId <= 0) {
             throw new PostNotFoundException($postId);
         }
-        $post = (new PostManager($this->config))->getPostById($postId);
+        $post = (new PostManager($this->config))->getById($postId);
         $this->render($this::VIEW_POST, ['post' => $post, "mainTitle"=>$post->getTitle()]);
     }
 
-    public function addPost()
+    public function add()
     {
         if (!$this->isAdmin()) {
             if (!$this->isUser()) {
-                $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_ADDPOST));
+                // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_ADDPOST));
             }
             throw new NotEnoughRightsException();
         }
@@ -59,23 +60,23 @@ class PostController extends SecuredController
         //$this->redirect(self::URL_HOME);
     }
 
-    public function editPost()
+    public function edit(int $postId)
     {
-        $postId   = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         if (!$this->isAdmin()) {
-            if (!$this->isUser()) {
-                $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
+            if ($this->isUser()) {
+                // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
+                throw new NotEnoughRightsException();
             }
-            throw new NotEnoughRightsException();
+            // throw new NotEnoughRightsException();
         }
 
         $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
         if (!$validate) {
-            $this->render($this::VIEW_EDITPOST, ["post"=>(new PostManager($this->config))->getPostById($postId)]);
+            $this->render($this::VIEW_EDITPOST, ["post"=>(new PostManager($this->config))->getById($postId)]);
             return;
         }
 
-        $postToUpdate = (new PostManager($this->config))->getPostById($postId);
+        $postToUpdate = (new PostManager($this->config))->getById($postId);
         $postToUpdate->setTitle(filter_input(INPUT_POST, 'postTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $postToUpdate->setChapo(filter_input(INPUT_POST, 'postChapo', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $postToUpdate->setContent(filter_input(INPUT_POST, 'postContent', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -110,19 +111,26 @@ class PostController extends SecuredController
         return null;
     }
 
+
     /**
      * Remove a comment in database. Gets comment id value by url (GET)
      */
-    public function removePost()
+    public function remove(int $postId)
     {
-        $this->checkAdminRights();
-        //Gets comment id
-        $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        //Create comment object
-        $post = (new PostManager($this->config))->getPostById($postId);
-        //remove object from database
-        // (new PostManager($this->config))->remove($post);
-        print((new PostManager($this->config))->remove($post)->rowCount());
+        $error = null;
+        //Validate comment
+        try{
+            $this->checkAdminRights();
+            $post = (new PostManager($this->config))->getById($postId);
+            $response['rowAffecteds'] =  (new PostManager($this->config))->remove($post)->rowCount();
+        } catch (\Exception $e){
+            $error = $e;
+        }
+        $response['message'] = $error? $error->getMessage():'OK';
+        $response['code']    = $error? $error->getCode() : '0';
+        $this->render('request', [
+            'response' => $response
+        ]);
         //$this->redirect($this::URL_ADMIN);
     }
 }

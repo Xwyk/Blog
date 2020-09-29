@@ -17,7 +17,7 @@ class UserManager extends Manager
     /**
      *
      */
-    public function getUserById(int $userId): User
+    public function getById(int $userId): User
     {
         $request = 'SELECT * FROM user 
                     WHERE id = :id ;';
@@ -25,7 +25,7 @@ class UserManager extends Manager
         return new User($user->fetch());
     }
 
-    public function getUserByMail(string $userMail)
+    public function getByMail(string $userMail)
     {
         $request = 'SELECT * FROM user 
                     WHERE mail_address = :mail ;';
