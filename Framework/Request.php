@@ -34,7 +34,7 @@ class Request
 
 	public function getUrl()
 	{
-		return $this->getArray->get($url);
+		return $this->getArray->get('url');
 	}
 
 	public function isRedirectionConfigured()

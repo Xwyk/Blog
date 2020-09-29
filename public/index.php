@@ -9,11 +9,10 @@ use Blog\Framework\Configuration;
 use Blog\Framework\Router;
 use Blog\Exceptions\ExpiredSessionException;
 
-
 $config  = new Configuration(__DIR__.'/../config/config.local.ini');
-$req = new Request($_GET, $_POST);
+$req     = new Request($_GET, $_POST);
 $session = new Session($config);
-$router = new Router($_GET['url']);
+$router  = new Router($req->getUrl());
 $view    = new View($config, $router);
 foreach ($config->getRoutes() as $routeName => $route) {
     try{
@@ -26,6 +25,4 @@ foreach ($config->getRoutes() as $routeName => $route) {
     }
     $router->$type($url, $controller.'#'.$method, $routeName);
 }
-// $view    = new View($config, $router->getRoutes());
-$t= ($router->run($view, $session, $config));
-var_dump($req->getDecodedRedirection());
+$t = ($router->run($view, $session, $config));
