@@ -16,8 +16,12 @@ abstract class Controller
     public $session;
     //Configuration object
     public $config;
+
+    public $router;
     //String which contains redirection to another page after treatment
     protected $redirection;
+    //
+    protected $routes;
 
     /**
      * Constructor. Set values.
@@ -25,11 +29,13 @@ abstract class Controller
      * @param Session       $session Session object
      * @param Configuration $config  Configuraiton object
      */
-    public function __construct(View $view, Session $session, Configuration $config)
+    public function __construct(View $view, Session $session, Configuration $config, Router $router)
     {
         $this->templating = $view;
         $this->session    = $session;
         $this->config     = $config;
+        $this->routes     = $config->getRoutes();
+        $this->router     = $router;
     }
 
     /**
@@ -39,9 +45,7 @@ abstract class Controller
      */
     protected function render(string $view, array $params = [])
     {
-        if ($this->isRedirectionConfigured()) {
-            return $this->redirection;
-        }
+        
         //Adding session object to parameters for view access and call templating render
         $params += [
             'session'=> $this->session,
@@ -55,19 +59,14 @@ abstract class Controller
         }
     }
 
-    public function redirectTo(string $name, array $params = [])
+    /**
+     * Set redirection URL to redirect after treatment
+     * @param string $redirection URL to redirect to
+     */
+    protected function setRedirection(string $redirection)
     {
-        $this->redirection = new Redirection($name, $params);
+        $this->redirection=urlencode($redirection);
     }
-
-    // /**
-    //  * Set redirection URL to redirect after treatment
-    //  * @param string $redirection URL to redirect to
-    //  */
-    // protected function setRedirection(string $redirection)
-    // {
-    //     $this->redirection=urlencode($redirection);
-    // }
 
     /**
      * Return redirection activation status
@@ -84,11 +83,13 @@ abstract class Controller
      */
     protected function redirect(string $path)
     {
-        //If there is an activated redirection, redirect it, else, redirect to pssed value
-        // if ($this->isRedirectionConfigured()) {
-            // header("Location: ".urldecode($this->redirection));
-            // return;
-        // }
+        // If there is an activated redirection, redirect it, else, redirect to pssed value
+        if ($this->isRedirectionConfigured()) {
+            var_dump("configured ".$this->redirection);
+            header("Location: ".urldecode($this->redirection));
+            return;
+        }
+        // var_dump("not configured");
         header("Location: ".$path);
     }
 

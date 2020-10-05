@@ -14,6 +14,9 @@ class PostController extends Controller
     public const VIEW_ADDPOST  = "addPost";
     public const VIEW_EDITPOST = "editPost";
     public const VIEW_POST     = "post";
+    public const URL_LOGIN     = "login";
+    public const URL_ADDPOST   = "posts/add";
+    public const URL_HOME      = "";
     protected const IMAGE_MAX_SIZE     = 10000000;
     protected const ALLOWED_EXTENSIONS = [
         'png',
@@ -21,7 +24,8 @@ class PostController extends Controller
         'jpeg',
         'webp'
     ];
-    public function display(int $postId)
+
+    public function displayPostById(int $postId)
     {
         if ($postId <= 0) {
             throw new PostNotFoundException($postId);
@@ -30,21 +34,26 @@ class PostController extends Controller
         $this->render($this::VIEW_POST, ['post' => $post, "mainTitle"=>$post->getTitle()]);
     }
 
-    public function add()
+    public function displayAddPostPage()
     {
         if (!$this->isAdmin()) {
             if (!$this->isUser()) {
-                // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_ADDPOST));
+                $this->redirect('../'.$this->router->url('login_page').'?redirect='.urlencode($this->routes['post_add_page']['url']));
+            }
+            throw new NotEnoughRightsException();
+        }
+        $this->render($this::VIEW_ADDPOST);
+    }
+
+    public function addPostRequest()
+    {
+        if (!$this->isAdmin()) {
+            if (!$this->isUser()) {
+                $this->redirect('../'.$this->router->url('login_page').'?redirect='.urlencode($this->routes['post_add_page']['url']));
             }
             throw new NotEnoughRightsException();
         }
 
-        $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
-        if (!$validate) {
-            $this->render($this::VIEW_ADDPOST);
-            return;
-        }
-        
         $newpost = (new PostManager($this->config))->createFromArray([
             'postTitle'       =>filter_input(INPUT_POST, 'postTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             'postChapo'       =>filter_input(INPUT_POST, 'postChapo', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
@@ -57,23 +66,27 @@ class PostController extends Controller
             'userMailAddress' =>$this->session->getAttribute('user')->getMailAddress()
         ]);
         (new PostManager($this->config))->add($newpost);
-        //$this->redirect(self::URL_HOME);
+        $this->redirect(self::URL_HOME);
     }
 
-    public function edit(int $postId)
+    public function displayEditPostPage(int $postId)
     {
         if (!$this->isAdmin()) {
-            if ($this->isUser()) {
-                // $this->redirect($this::URL_LOGIN.'&redirect='.urlencode($this::URL_EDITPOST.$postId));
-                throw new NotEnoughRightsException();
+            if (!$this->isUser()) {
+                $this->redirect('../'.$this->router->url('login_page').'?redirect='.urlencode($this->routes['post_edit_page']['url']));
             }
-            // throw new NotEnoughRightsException();
+            throw new NotEnoughRightsException();
         }
+        $this->render($this::VIEW_EDITPOST, ["post"=>(new PostManager($this->config))->getById($postId)]);
+    }
 
-        $validate = filter_input(INPUT_POST, 'validate', FILTER_VALIDATE_INT);
-        if (!$validate) {
-            $this->render($this::VIEW_EDITPOST, ["post"=>(new PostManager($this->config))->getById($postId)]);
-            return;
+    public function editPostRequest(int $postId)
+    {
+        if (!$this->isAdmin()) {
+            if (!$this->isUser()) {
+                $this->redirect('../'.$this->router->url('login_page').'?redirect='.urlencode($this->routes['post_edit_page']['url']));
+            }
+            throw new NotEnoughRightsException();
         }
 
         $postToUpdate = (new PostManager($this->config))->getById($postId);
@@ -87,7 +100,8 @@ class PostController extends Controller
         }
 
         (new PostManager($this->config))->update($postToUpdate);
-        $this->redirect(self::URL_POST.$postId);
+        //TODO 
+        $this->redirect($this->router->url('post_page',['id' => $postId]));
     }
 
     protected function getPicturePath()

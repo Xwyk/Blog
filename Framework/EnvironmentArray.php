@@ -1,6 +1,6 @@
 <?php
 
-namespace Blog\Framework\Request;
+namespace Blog\Framework;
 
 /**
  * 

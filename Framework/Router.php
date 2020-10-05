@@ -43,7 +43,7 @@ class Router
 
         foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route){
             if($route->match($this->url)){
-                return $route->call($view, $session, $config);
+                return $route->call($view, $session, $config, $this);
             }
         }
         throw new RouteNotFoundException('');

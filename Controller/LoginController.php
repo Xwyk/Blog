@@ -8,7 +8,7 @@ use Blog\Model\Manager\UserManager;
 class LoginController extends Controller
 {
     public const URL_ADMIN      =    "/admin";
-    public const URL_HOME       =    "/home";
+    public const URL_HOME       =    "/";
     public const URL_LOGIN      =    "/login";
     public const VIEW_LOGIN     =    "login";
     

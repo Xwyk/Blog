@@ -8,6 +8,9 @@ use Blog\Framework\Request;
 use Blog\Framework\Configuration;
 use Blog\Framework\Router;
 use Blog\Exceptions\ExpiredSessionException;
+use Blog\Exceptions\UserNotConnectedException;
+use Blog\Controller\ErrorController;
+
 
 $config  = new Configuration(__DIR__.'/../config/config.local.ini');
 $req     = new Request($_GET, $_POST);
@@ -20,9 +23,15 @@ foreach ($config->getRoutes() as $routeName => $route) {
         $url = $route['url'];
         $controller = $route['controller'];
         $method = $route['method'];
+        $router->$type($url, $controller.'#'.$method, $routeName);
     } catch (Exception $e){
         throw new FileNotValidException(".ini");
     }
-    $router->$type($url, $controller.'#'.$method, $routeName);
 }
-$t = ($router->run($view, $session, $config));
+try {
+    ($router->run($view, $session, $config));
+} catch (UserNotConnectedException $e) {
+    header("Location: ".$config->getRoutes()['login_page']['url']);
+} catch (\Exception $e) {
+    (new ErrorController($view, $session, $config))->display($e);
+}

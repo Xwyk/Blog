@@ -15,14 +15,14 @@ abstract class SecuredController extends Controller
      * @param Session       $session Session object
      * @param Configuration $config  Configuraiton object
      */
-    public function __construct(View $view, Session $session, Configuration $config)
+    public function __construct(View $view, Session $session, Configuration $config, Router $router)
     {
         //If no user is authenticated, throw exception
         if (!$session->isAuthenticated()) {
             throw new UserNotConnectedException();
         }
         //Call Controller constructor
-        parent::__construct($view, $session, $config);
+        parent::__construct($view, $session, $config, $router);
     }
 
     /**

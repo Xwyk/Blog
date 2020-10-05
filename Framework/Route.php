@@ -40,11 +40,11 @@ class Route
         return '([^/]+)';
     }
 
-    public function call($view, $session, $config){
+    public function call($view, $session, $config, $router){
         if(is_string($this->callable)){
             $params = explode('#', $this->callable);
             $controller = "Blog\\Controller\\" . $params[0] . "Controller";
-            $controller = new $controller($view, $session, $config);
+            $controller = new $controller($view, $session, $config, $router);
             return call_user_func_array([$controller, $params[1]], $this->matches);
         } else {
             return call_user_func_array($this->callable, $this->matches);
