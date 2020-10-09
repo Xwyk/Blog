@@ -9,12 +9,12 @@ The above website was developed on the following environment :
 
 ## Installation :
 1. Clone repository : 
- `git clone https://github.com/florianleboul/Blog.git`
+`git clone https://github.com/florianleboul/Blog.git`
  
 
 2. Create database : 
- - import sql/structures.sql -- Create database
- - import sql/fiwture.sql    -- (Optional) Create default information set
+2. import sql/structures.sql -- Create database
+2. import sql/fiwture.sql    -- (Optional) Create default information set
 
 3. Set database informations
  - Edit config.ini to set database 
@@ -30,11 +30,3 @@ The above website was developed on the following environment :
  	- Click on register
  	- Create account
  	- Edit on database to change your rigths 
-
-```mermaid
-graph TD;
-  A-->B;
-  A-->C;
-  B-->D;
-  C-->D;
-```
