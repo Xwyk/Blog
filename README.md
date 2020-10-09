@@ -13,7 +13,10 @@ The above website was developed on the following environment :
  
 
 2. Create database : 
-	- import sql/structures.sql -- Create database
+- import sql/structures.sql -- Create database
+ - import sql/structures.sql -- Create database
+  - import sql/structures.sql -- Create database
+   - import sql/structures.sql -- Create database
 	- import sql/fiwture.sql    -- (Optional) Create default information set
 
 3. Set database informations
