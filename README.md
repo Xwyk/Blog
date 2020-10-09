@@ -8,8 +8,8 @@ The above website was developed on the following environment :
  - mysql 8.0
 
 Installation :
-Clone repository : 
-git clone https://github.com/florianleboul/Blog.git
+ Clone repository : 
+ git clone https://github.com/florianleboul/Blog.git
 
 Create database : 
  - import sql/structures.sql -- Create database
@@ -29,3 +29,8 @@ Create admin account :
  	- Click on register
  	- Create account
  	- Edit on database to change your rigths 
+graph TD;
+  A-->B;
+  A-->C;
+  B-->D;
+  C-->D;
