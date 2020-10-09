@@ -13,23 +13,20 @@ The above website was developed on the following environment :
  
 
 2. Create database : 
-- import sql/structures.sql -- Create database
- - import sql/structures.sql -- Create database
-  - import sql/structures.sql -- Create database
-   - import sql/structures.sql -- Create database
+   	- import sql/structures.sql -- Create database
 	- import sql/fiwture.sql    -- (Optional) Create default information set
 
 3. Set database informations
- - Edit config.ini to set database 
- 	- Host
- 	- Port
- 	- Username
- 	- Password
+	- Edit config.ini to set database 
+		- Host
+		- Port
+		- Username
+		- Password
 
 4. Create admin account : 
- - By fixtures.sql : admin/password
- - By database :
- 	- Go to website
- 	- Click on register
- 	- Create account
- 	- Edit on database to change your rigths 
+	- By fixtures.sql : admin/password
+	- By database :
+ 		- Go to website
+ 		- Click on register
+ 		- Create account
+ 		- Edit on database to change your rigths 
