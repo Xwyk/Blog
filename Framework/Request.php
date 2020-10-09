@@ -11,12 +11,16 @@ class Request
 {
 	protected $getArray;
 	protected $postArray;
+	protected $fileArray;
 
-	public function __construct(array $get, array $post = [])
+	public function __construct(array $get, array $post = [], array $file = [])
 	{
 		$this->getArray    = new EnvironmentArray($get);
 		if (!empty($post)) {
 			$this->postArray = new EnvironmentArray($post);
+		}
+		if (!empty($file)) {
+			$this->fileArray = new EnvironmentArray($file);
 		}
 	}
 
@@ -28,6 +32,11 @@ class Request
 	public function getPostValue(string $key)
 	{
 		return $this->postArray->get($key);
+	}
+
+	public function getFileValue(string $key)
+	{
+		return $this->fileArray->get($key);
 	}
 
 	public function getUrl()

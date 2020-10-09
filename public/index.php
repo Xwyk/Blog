@@ -13,9 +13,9 @@ use Blog\Controller\ErrorController;
 
 
 $config  = new Configuration(__DIR__.'/../config/config.local.ini');
-$req     = new Request($_GET, $_POST);
+$req     = new Request($_GET, $_POST, $_FILES);
 $session = new Session($config);
-$router  = new Router($req->getUrl());
+$router  = new Router($req);
 $view    = new View($config, $router);
 foreach ($config->getRoutes() as $routeName => $route) {
     try{

@@ -8,12 +8,14 @@ use Blog\Exceptions\RouteNotFoundException;
  */
 class Router
 {
-	protected $url;
-    protected $routes = [];
+    protected $url;
+    public    $request;
+    protected $routes      = [];
     protected $namedRoutes = [];
 
-    public function __construct(string $url){
-        $this->url = $url;
+    public function __construct(Request $request){
+        $this->request = $request;
+        $this->url     = $request->getUrl();
     }
 
     public function get(string $path, $callable, string $name = null){

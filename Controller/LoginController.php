@@ -14,18 +14,21 @@ class LoginController extends Controller
     
     public function display()
     {
-        $redirect = filter_input(INPUT_GET, 'redirect');
+        $redirect = $this->router->request->getGetValue('redirect');
+        $email    = $this->router->request->getPostValue('email');
+        $password = $this->router->request->getPostValue('password');
+        // $redirect = filter_input(INPUT_GET, 'redirect');
         if ($redirect) {
             $this->setRedirection($redirect);
         }
         if ($this->session->isAuthenticated()) {
-            $this->redirect($this::URL_HOME);
+            $this->redirect($this->router->url('home_page'));
             return;
         }
-        if (!(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS)) || !(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
-            $formUrl=$this::URL_LOGIN;
+        if (! $email || ! $password) {
+            $formUrl=$this->router->url('login_page');
             if ($redirect) {
-                $formUrl.='/?redirect='.urlencode($redirect);
+                $formUrl.='/?redirect='.$redirect;
             }
             $this->render($this::VIEW_LOGIN, ['formUrl'=>$formUrl]);
             return;
