@@ -17,7 +17,7 @@ The above website was developed on the following environment :
 	- import sql/fiwture.sql    -- (Optional) Create default information set
 
 3. Set database informations
-	- Edit config.ini to set database 
+	- Edit config.ini to set database info
 		- Host
 		- Port
 		- Username
@@ -30,3 +30,10 @@ The above website was developed on the following environment :
  		- Click on register
  		- Create account
  		- Edit on database to change your rigths 
+```javascript
+function fancyAlert(arg) {
+  if(arg) {
+    $.facebox({div:'#foo'})
+  }
+}
+```
