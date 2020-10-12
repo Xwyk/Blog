@@ -8,8 +8,10 @@ The above website was developed on the following environment :
  - mysql 8.0
 
 ## Installation :
-1. Clone repository : 
-```git clone https://github.com/florianleboul/Blog.git```
+1. Download zip and extract it on your server or clone repository from github :
+```
+git clone https://github.com/florianleboul/Blog.git
+```
  
 
 2. Create database : 
@@ -17,15 +19,15 @@ The above website was developed on the following environment :
 	- import sql/fiwture.sql    -- (Optional) Create default information set
 
 3. Set database informations
-	- Edit config.ini to set database info
+	- Copy config.ini to config.local.ini to set database info
 ```
 ; Database parameters
 [database]
-host     = "localhost"
-port     = "3306"
-dbname   = "blog"
-username = "root"
-password = "Azerty"
+host     = "<Your SQL server name/ip>"
+port     = "<Your SQL server port>"
+dbname   = "<Database name | default : blog>"
+username = "<SQL user with Read/Write access to database>"
+password = "<SQL user's password>"
 ```
 
 4. Create admin account : 

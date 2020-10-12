@@ -35,3 +35,12 @@ try {
 } catch (\Exception $e) {
     (new ErrorController($view, $session, $config))->display($e);
 }
+$to = "florianleboul@gmail.com";
+$subject = "Essai de mail";
+$body = "Coucou";
+$headers = "From: <email expéditeur>" . "\r\n";
+if (mail($to, $subject, $body, $headers)) {
+    echo ("Message envoyé !");
+} else {
+    echo ("Message non envoyé...");
+}

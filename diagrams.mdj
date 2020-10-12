@@ -27840,7 +27840,7 @@
 																			"left": 16,
 																			"top": 175,
 																			"width": 601,
-																			"height": 43,
+																			"height": 146,
 																			"guardLabel": {
 																				"$ref": "AAAAAAF1HDGOFqtrtJU="
 																			}
@@ -27864,15 +27864,15 @@
 																					"visible": false,
 																					"font": "Arial;13;0",
 																					"left": 36,
-																					"top": 233,
+																					"top": 336,
 																					"height": 13
 																				}
 																			],
 																			"font": "Arial;13;0",
 																			"left": 16,
-																			"top": 218,
+																			"top": 321,
 																			"width": 601,
-																			"height": 43,
+																			"height": 128,
 																			"guardLabel": {
 																				"$ref": "AAAAAAF1HDGOF6txoXY="
 																			}
@@ -27882,7 +27882,7 @@
 																	"left": 16,
 																	"top": 175,
 																	"width": 601,
-																	"height": 86
+																	"height": 274
 																}
 															],
 															"font": "Arial;13;0",
@@ -28001,14 +28001,14 @@
 																	"left": 110,
 																	"top": 105,
 																	"width": 1,
-																	"height": 34
+																	"height": 656
 																}
 															],
 															"font": "Arial;13;0",
 															"left": 16,
 															"top": 40,
 															"width": 188.419921875,
-															"height": 99,
+															"height": 721,
 															"stereotypeDisplay": "icon",
 															"nameCompartment": {
 																"$ref": "AAAAAAF1HDIeNKupXTA="
@@ -28118,14 +28118,14 @@
 																	"left": 330,
 																	"top": 105,
 																	"width": 1,
-																	"height": 34
+																	"height": 656
 																}
 															],
 															"font": "Arial;13;0",
 															"left": 272,
 															"top": 40,
 															"width": 116.92626953125,
-															"height": 99,
+															"height": 721,
 															"stereotypeDisplay": "icon",
 															"nameCompartment": {
 																"$ref": "AAAAAAF1HDPaHqwJ/dI="
@@ -28235,14 +28235,14 @@
 																	"left": 504,
 																	"top": 105,
 																	"width": 1,
-																	"height": 34
+																	"height": 656
 																}
 															],
 															"font": "Arial;13;0",
 															"left": 440,
 															"top": 40,
 															"width": 128.4853515625,
-															"height": 99,
+															"height": 721,
 															"stereotypeDisplay": "icon",
 															"nameCompartment": {
 																"$ref": "AAAAAAF1HDPw56woxT4="
