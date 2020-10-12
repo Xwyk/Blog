@@ -9,7 +9,7 @@ The above website was developed on the following environment :
 
 ## Installation :
 1. Clone repository : 
-`git clone https://github.com/florianleboul/Blog.git`
+```git clone https://github.com/florianleboul/Blog.git```
  
 
 2. Create database : 
