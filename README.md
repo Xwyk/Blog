@@ -30,10 +30,12 @@ The above website was developed on the following environment :
  		- Click on register
  		- Create account
  		- Edit on database to change your rigths 
-```javascript
-function fancyAlert(arg) {
-  if(arg) {
-    $.facebox({div:'#foo'})
-  }
-}
+```
+; Database parameters
+[database]
+host     = "localhost"
+port     = "3306"
+dbname   = "blog"
+username = "root"
+password = "Azerty"
 ```
