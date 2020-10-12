@@ -18,18 +18,6 @@ The above website was developed on the following environment :
 
 3. Set database informations
 	- Edit config.ini to set database info
-		- Host
-		- Port
-		- Username
-		- Password
-
-4. Create admin account : 
-	- By fixtures.sql : admin/password
-	- By database :
- 		- Go to website
- 		- Click on register
- 		- Create account
- 		- Edit on database to change your rigths 
 ```
 ; Database parameters
 [database]
@@ -39,3 +27,11 @@ dbname   = "blog"
 username = "root"
 password = "Azerty"
 ```
+
+4. Create admin account : 
+	- By fixtures.sql : admin/password
+	- By database :
+ 		- Go to website
+ 		- Click on register
+ 		- Create account
+ 		- Edit on database to change your rigths 
