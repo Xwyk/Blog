@@ -6,17 +6,19 @@
 The above website was developed on the following environment :  
  - php 7.3
  - mysql 8.0
+And require
+ - php >= 7.0
+ - mysql >= 5.6
 
 ## Installation :
 1. Download zip and extract it on your server or clone repository from github :
 ```
 git clone https://github.com/florianleboul/Blog.git
 ```
- 
 
 2. Create database : 
    	- import sql/structures.sql -- Create database
-	- import sql/fiwture.sql    -- (Optional) Create default information set
+	- import sql/fixture.sql    -- Create default information set
 
 3. Set database informations
 	- Copy config.ini to config.local.ini to set database info
@@ -31,9 +33,10 @@ password = "<SQL user's password>"
 ```
 
 4. Create admin account : 
-	- By fixtures.sql : admin/password
-	- By database :
- 		- Go to website
- 		- Click on register
- 		- Create account
- 		- Edit on database to change your rigths 
+	- Admin account is created by importing sql/fixture.sql in step 2 :
+		- username : webadm
+		- password : password
+	- For increase security, change password by :
+		- Connect to website with given credentials
+		- Go to account section
+		- On password section, type your new password two times and click on save
