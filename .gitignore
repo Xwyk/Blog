@@ -1,1 +1,3 @@
-config/config.local.ini
+./config/config.local.ini
+./*.dmp
+./*.sublime-*
