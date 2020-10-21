@@ -13,7 +13,7 @@ use Blog\Controller\ErrorController;
 
 
 // try {
-$config  = new Configuration(__DIR__.'/../config/config.local.ini');
+$config  = new Configuration(__DIR__.'/../config/');
 $req     = new Request($_GET, $_POST, $_FILES);
 $session = new Session($config);
 $router  = new Router($req);

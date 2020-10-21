@@ -23,16 +23,22 @@ class Configuration
     public function __construct(string $path)
     {
         //Check ini file, throw exception if not accessible
-        if (!file_exists($path)) {
-            throw new FileNotFoundException($path);
+        if (!file_exists($path."config.local.ini")) {
+            throw new FileNotFoundException($path."config.local.ini");
         }
         //Parse ini file into array
-        $iniArray = parse_ini_file($path, true);
+        $configLocalIni = parse_ini_file($path."config.local.ini", true);
         //Throw exception if file isn't valid
-        if (!$iniArray) {
-            throw new FileNotValidException($path);
+        if (!$configLocalIni) {
+            throw new FileNotValidException($path."config.local.ini");
         }
-        $this->config = $iniArray;
+
+        $routesIni = parse_ini_file($path.'routes.ini', true);
+        //Throw exception if file isn't valid
+        if (!$routesIni) {
+            throw new FileNotValidException($path.'routes.ini');
+        }
+        $this->config = array_merge($configLocalIni, $routesIni);
     }
 
     /**
