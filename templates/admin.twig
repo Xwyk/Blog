@@ -183,7 +183,6 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
-                    console.log(data);
                     if (data>=1) {
                         $("#post_"+id).remove()
                         $('#dtOrderExample').DataTable().ajax.reload();
@@ -192,7 +191,7 @@
                     alert("Une erreur est survenue lors de la suppression");
                 },
                 error : function(argument) {
-                    console.log(JSON.stringify(argument));
+                    alert("Une erreur est survenue, merci de recharger la page");
                 }
             });
         }
@@ -207,7 +206,6 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
-                    console.log(data);
                     if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye-slash').addClass('fa-eye');
@@ -219,7 +217,7 @@
                     }
                 },
                 error : function(argument) {
-                    console.log("error:" + JSON.stringify(argument));
+                    alert("Une erreur est survenue, merci de recharger la page");
                 }
             });
         }
@@ -234,7 +232,6 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
-                    console.log(data);
                     if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye').addClass('fa-eye-slash');
@@ -246,7 +243,7 @@
                     }
                 },
                 error : function(argument) {
-                    console.log(argument);
+                    alert("Une erreur est survenue, merci de recharger la page");
                 }
             });
         }
@@ -260,7 +257,6 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
-                    console.log(data);
                     if (data.rowAffecteds == 1) {
                         // $("#comment_"+id).remove()
                         $('#dtOrderExample').DataTable().ajax.reload();
@@ -269,7 +265,7 @@
                     alert("Erreur de suppression : "+data.code+" : "+data.message);
                 },
                 error : function(argument) {
-                    console.log(argument);
+                    alert("Une erreur est survenue, merci de recharger la page");
                 }
             });
         }

@@ -89,7 +89,7 @@ abstract class Controller
             header("Location: ".urldecode($this->redirection));
             return;
         }
-        // var_dump("not configured");
-        header("Location: ".$path);
+        header("Location: ".(($path=="")?"/":$path));
+
     }
 }

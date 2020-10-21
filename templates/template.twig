@@ -37,9 +37,9 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/#contact">Contact</a></li>
                         <li class="nav-item mx-0 mx-lg-1">
                             {% if session.isAuthenticated %}
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ router.url('logout_page') }}">Déconnexion</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/{{ router.url('logout_request') }}">Déconnexion</a>
                             {% else %}
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ router.url('login_page') }}">Connexion</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/{{ router.url('login_page') }}">Connexion</a>
                             {% endif %}
                         </li>
                     </ul>
@@ -74,7 +74,7 @@
                         {% if session.isAdmin %}
                             <p>Accéder à <a href="/{{ router.url('admin_page') }}">l'interface d'administration</a>.</p>
                         {% endif %}
-                        <p><a href="/{{ router.url('logout_page') }}">Déconnexion</a>.</p>
+                        <p><a href="/{{ router.url('logout_request') }}">Déconnexion</a>.</p>
                     {% else %}
                     <p>Se <a href="/{{ router.url('login_page') }}">connecter</a>.</p>
                     <p>S'<a href="/{{ router.url('register_page') }}">enregistrer</a>.</p>

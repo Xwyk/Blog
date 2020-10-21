@@ -12,7 +12,7 @@ use Blog\Exceptions\UserNotConnectedException;
 use Blog\Controller\ErrorController;
 
 
-try {
+// try {
 $config  = new Configuration(__DIR__.'/../config/config.local.ini');
 $req     = new Request($_GET, $_POST, $_FILES);
 $session = new Session($config);
@@ -29,9 +29,12 @@ foreach ($config->getRoutes() as $routeName => $route) {
         throw new FileNotValidException(".ini");
     }
 }
-    ($router->run($view, $session, $config));
-} catch (UserNotConnectedException $e) {
-    // header("Location: ".$config->getRoutes()['login_page']['url']);
-} catch (\Exception $e) {
-    // (new ErrorController($view, $session, $config))->display($e);
-}
+($router->run($view, $session, $config));
+// } catch (UserNotConnectedException $e) {
+//     http_response_code(401);
+//     header("Location: ".$router->url('login_page'));
+// } catch (\Exception $e) {
+//     http_response_code(401);
+//     header("Location: ".$router->url('home_page'));
+//     // (new ErrorController($view, $session, $config))->display($e);
+// }
