@@ -51,7 +51,7 @@ class UserManager extends Manager
             throw new UserNotActiveException($user->getMailAddress());
         }
         if (!password_verify($password, $user->getPassword())) {
-            throw new WrongPasswordException("Mot de passe incorrect", 1);
+            throw new WrongPasswordException("Mot de passe incorrect".$password.$user->getPassword(), 1);
         }
         return $user;
     }
@@ -87,7 +87,25 @@ class UserManager extends Manager
             ':lastname'  => $userToAdd->getLastName(),
             ':pseudo'    => $userToAdd->getPseudo(),
             ':mail'      => $userToAdd->getMailAddress(),
-            ':pwd'       => password_hash($userToAdd->getPassword(), PASSWORD_DEFAULT)]);
+            ':pwd'       => $userToAdd->getPassword()]);
+        return $result;
+    }
+
+    public function update(user $user)
+    {
+        $request = 'UPDATE user
+                    SET first_name = :firstname,
+                        last_name  = :lastname,
+                        pseudo     = :pseudo,
+                        password   = :pwd
+                    WHERE id = :id;';
+        $result = $this->executeRequest($request, [
+            'firstname'  => $user->getFirstName(),
+            'lastname'   => $user->getLastName(),
+            'pseudo' 	 => $user->getPseudo(),
+            'pwd'		 => $user->getPassword(),
+            'id'     	 => $user->getId()
+        ]);
         return $result;
     }
 }

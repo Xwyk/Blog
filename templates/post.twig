@@ -16,9 +16,9 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image-->
-                <img class="img-fluid rounded mb-5" src="/{{ post.getPicture ?? '/images/cabin.png' }}" alt="" />
+                <img class="img-fluid rounded mb-5" src="/{{ post.getPicture ?? './images/cabin.png' }}" alt="" />
                 <!-- Portfolio Modal - Text-->
-                <p class="mb-5">{{ post.getContent }}</p>
+                {%autoescape false%}{{ post.getContent }}{%endautoescape%}
                  <ul class="list-inline item-details">
                     <li>Auteur:
                         <strong>{{ post.getAuthor.getFirstName }} {{ post.getAuthor.getLastName}} ({{ post.getAuthor.getPseudo}})</strong>

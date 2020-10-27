@@ -98,7 +98,7 @@
                                 <td>{{ post.getCreationDate.format('Y-m-d H:i') }}</td>
                                 <td>{{ post.getModificationDate.format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <a href="/{{ router.url('post_page', {'id' : comment.getPostId}) }}">Lien</a>
+                                    <a href="/{{ router.url('post_page', {'id' : post.getId}) }}">Lien</a>
                                 </td>
                                 <td>
                                     <div class="dropdown">

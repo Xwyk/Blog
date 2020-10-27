@@ -28,10 +28,6 @@ class RegisterController extends Controller
 
     public function display()
     {
-        if (empty(filter_input_array(INPUT_POST))) {
-            $this->render($this::VIEW_REGISTER);
-            return;
-        }
-        $this->register();
+        $this->render($this::VIEW_REGISTER);
     }
 }

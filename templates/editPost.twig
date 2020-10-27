@@ -8,10 +8,26 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <form class="form-comment form-horizontal" action="/{{ router.url('post_edit_request', {'id' : post.getId}) }}" method="post" enctype="multipart/form-data">
+                <form class="form-comment form-horizontal" action="/{{ router.url('post_edit_request', {'postId' : post.getId}) }}" method="post" enctype="multipart/form-data">
                     <!-- Portfolio Modal - Title-->
-                    <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md portfolio-modal-title text-secondary text-uppercase mb-0" value="{{ post.getTitle|upper }}" required>
-                    <input id="postChapo" name="postChapo" type="text" placeholder="Chapo de l'article" class="form-control input-md portfolio-modal-title text-secondary text-uppercase mb-0" value="{{ post.getChapo|upper }}" required>
+                    <div class="container-fluid">
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Titre : </p>
+				            </div>
+				            <div class="col-8">
+				            	 <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md portfolio-modal-title text-secondary text-uppercase mb-0" value="{{ post.getTitle|upper }}" required>
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Chapo : </p>
+				            </div>
+				            <div class="col-8">
+				            	<input id="postChapo" name="postChapo" type="text" placeholder="Chapo de l'article" class="form-control input-md portfolio-modal-title text-secondary text-uppercase mb-0" value="{{ post.getChapo|upper }}" required>
+				            </div>
+				        </div>
+					</div>
                     <!-- Icon Divider-->
                     <div class="divider-custom">
                         <div class="divider-custom-line"></div>
@@ -19,7 +35,7 @@
                         <div class="divider-custom-line"></div>
                     </div>
                     <!-- Portfolio Modal - Image-->
-                    <img class="img-fluid rounded mb-5" src="{{ post.getPicture ?? 'images/cabin.png' }}" alt="" />
+                    <img class="img-fluid rounded mb-5" src="/{{ post.getPicture ?? './images/cabin.png' }}" alt="" />
                     <input id="postImage" name="postImage" class="input-file" type="file">
 
                     <!-- Portfolio Modal - Text-->
@@ -31,4 +47,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block postBody %}
+	<script src="https://cdn.tiny.cloud/1/{{ config.getTinymceKey }}/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+ 	<script>tinymce.init({selector:'#postContent'});</script>
 {% endblock %}
