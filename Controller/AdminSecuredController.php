@@ -12,11 +12,11 @@ use Blog\Exceptions\NotEnoughRightsException;
  */
 class AdminSecuredController extends SecuredController
 {
+	// Template name whithout extension
     public const VIEW_ADMIN = "admin";
+    
     /**
-     * Displays admin view if user is connected and admin
-     * Redirects to login if user isn't connected
-     * Throw exception if user is connected and isn't admin
+     * Displays admin view 
      * @throws Blog\Exceptions\NotEnoughRightsException if user is connected and isn't admin 
      */
     public function display()
@@ -31,15 +31,6 @@ class AdminSecuredController extends SecuredController
     }
 
     /**
-     * Call CommentManager for getting all invalids comments
-     * @return array Returns an array, empty or filled with all invalids comments
-     */
-    protected function getAllInvalidComments()
-    {
-        $this->checkAdminRights();
-        return (new CommentManager($this->config))->getAllInvalid();
-    }
-    /**
      * Call CommentManager for getting all comments
      * @return array Returns an array, empty or filled with all comments
      */
@@ -48,31 +39,11 @@ class AdminSecuredController extends SecuredController
         $this->checkAdminRights();
         return (new CommentManager($this->config))->getAll();
     }
-    /**
-     * [getAllComments description]
-     * @return [type] [description]
-     */
-    protected function getAllUsers()
-    {
-        //return (new CommentManager($this->config))->getAllInvalidComments();
-    }
-    /**
-     * [getAllComments description]
-     * @return [type] [description]
-     */
-    protected function getAdminUsers()
-    {
-        //return (new CommentManager($this->config))->getAllInvalidComments();
-    }
-    /**
-     * [getAllComments description]
-     * @return [type] [description]
-     */
-    protected function getNonAdminUsers()
-    {
-        //return (new CommentManager($this->config))->getAllInvalidComments();
-    }
 
+    /**
+     * Call PostManager for getting all posts
+     * @return array Returns an array, empty or filled with all posts
+     */
     protected function getAllPosts()
     {
         return (new PostManager($this->config))->getAll();
