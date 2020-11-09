@@ -3,10 +3,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/df302761ee7a4669b0b99f749ea2b610)](https://app.codacy.com/manual/florianleboul/Blog?utm_source=github.com&utm_medium=referral&utm_content=florianleboul/Blog&utm_campaign=Badge_Grade_Dashboard)
 
 ## Requirements : 
-The above website was developed on the following environment :  
- - php 7.3
- - mysql 8.0
-And require
+The above website require the following environment :
  - php >= 7.0
  - mysql >= 5.6
 
