@@ -11,13 +11,15 @@ And require
  - mysql >= 5.6
 
 ## Installation :
+In this installation guide, I suppose server is configured, with given requirements.
 1. Download zip and extract it on your server or clone repository from github :
 ```
 git clone https://github.com/florianleboul/Blog.git
 ```
 
 2. Create database : 
-   	- import sql/structures.sql -- Create database
+	- Create database, select it and import above scripts to create tables and default values set
+   	- import sql/structures.sql -- Create tables
 	- import sql/fixture.sql    -- Create default information set
 
 3. Set database informations
@@ -27,7 +29,7 @@ git clone https://github.com/florianleboul/Blog.git
 [database]
 host     = "<Your SQL server name/ip>"
 port     = "<Your SQL server port>"
-dbname   = "<Database name | default : blog>"
+dbname   = "<Database name, created in step 2>"
 username = "<SQL user with Read/Write access to database>"
 password = "<SQL user's password>"
 ```
