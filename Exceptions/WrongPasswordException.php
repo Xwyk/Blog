@@ -11,9 +11,9 @@ class WrongPasswordException extends \Exception
 
     public function __construct($message = "")
     {
-    	if ($message != "") {
-    		$this->message = $message;
-    	}
+        if ($message != "") {
+            $this->message = $message;
+        }
         parent::__construct();
     }
 }
