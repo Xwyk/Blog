@@ -37,21 +37,39 @@ class UserManager extends Manager
         return $user;
     }
 
-    public function login(string $usermail, string $password)
+     public function getByPseudo(string $userPseudo)
     {
         $request = 'SELECT * FROM user 
+                    WHERE pseudo = :pseudo ;';
+        $requestResult = $this->executeRequest($request, [':pseudo' => $userPseudo]);
+        $userResult = $requestResult->fetch();
+        if ($userResult) {
+            $user = new User($userResult);
+        }
+        return $user;
+    }
+
+    public function login(string $usermail, string $password)
+    {
+        //TODO : replace by getuserbymail
+        $request = 'SELECT * FROM user 
                     WHERE mail_address = :mailAddress ;';
+        // $request = 'SELECT * FROM user 
+        //             WHERE pseudo = :pseudo ;';
         $user = $this->executeRequest($request, [':mailAddress' => $usermail]);
+        // $user = $this->executeRequest($request, [':pseudo' => $userPseudo]);
         $result=$user->fetch();
         if (!is_array($result)) {
             throw new UserNotFoundException($usermail);
+            // throw new UserNotFoundException($userPseudo);
         }
         $user = new User($result);
         if (!$user->isActive()) {
             throw new UserNotActiveException($user->getMailAddress());
+            // throw new UserNotActiveException($user->getPseudo());
         }
         if (!password_verify($password, $user->getPassword())) {
-            throw new WrongPasswordException("Mot de passe incorrect".$password.$user->getPassword(), 1);
+            throw new WrongPasswordException("Mot de passe incorrect");
         }
         return $user;
     }
@@ -72,6 +90,9 @@ class UserManager extends Manager
         if ($this->getUserByMail($userToAdd->getMailAddress())) {
             throw new AlreadyUsedMailAddressException($userToAdd->getMailAddress());
         }
+        // if ($this->getUserByPseudo($userToAdd->getPseudo())) {
+        //     throw new AlreadyUsedPseudoException($userToAdd->getPseudo());
+        // }
         $request = 'INSERT INTO user (first_name, 
                                       last_name,
                                       pseudo,
