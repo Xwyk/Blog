@@ -98,7 +98,7 @@
                                 <td>{{ post.getCreationDate.format('Y-m-d H:i') }}</td>
                                 <td>{{ post.getModificationDate.format('Y-m-d H:i') }}</td>
                                 <td>
-                                    <a href="/{{ router.url('post_page', {'id' : comment.getPostId}) }}">Lien</a>
+                                    <a href="/{{ router.url('post_page', {'id' : post.getId}) }}">Lien</a>
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -183,6 +183,7 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
+
                     if (data>=1) {
                         $("#post_"+id).remove()
                         $('#dtOrderExample').DataTable().ajax.reload();
@@ -206,6 +207,7 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
+                	console.log(data);
                     if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye-slash').addClass('fa-eye');
@@ -217,6 +219,7 @@
                     }
                 },
                 error : function(argument) {
+                	console.log(argument);
                     alert("Une erreur est survenue, merci de recharger la page");
                 }
             });
@@ -232,6 +235,7 @@
                     token: "{{ token }}"
                 },
                 success : function(data){
+                	console.log(data);
                     if (data.rowAffecteds==1) {
                         // $("#post_"+id).remove()
                         $('#visibilityIcon_'+id).removeClass('fa-eye').addClass('fa-eye-slash');
@@ -243,6 +247,7 @@
                     }
                 },
                 error : function(argument) {
+                	console.log(argument);
                     alert("Une erreur est survenue, merci de recharger la page");
                 }
             });

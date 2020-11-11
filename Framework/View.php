@@ -13,6 +13,7 @@ class View
     protected const TEMPLATING_TWIG_EXTENSION = '.twig';
     protected $templatingEngine;
     protected $router;
+    protected $config;
     // protected $routesNames;
     /**
      * Constructor. Instanciate templating engine
@@ -20,6 +21,7 @@ class View
     public function __construct(Configuration $config, Router $router)
     {
         $this->router           = $router;
+        $this->config           = $config;
         $loader                 = new FilesystemLoader($config->getThemeDirectory());
         $this->templatingEngine = new Environment($loader, [
             'debug' => true
@@ -35,6 +37,7 @@ class View
     public function render(string $view, array $parameters = null)
     {
         $parameters['router'] = $this->router;
+        $parameters['config'] = $this->config;
         //Print on screen twig template
         $this->templatingEngine->display($view.$this::TEMPLATING_TWIG_EXTENSION, $parameters);
     }

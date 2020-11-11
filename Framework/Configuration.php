@@ -117,4 +117,12 @@ class Configuration
         return $this->config['routes'];
     }
 
+    public function getTinymceKey()
+    {
+    	if (! isset($this->config['application']['tinyKey'])) {
+            throw new ValueNotExistsException();
+        }
+        return $this->config['application']['tinyKey'];
+    }
+
 }

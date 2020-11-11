@@ -8,7 +8,6 @@ use Blog\Model\Manager\UserManager;
 
 class RegisterController extends Controller
 {
-    public const URL_LOGIN      =    "/?action=login";
     public const VIEW_REGISTER  =    "register";
     public function register()
     {
@@ -21,7 +20,7 @@ class RegisterController extends Controller
                 'password'    => filter_input(INPUT_POST, 'password' , FILTER_SANITIZE_FULL_SPECIAL_CHARS)
             ]);
             (new UserManager($this->config))->add($userToAdd);
-            $this->redirect($this::URL_LOGIN);
+            $this->redirect($this->router->url('login_page'));
         } catch (\Exception $e) {
             $this->render($this::VIEW_REGISTER, ['error'=>$e->getMessage()]);
         }
@@ -29,10 +28,6 @@ class RegisterController extends Controller
 
     public function display()
     {
-        if (empty(filter_input_array(INPUT_POST))) {
-            $this->render($this::VIEW_REGISTER);
-            return;
-        }
-        $this->register();
+        $this->render($this::VIEW_REGISTER);
     }
 }

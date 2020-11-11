@@ -45,7 +45,6 @@ abstract class Controller
      */
     protected function render(string $view, array $params = [])
     {
-        
         //Adding session object to parameters for view access and call templating render
         $params += [
             'session'=> $this->session,
@@ -85,11 +84,10 @@ abstract class Controller
     {
         // If there is an activated redirection, redirect it, else, redirect to pssed value
         if ($this->isRedirectionConfigured()) {
-            var_dump("configured ".$this->redirection);
             header("Location: ".urldecode($this->redirection));
             return;
         }
-        header("Location: ".(($path=="")?"/":$path));
+        header("Location: /".$path);
 
     }
 }
