@@ -13,7 +13,7 @@ class CommentNotFoundException extends \Exception
     public function __construct($id)
     {
         $this->code = 404;
-        $this->message .= $message;
+        $this->message .= $id;
         parent::__construct();
     }
 }
