@@ -125,4 +125,12 @@ class Configuration
         return $this->config['application']['tinyKey'];
     }
 
+    public function getWebSiteRoot()
+    {
+        if (! isset($this->config['application']['websiteRoot'])) {
+            throw new ValueNotExistsException();
+        }
+        return $this->config['application']['websiteRoot'];
+    }
+
 }
