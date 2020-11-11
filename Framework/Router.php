@@ -3,6 +3,7 @@
 namespace Blog\Framework;
 
 use Blog\Exceptions\RouteNotFoundException;
+
 /**
  * Represents an entity in database
  */

@@ -106,7 +106,6 @@ class Configuration
             throw new ValueNotExistsException();
         }
         return $this->config['templates']['directory'];
-        
     }
 
     public function getRoutes()
@@ -132,5 +131,4 @@ class Configuration
         }
         return $this->config['application']['websiteRoot'];
     }
-
 }

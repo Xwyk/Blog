@@ -88,6 +88,5 @@ abstract class Controller
             return;
         }
         header("Location: /".$path);
-
     }
 }

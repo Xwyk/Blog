@@ -37,7 +37,7 @@ class UserManager extends Manager
         return $user;
     }
 
-     public function getByPseudo(string $userPseudo)
+    public function getByPseudo(string $userPseudo)
     {
         $request = 'SELECT * FROM user 
                     WHERE pseudo = :pseudo ;';
