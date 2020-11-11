@@ -114,9 +114,6 @@ class Post extends Entity
      */
     public function setContent(string $newContent)
     {
-        if ($newContent != strip_tags($newContent)) {
-            throw new UnexpectedValueException('Can\'t set content : value contain html/PHP code');
-        }
         $this->content = $newContent;
     }
 

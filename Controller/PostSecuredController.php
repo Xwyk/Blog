@@ -43,9 +43,9 @@ class PostSecuredController extends SecuredController
         }
 
         $newpost = (new PostManager($this->config))->createFromArray([
-            'postTitle'       =>filter_input(INPUT_POST, 'postTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            'postChapo'       =>filter_input(INPUT_POST, 'postChapo', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            'postContent'     =>filter_input(INPUT_POST, 'postContent', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            'postTitle'       =>$this->router->request->getPostValue('postTitle'),
+            'postChapo'       =>$this->router->request->getPostValue('postChapo'),
+            'postContent'     =>$this->router->request->getPostValue('postContent'),
             'postPicture'     =>$this->getPicturePath(),
             'userId'          =>$this->session->getAttribute('user')->getId(),
             'userPseudo'      =>$this->session->getAttribute('user')->getPseudo(),
@@ -78,13 +78,16 @@ class PostSecuredController extends SecuredController
         }
 
         $postToUpdate = (new PostManager($this->config))->getById($postId);
-        $postToUpdate->setTitle(filter_input(INPUT_POST, 'postTitle', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-        $postToUpdate->setChapo(filter_input(INPUT_POST, 'postChapo', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-        $postToUpdate->setContent(filter_input(INPUT_POST, 'postContent', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        $postToUpdate->setTitle($this->router->request->getPostValue('postTitle'));
+        $postToUpdate->setChapo($this->router->request->getPostValue('postChapo'));
+        $postToUpdate->setContent($this->router->request->getPostValue('postContent'));
 
         $imgPath = $this->getPicturePath();
         if ($imgPath) {
-            $postToUpdate->setPicture($imgPath);
+        	if (is_string($imgPath)) {
+	            $postToUpdate->setPicture($imgPath);
+    		}
+    		//error while getting image
         }
 
         (new PostManager($this->config))->update($postToUpdate);
@@ -110,7 +113,7 @@ class PostSecuredController extends SecuredController
             }
             return $imageDir.$imageName.'.'.$imageExtension;
         }
-        return null;
+        return $image['error'];
     }
 
 

@@ -10,11 +10,7 @@ use Blog\Exceptions\ExpiredTokenException;
 use Blog\Exceptions\InvalidTokenException;
 
 /**
- * Manages actions on comments :
- *     - add        : user rights
- *     - validate   : admin rights
- *     - invalidate : admin rights
- *     - remove     : admin rights
+ * Manages admin actions on comments :
  */
 class CommentSecuredController extends SecuredController
 {
@@ -33,7 +29,7 @@ class CommentSecuredController extends SecuredController
             }
             //Create comment object with POST value, session user, an post id
             $comment = new Comment([
-                'content' => filter_input(INPUT_POST, 'commentText', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+                'content' => $this->router->request->getPostValue('commentText'),
                 'author'  => $this->session->getAttribute('user'),
                 'postId'  => $postId
             ]);
@@ -42,16 +38,13 @@ class CommentSecuredController extends SecuredController
         } catch (\Exception $e){
             $error = $e;
         }
-        $response['message'] = $error? $error->getMessage():'OK';
-        $response['code']    = $error? $error->getCode() : '0';
         $this->render('request', [
-            'response' => $response
+            'response' => $this->formatResponseArray($response, $error)
         ]);
     }
 
     /**
      * Validate a comment in database
-     * @todo redirection
      */
     public function validate(int $id)
     {
@@ -62,16 +55,13 @@ class CommentSecuredController extends SecuredController
         } catch (\Exception $e){
             $error = $e;
         }
-        $response['message'] = $error? $error->getMessage():'OK';
-        $response['code']    = $error? $error->getCode() : '0';
         $this->render('request', [
-            'response' => $response
+            'response' => $this->FormatResponseArray($response, $error)
         ]);
     }
 
     /**
      * Invalidate a comment in database
-     * @todo redirection
      */
     public function invalidate(int $id)
     {
@@ -82,10 +72,8 @@ class CommentSecuredController extends SecuredController
         } catch (\Exception $e){
             $error = $e;
         }
-        $response['message'] = $error? $error->getMessage():'OK';
-        $response['code']    = $error? $error->getCode() : '0';
         $this->render('request', [
-            'response' => $response
+            'response' => $this->formatResponseArray($response, $error)
         ]);
     }
 
@@ -101,8 +89,8 @@ class CommentSecuredController extends SecuredController
     protected function updateValidation(int $id, bool $valid)
     {
         $this->checkAdminRights();
-        //Get values from GET and POST, checks token  
-        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        //Get values from POST, checks token  
+        $token 		 = $this->router->request->getPostValue('token');
         $resultCheck = $this->session->checkToken($token);
         //If id is'nt valid, throw exception
         if (!$id) {
@@ -131,20 +119,31 @@ class CommentSecuredController extends SecuredController
      */
     public function remove(int $commentId)
     {
+    	// set error default value
         $error = null;
         try{
             $this->checkAdminRights();
-            //Create comment object
+            // Create comment object
             $comment = (new CommentManager($this->config))->getById($commentId);
-            //remove object from database
+            // remove object from database
             $response['rowAffecteds'] = (new CommentManager($this->config))->remove($comment)->rowCount();
         } catch (\Exception $e){
             $error = $e;
         }
-        $response['message'] = $error? $error->getMessage():'OK';
-        $response['code']    = $error? $error->getCode() : '0';
+        // Render view
         $this->render('request', [
-            'response' => $response
+            'response' => $this->formatResponseArray($response, $error)
         ]);
+    }
+
+    /**
+     * Format a response array to a request
+     * @return array Passed array, formatted with error arguments, if they are.
+     */
+    protected function formatResponseArray(array $responseArray=[], $error)
+    {
+    	$responseArray['message'] = $error? $error->getMessage():'OK';
+        $responseArray['code']    = $error? $error->getCode() : '0';
+        return $responseArray;
     }
 }

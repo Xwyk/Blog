@@ -1,0 +1,71 @@
+{% set mainTitle = 'Compte' %}
+{% extends "template.twig" %}
+{% block preBody %}
+    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+
+<div id="editPost" class="text-center padding" cz-shortcut-listen="true">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form class="form-comment form-horizontal" action="/{{ router.url('userAccout_request') }}" method="post" enctype="multipart/form-data">
+                	
+				    <h1 class="h3 mb-3 font-weight-normal">Modification des informations personnelles</h1>
+				    <p class="text-danger">{{ error.message ?? "" }}</p>
+				    <p class="text-success">{{ info ?? "" }}</p>
+                    <!-- Portfolio Modal - Title-->
+                    <div class="container-fluid">
+                    	<div class="row justify-content-center">
+				            <div class="col-8">
+				    			<img src="https://robohash.org/{{ user.getPseudo }}/?size=100x100&set=any" class="img-circle avatar " alt="user profile image">
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Pseudo : </p>
+				            </div>
+				            <div class="col-8">
+				            	<label for="inputPseudo" class="sr-only">Pseudo</label>
+        						<input type="text" id="inputPseudo" class="form-control" placeholder="inputPseudo" value="{{ user.getPseudo }}" required="" name="inputPseudo">
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Mot de passe actuel : </p>
+				            </div>
+				            <div class="col-8">
+				            	<label for="inputOldPassword1" class="sr-only">Mot de passe actuel</label>
+        						<input type="password" id="inputOldPassword1" class="form-control" placeholder="Mot de passe actuel"  name="oldPassword">
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Nouveau mot de passe : </p>
+				            </div>
+				            <div class="col-8">
+				            	<label for="inputNewPassword1" class="sr-only">Nouveau mot de passe</label>
+       							<input type="password" id="inputNewPassword1" class="form-control" placeholder="Nouveau mot de passe"  name="newPassword1">
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Confirmation du nouveau mot de passe : </p>
+				            </div>
+				            <div class="col-8">
+				            	<label for="inputNewPassword2" class="sr-only">Confirmation du nouveau mot de passe</label>
+        						<input type="password" id="inputNewPassword2" class="form-control" placeholder="Confirmation du nouveau mot de passe"  name="newPassword2">
+				            </div>
+				        </div>
+					</div>
+			        <div class="checkbox mb-3">
+			        <label>
+			        </label>
+			        </div>
+			        <button class="btn btn-lg btn-primary btn-block" type="submit">Valider les changements</button>
+			    </form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

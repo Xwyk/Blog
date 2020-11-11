@@ -1,23 +1,57 @@
 {% set mainTitle = 'Ajout d\'un article' %}
 {% extends "template.twig" %}
 {% block preBody %}
-    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+    <link href="/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
-<div id="addPost" class="text-center" cz-shortcut-listen="true">
-    <form class="form-comment" action="/{{ router.url('post_add_request') }}" method="post" enctype="multipart/form-data">
-        <h1 class="h3 mb-3 font-weight-normal">Ajout d'un Article</h1>
-        <p class="text-danger">{{ error ?? "" }}</p>
-            <label for="postTitle" class="sr-only">Title</label>  
-        <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md">
-            <label for="postChapo" class="sr-only">Chapo</label>
-        <input id="postChapo" name="postChapo" type="text" placeholder="Chapo" class="form-control input-md">
-            <label for="postImage" class="sr-only">Image</label>
-        <input id="postImage" name="postImage" class="input-file" type="file">
-            <label for="postContent" class="sr-only">Description</label>
-        <textarea class="form-control" id="postContent" name="postContent"></textarea>
-        <input type="hidden" name="validate" value="1"></input>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button></textarea>
-    </form>
+<div id="editPost" class="text-center padding" cz-shortcut-listen="true">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+    			<form class="form-comment" action="/{{ router.url('post_add_request') }}" method="post" enctype="multipart/form-data">
+    			    <h1 class="h3 mb-3 font-weight-normal">Ajout d'un Article</h1>
+    			    <p class="text-danger">{{ error ?? "" }}</p>
+    			    
+    			    <div class="container-fluid">
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Titre : </p>
+				            </div>
+				            <div class="col-8">
+			    			    <label for="postTitle" class="sr-only">Title</label>  
+			    			    <input id="postTitle" name="postTitle" type="text" placeholder="Titre de l'article" class="form-control input-md">
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Chapo : </p>
+				            </div>
+				            <div class="col-8">
+			    			    <label for="postChapo" class="sr-only">Chapo</label>
+			    			    <input id="postChapo" name="postChapo" type="text" placeholder="Chapo" class="form-control input-md">
+				            </div>
+				        </div>
+				        <div class="row justify-content-center">
+				            <div class="col-4">
+				            	<p class="mb-5">Image : </p>
+				            </div>
+				            <div class="col-8">
+			    			    <label for="postImage" class="sr-only">Image</label>
+			    			    <input id="postImage" name="postImage" class="input-file" type="file">
+				            </div>
+				        </div>
+					</div>
+    			    <label for="postContent" class="sr-only">Description</label>
+    			    <textarea class="form-control" id="postContent" name="postContent"></textarea>
+    			    <input type="hidden" name="validate" value="1"></input>
+    			    <button class="btn btn-lg btn-primary btn-block" type="submit">Sauvegarder</button></textarea>
+    			</form>
+			</div>
+		</div>
+	</div>
 </div>
+{% endblock %}
+{% block postBody %}
+	<script src="https://cdn.tiny.cloud/1/{{ config.getTinymceKey }}/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+ 	<script>tinymce.init({selector:'#postContent'});</script>
 {% endblock %}
