@@ -12,10 +12,12 @@ class Request
 	protected $getArray;
 	protected $postArray;
 	protected $fileArray;
+	protected $config;
 
-	public function __construct(array $get, array $post = [], array $file = [])
+	public function __construct(array $get, Configuration $config, array $post = [], array $file = [])
 	{
-		$this->getArray    = new EnvironmentArray($get);
+		$this->getArray = new EnvironmentArray($get);
+		$this->config   = $config;
 		if (!empty($post)) {
 			$this->postArray = new EnvironmentArray($post);
 		}
@@ -41,6 +43,6 @@ class Request
 
 	public function getUrl()
 	{
-		return $this->getArray->get('url');
+		return $this->config->getWebsiteRoot()."/".$this->getArray->get('url');
 	}
 }

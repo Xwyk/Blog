@@ -1,6 +1,6 @@
 {% extends "template.twig" %}
 {% block preBody %}
-    <link href="/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+    <link href="{{ config.getWebsiteRoot }}/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
 <div id="post" class="text-center padding" cz-shortcut-listen="true">
@@ -16,7 +16,7 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image-->
-                <img class="img-fluid rounded mb-5" src="/{{ post.getPicture ?? './images/cabin.png' }}" alt="" />
+                <img class="img-fluid rounded mb-5" src="{{ config.getWebsiteRoot }}/{{ post.getPicture ?? './images/cabin.png' }}" alt="" />
                 <!-- Portfolio Modal - Text-->
                 {%autoescape false%}{{ post.getContent }}{%endautoescape%}
                  <ul class="list-inline item-details">
@@ -76,7 +76,7 @@
         function addComment(){
             $.ajax({
                 type: "POST",
-                url: "/?action=addComment&postId={{ post.getId }}",
+                url: "{{ config.getWebsiteRoot }}/?action=addComment&postId={{ post.getId }}",
                 dataType : 'json',
                 data: {
                     commentText: $('#commentText').val()

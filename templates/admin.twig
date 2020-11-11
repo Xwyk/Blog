@@ -1,9 +1,9 @@
-{% set mainTitle = 'Interface d\'administration' %}
+{% set mainTitle = "Interface d'administration" %}
 {% extends "template.twig" %}
 {% block preBody %}
-    <link href="plugins/datatables/datatables/media/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="{{ config.getWebsiteRoot }}/plugins/datatables/datatables/media/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     {# <link href="plugins/datatables/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"> #}
-    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+    <link href="{{ config.getWebsiteRoot }}/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
 <div class="text-center padding" cz-shortcut-listen="true">
@@ -132,8 +132,8 @@
 {% endblock %}
 
 {% block postBody %}
-    <script src="plugins/datatables/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ config.getWebsiteRoot }}/plugins/datatables/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="{{ config.getWebsiteRoot }}/plugins/datatables/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript">
         $(".dtOrderExample").DataTable(
             {   
@@ -177,7 +177,7 @@
         function removePost(id){
             $.ajax({
                 type: "POST",
-                url: "/posts/"+id+"/remove",
+                url: "{{ config.getWebsiteRoot }}/posts/"+id+"/remove",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
@@ -201,7 +201,7 @@
             console.log("{{token}}"+" "+id);
             $.ajax({
                 type: "POST",
-                url: "/comments/"+id+"/validate",
+                url: "{{ config.getWebsiteRoot }}/comments/"+id+"/validate",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
@@ -229,7 +229,7 @@
             console.log("{{token}}"+" "+id);
             $.ajax({
                 type: "POST",
-                url: "/comments/"+id+"/invalidate",
+                url: "{{ config.getWebsiteRoot }}/comments/"+id+"/invalidate",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"
@@ -256,7 +256,7 @@
         function removeComment(id){
             $.ajax({
                 type: "POST",
-                url: "/comments/"+id+"/remove",
+                url: "{{ config.getWebsiteRoot }}/comments/"+id+"/remove",
                 dataType : 'json',
                 data: {
                     token: "{{ token }}"

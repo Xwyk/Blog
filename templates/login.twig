@@ -1,13 +1,13 @@
 {% set mainTitle = 'Connexion' %}
 {% extends "template.twig" %}
 {% block preBody %}
-    <link href="themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+    <link href="{{ config.getWebsiteRoot }}/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
 <div id="login" class="text-center" cz-shortcut-listen="true">
     <form class="form-signin" action="/{{ router.url('login_request') }}" method="post">
         <p class="text-danger">{{ error ?? "" }}</p>
-        <img class="mb-4" src="./images/logo.png" alt="" width="72" height="72">
+        <img class="mb-4" src="{{ config.getWebsiteRoot }}./images/logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
         <label for="inputEmail" class="sr-only">Adresse mail</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" name="email">

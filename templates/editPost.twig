@@ -1,7 +1,7 @@
 {% set mainTitle = 'Edition' %}
 {% extends "template.twig" %}
 {% block preBody %}
-    <link href="/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
+    <link href="{{ config.getWebsiteRoot }}/themes/freelancer 4.5/css/signin.css" rel="stylesheet" />
 {% endblock %}
 {% block content %}
 <div id="editPost" class="text-center padding" cz-shortcut-listen="true">
@@ -35,7 +35,7 @@
                         <div class="divider-custom-line"></div>
                     </div>
                     <!-- Portfolio Modal - Image-->
-                    <img class="img-fluid rounded mb-5" src="/{{ post.getPicture ?? './images/cabin.png' }}" alt="" />
+                    <img class="img-fluid rounded mb-5" src="{{ config.getWebsiteRoot }}/{{ post.getPicture ?? './images/cabin.png' }}" alt="" />
                     <input id="postImage" name="postImage" class="input-file" type="file">
 
                     <!-- Portfolio Modal - Text-->

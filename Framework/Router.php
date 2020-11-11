@@ -48,7 +48,8 @@ class Router
                 return $route->call($view, $session, $config, $this);
             }
         }
-        throw new RouteNotFoundException('');
+        var_dump($this->url);
+        throw new RouteNotFoundException("");
     }
 
     public function url(string $name, array $params = []){
