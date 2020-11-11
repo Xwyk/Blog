@@ -111,7 +111,7 @@ class Configuration
 
     public function getRoutes()
     {
-    	if (! isset($this->config['routes'])) {
+        if (! isset($this->config['routes'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['routes'];
@@ -119,7 +119,7 @@ class Configuration
 
     public function getTinymceKey()
     {
-    	if (! isset($this->config['application']['tinyKey'])) {
+        if (! isset($this->config['application']['tinyKey'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['application']['tinyKey'];

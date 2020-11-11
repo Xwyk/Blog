@@ -12,7 +12,7 @@ use Blog\Exceptions\NotEnoughRightsException;
  */
 class AdminSecuredController extends SecuredController
 {
-	// Template name whithout extension
+    // Template name whithout extension
     public const VIEW_ADMIN = "admin";
     
     /**

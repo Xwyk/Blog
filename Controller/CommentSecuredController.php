@@ -90,7 +90,7 @@ class CommentSecuredController extends SecuredController
     {
         $this->checkAdminRights();
         //Get values from POST, checks token  
-        $token 		 = $this->router->request->getPostValue('token');
+        $token       = $this->router->request->getPostValue('token');
         $resultCheck = $this->session->checkToken($token);
         //If id is'nt valid, throw exception
         if (!$id) {
@@ -119,7 +119,7 @@ class CommentSecuredController extends SecuredController
      */
     public function remove(int $commentId)
     {
-    	// set error default value
+        // set error default value
         $error = null;
         try{
             $this->checkAdminRights();
@@ -142,7 +142,7 @@ class CommentSecuredController extends SecuredController
      */
     protected function formatResponseArray(array $responseArray=[], $error)
     {
-    	$responseArray['message'] = $error? $error->getMessage():'OK';
+        $responseArray['message'] = $error? $error->getMessage():'OK';
         $responseArray['code']    = $error? $error->getCode() : '0';
         return $responseArray;
     }

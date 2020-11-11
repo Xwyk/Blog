@@ -123,9 +123,9 @@ class UserManager extends Manager
         $result = $this->executeRequest($request, [
             'firstname'  => $user->getFirstName(),
             'lastname'   => $user->getLastName(),
-            'pseudo' 	 => $user->getPseudo(),
-            'pwd'		 => $user->getPassword(),
-            'id'     	 => $user->getId()
+            'pseudo'     => $user->getPseudo(),
+            'pwd'        => $user->getPassword(),
+            'id'         => $user->getId()
         ]);
         return $result;
     }
