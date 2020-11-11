@@ -47,7 +47,7 @@ class Configuration
      */
     public function getDbHost(): string
     {
-        if (! isset($this->config['database']['host'])) {
+        if (!isset($this->config['database']['host'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['database']['host'];
@@ -59,7 +59,7 @@ class Configuration
      */
     public function getDbPort(): int
     {
-        if (! isset($this->config['database']['port'])) {
+        if (!isset($this->config['database']['port'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['database']['port'];
@@ -71,7 +71,7 @@ class Configuration
      */
     public function getDbName(): string
     {
-        if (! isset($this->config['database']['dbname'])) {
+        if (!isset($this->config['database']['dbname'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['database']['dbname'];
@@ -83,7 +83,7 @@ class Configuration
      */
     public function getDbUsername(): string
     {
-        if (! isset($this->config['database']['username'])) {
+        if (!isset($this->config['database']['username'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['database']['username'];
@@ -95,14 +95,14 @@ class Configuration
      */
     public function getDbPassword(): string
     {
-        if (! isset($this->config['database']['password'])) {
+        if (!isset($this->config['database']['password'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['database']['password'];
     }
 
     public function getThemeDirectory(){
-        if (! isset($this->config['templates']['directory'])) {
+        if (!isset($this->config['templates']['directory'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['templates']['directory'];
@@ -111,7 +111,7 @@ class Configuration
 
     public function getRoutes()
     {
-        if (! isset($this->config['routes'])) {
+        if (!isset($this->config['routes'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['routes'];
@@ -119,7 +119,7 @@ class Configuration
 
     public function getTinymceKey()
     {
-        if (! isset($this->config['application']['tinyKey'])) {
+        if (!isset($this->config['application']['tinyKey'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['application']['tinyKey'];
@@ -127,7 +127,7 @@ class Configuration
 
     public function getWebSiteRoot()
     {
-        if (! isset($this->config['application']['websiteRoot'])) {
+        if (!isset($this->config['application']['websiteRoot'])) {
             throw new ValueNotExistsException();
         }
         return $this->config['application']['websiteRoot'];

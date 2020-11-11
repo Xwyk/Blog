@@ -16,7 +16,7 @@ class AdminSecuredController extends SecuredController
     public const VIEW_ADMIN = "admin";
     
     /**
-     * Displays admin view 
+     * Displays admin view
      * @throws Blog\Exceptions\NotEnoughRightsException if user is connected and isn't admin 
      */
     public function display()

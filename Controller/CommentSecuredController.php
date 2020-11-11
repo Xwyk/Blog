@@ -142,7 +142,7 @@ class CommentSecuredController extends SecuredController
      */
     protected function formatResponseArray(array $responseArray=[], $error)
     {
-        $responseArray['message'] = $error? $error->getMessage():'OK';
+        $responseArray['message'] = $error? $error->getMessage() :'OK';
         $responseArray['code']    = $error? $error->getCode() : '0';
         return $responseArray;
     }
