@@ -84,10 +84,10 @@ class PostSecuredController extends SecuredController
 
         $imgPath = $this->getPicturePath();
         if ($imgPath) {
-        	if (is_string($imgPath)) {
-	            $postToUpdate->setPicture($imgPath);
-    		}
-    		//error while getting image
+            if (is_string($imgPath)) {
+                $postToUpdate->setPicture($imgPath);
+            }
+            //error while getting image
         }
 
         (new PostManager($this->config))->update($postToUpdate);
