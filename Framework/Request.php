@@ -36,7 +36,7 @@ class Request
         return $this->postArray->get($key);
     }
 
-    public function getFileValue(string $key)
+    public function getFilesValue(string $key)
     {
         return $this->fileArray->get($key);
     }

@@ -97,7 +97,7 @@ class PostSecuredController extends SecuredController
 
     protected function getPicturePath()
     {
-        $image = $_FILES['postImage'] ?? null;
+        $image = $this->router->request->getFilesValue('postImage') ?? null;
         if ($image['error'] == 0) {
             $imageDir = '.\images\\';
             $imageName=md5(uniqid());

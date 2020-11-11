@@ -85,19 +85,4 @@ abstract class SecuredController extends Controller
     {
         return $this->session->checkToken($tokenToCheck, $this->config);
     }
-
-    public function jsonRender(array $data)
-    {
-        try{
-            $response = json_encode(array('rowAffecteds' => $this->updateValidation(true)));
-        } catch (\Exception $e){
-            $error    = $e->getCode();
-        }
-        if (isset($error)) {
-            $response = $error;
-        }
-        $this->render('request', [
-            'response' => $response
-        ]);
-    }
 }

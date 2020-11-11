@@ -7,12 +7,13 @@ namespace Blog\Exceptions;
  */
 class CommentNotFoundException extends \Exception
 {
-    public $message = "Commentaire non trouvé";
+    public $message = "Commentaire non trouvé ";
 
 
     public function __construct($id)
     {
         $this->code = 404;
+        $this->message .= $message;
         parent::__construct();
     }
 }
