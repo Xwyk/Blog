@@ -22,6 +22,50 @@ CREATE SCHEMA IF NOT EXISTS `blog` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4
 USE `blog` ;
 
 -- -----------------------------------------------------
+-- Table `blog`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `blog`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `blog`.`user` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `pseudo` VARCHAR(45) NOT NULL,
+  `mail_address` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(60) NOT NULL,
+  `active` TINYINT(4) NOT NULL,
+  `creation_date` DATETIME NOT NULL,
+  `type` INT(11) NOT NULL,
+  `modification_date` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Table `blog`.`post`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `blog`.`post` ;
+
+CREATE TABLE IF NOT EXISTS `blog`.`post` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `content` LONGTEXT NOT NULL,
+  `creation_date` DATETIME NOT NULL,
+  `author` INT(11) NOT NULL,
+  `chapo` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(45) NOT NULL,
+  `modification_date` DATETIME NOT NULL,
+  `picture` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `post_auteur_idx` (`author` ASC) VISIBLE,
+  CONSTRAINT `post_auteur`
+    FOREIGN KEY (`author`)
+    REFERENCES `blog`.`user` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 29
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
 -- Table `blog`.`comment`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `blog`.`comment` ;
@@ -53,28 +97,7 @@ AUTO_INCREMENT = 23
 DEFAULT CHARACTER SET = utf8;
 
 
--- -----------------------------------------------------
--- Table `blog`.`post`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `blog`.`post` ;
 
-CREATE TABLE IF NOT EXISTS `blog`.`post` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `content` LONGTEXT NOT NULL,
-  `creation_date` DATETIME NOT NULL,
-  `author` INT(11) NOT NULL,
-  `chapo` VARCHAR(45) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
-  `modification_date` DATETIME NOT NULL,
-  `picture` VARCHAR(100) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `post_auteur_idx` (`author` ASC) VISIBLE,
-  CONSTRAINT `post_auteur`
-    FOREIGN KEY (`author`)
-    REFERENCES `blog`.`user` (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 29
-DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -98,26 +121,7 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
 
 
--- -----------------------------------------------------
--- Table `blog`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `blog`.`user` ;
 
-CREATE TABLE IF NOT EXISTS `blog`.`user` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `pseudo` VARCHAR(45) NOT NULL,
-  `mail_address` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(60) NOT NULL,
-  `active` TINYINT(4) NOT NULL,
-  `creation_date` DATETIME NOT NULL,
-  `type` INT(11) NOT NULL,
-  `modification_date` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 6
-DEFAULT CHARACTER SET = utf8;
 
 USE `blog`;
 
