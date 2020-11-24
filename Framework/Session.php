@@ -12,12 +12,12 @@ use Blog\Exceptions\ExpiredSessionException;
 class Session
 {
     //$_SESSION associatives keys
-    public const AUTHENTICATED_KEY                    = 'user';
-    public const TOKEN_KEY                            = 'token';
-    public const SESSION_KEY                          = 'session';
-    public const SESSION_GENERATION_TIME_KEY          = 'sessionGenerationTime';
-    public const SESSION_EXPIRATION_TIME_KEY          = 'sessionExpirationTime';
-    public const SESSION_INACTIVITY_TIME_KEY          = 'sessionInactivityTime';
+    public const AUTHENTICATED_KEY           = 'user';
+    public const TOKEN_KEY                   = 'token';
+    public const SESSION_KEY                 = 'session';
+    public const SESSION_GENERATION_TIME_KEY = 'sessionGenerationTime';
+    public const SESSION_EXPIRATION_TIME_KEY = 'sessionExpirationTime';
+    public const SESSION_INACTIVITY_TIME_KEY = 'sessionInactivityTime';
     
     //Session time validity
     protected const SESSION_VALIDITY_MINUTES          = 60;
