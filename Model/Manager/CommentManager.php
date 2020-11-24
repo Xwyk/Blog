@@ -12,10 +12,10 @@ use Blog\Model\Comment;
 class CommentManager extends Manager
 {
 
-    public const COMMENTS_VALID = 1;
+    public const COMMENTS_VALID   = 1;
     public const COMMENTS_INVALID = 2;
-    public const COMMENTS_ALL = 3;
-    protected const BASE_REQUEST = 'SELECT comment.id AS commentId,
+    public const COMMENTS_ALL     = 3;
+    protected const BASE_REQUEST  = 'SELECT comment.id AS commentId,
                                       comment.content AS commentContent,
                                       comment.isValid AS commentValid,
                                       comment.author AS commentAuthor,
@@ -112,10 +112,10 @@ class CommentManager extends Manager
     public function getById(int $commentId)
     {
         $requestComments = $this::BASE_REQUEST.'WHERE comment.id = :id ;';
-
-        $comments = $this->executeRequest($requestComments, [':id'=>$commentId]);
-        $ret=null;
-        $resultRequest = $comments->fetch();
+        
+        $comments        = $this->executeRequest($requestComments, [':id'=>$commentId]);
+        $ret             = null;
+        $resultRequest   = $comments->fetch();
         if (!$resultRequest) {
             throw new CommentNotFoundException($commentId);
         }
@@ -129,7 +129,7 @@ class CommentManager extends Manager
         $request = 'UPDATE comment
                     SET isValid = 1
                     WHERE id = :id;';
-        $result = $this->executeRequest($request, [':id' => $commentId]);
+        $result  = $this->executeRequest($request, [':id' => $commentId]);
         return $result;
     }
 
@@ -138,7 +138,7 @@ class CommentManager extends Manager
         $request = 'UPDATE comment
                     SET isValid = 0
                     WHERE id = :id;';
-        $result = $this->executeRequest($request, [':id' => $commentId]);
+        $result  = $this->executeRequest($request, [':id' => $commentId]);
         return $result;
     }
 
@@ -150,7 +150,7 @@ class CommentManager extends Manager
                     VALUES (:content,
                             :author,
                             :post);';
-        $result = $this->executeRequest($request, [
+        $result  = $this->executeRequest($request, [
             ':content' => $comment->getContent(),
             ':author'  => $comment->getAuthor()->getId(),
             ':post'    => $comment->getPostId()
