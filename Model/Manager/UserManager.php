@@ -39,10 +39,10 @@ class UserManager extends Manager
 
     public function getByPseudo(string $userPseudo)
     {
-        $request = 'SELECT * FROM user 
+        $request       = 'SELECT * FROM user 
                     WHERE pseudo = :pseudo ;';
         $requestResult = $this->executeRequest($request, [':pseudo' => $userPseudo]);
-        $userResult = $requestResult->fetch();
+        $userResult    = $requestResult->fetch();
         if ($userResult) {
             $user = new User($userResult);
         }
