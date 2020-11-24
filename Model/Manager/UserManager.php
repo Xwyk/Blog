@@ -21,16 +21,16 @@ class UserManager extends Manager
     {
         $request = 'SELECT * FROM user 
                     WHERE id = :id ;';
-        $user = $this->executeRequest($request, ['id' => $userId]);
+        $user    = $this->executeRequest($request, ['id' => $userId]);
         return new User($user->fetch());
     }
 
     public function getByMail(string $userMail)
     {
-        $request = 'SELECT * FROM user 
+        $request       = 'SELECT * FROM user 
                     WHERE mail_address = :mail ;';
         $requestResult = $this->executeRequest($request, [':mail' => $userMail]);
-        $userResult = $requestResult->fetch();
+        $userResult    = $requestResult->fetch();
         if ($userResult) {
             $user = new User($userResult);
         }
@@ -54,11 +54,8 @@ class UserManager extends Manager
         //TODO : replace by getuserbymail
         $request = 'SELECT * FROM user 
                     WHERE mail_address = :mailAddress ;';
-        // $request = 'SELECT * FROM user 
-        //             WHERE pseudo = :pseudo ;';
-        $user = $this->executeRequest($request, [':mailAddress' => $usermail]);
-        // $user = $this->executeRequest($request, [':pseudo' => $userPseudo]);
-        $result=$user->fetch();
+        $user    = $this->executeRequest($request, [':mailAddress' => $usermail]);
+        $result  = $user->fetch();
         if (!is_array($result)) {
             throw new UserNotFoundException($usermail);
             // throw new UserNotFoundException($userPseudo);
@@ -103,7 +100,7 @@ class UserManager extends Manager
                             :pseudo, 
                             :mail, 
                             :pwd);';
-        $result = $this->executeRequest($request, [
+        $result  = $this->executeRequest($request, [
             ':firstname' =>$userToAdd->getFirstName(),
             ':lastname'  => $userToAdd->getLastName(),
             ':pseudo'    => $userToAdd->getPseudo(),
@@ -120,7 +117,7 @@ class UserManager extends Manager
                         pseudo     = :pseudo,
                         password   = :pwd
                     WHERE id = :id;';
-        $result = $this->executeRequest($request, [
+        $result  = $this->executeRequest($request, [
             'firstname'  => $user->getFirstName(),
             'lastname'   => $user->getLastName(),
             'pseudo'     => $user->getPseudo(),
