@@ -11,9 +11,9 @@ use Blog\Exceptions\PostNotFoundException;
 
 class PostSecuredController extends SecuredController
 {
-    public const VIEW_ADDPOST  = "addPost";
-    public const VIEW_EDITPOST = "editPost";
-    public const VIEW_POST     = "post";
+    public const VIEW_ADDPOST          = "addPost";
+    public const VIEW_EDITPOST         = "editPost";
+    public const VIEW_POST             = "post";
     protected const IMAGE_MAX_SIZE     = 10000000;
     protected const ALLOWED_EXTENSIONS = [
         'png',
@@ -99,8 +99,8 @@ class PostSecuredController extends SecuredController
     {
         $image = $this->router->request->getFilesValue('postImage') ?? null;
         if ($image['error'] == 0) {
-            $imageDir = '.\images\\';
-            $imageName=md5(uniqid());
+            $imageDir       = '.\images\\';
+            $imageName      = md5(uniqid());
             $imageExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
             // if (in_array($imageExtension, $this::ALLOWED_EXTENSIONS)) {
             //  throw new \Exception("Extension non authorisée", 1);
@@ -126,7 +126,7 @@ class PostSecuredController extends SecuredController
         //Validate comment
         try{
             $this->checkAdminRights();
-            $post = (new PostManager($this->config))->getById($postId);
+            $post                     = (new PostManager($this->config))->getById($postId);
             $response['rowAffecteds'] =  (new PostManager($this->config))->remove($post)->rowCount();
         } catch (\Exception $e){
             $error = $e;
