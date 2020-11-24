@@ -12,11 +12,11 @@ use Blog\Model\User;
 class TokenManager extends Manager
 {
     protected const TOKEN_VALIDITY_MINUTES = 1;
-    protected const MAX_ALLOWED_TOKENS = 2;
-    public const TOKEN_EXPIRED = 3;
-    public const TOKEN_INVALID = 2;
-    public const TOKEN_VALID = 1;
-    protected const BASE_REQUEST = 'SELECT  
+    protected const MAX_ALLOWED_TOKENS     = 2;
+    public const TOKEN_EXPIRED             = 3;
+    public const TOKEN_INVALID             = 2;
+    public const TOKEN_VALID               = 1;
+    protected const BASE_REQUEST           = 'SELECT  
                             token.user AS tokenUser,
                             token.value AS tokenValue,
                             token.generation_date AS tokenGenerationDate,
@@ -34,7 +34,7 @@ class TokenManager extends Manager
     public function getByUser(User $user)
     {
         $sqlRequest = self::BASE_REQUEST.'WHERE user = :user;';
-        $token     = $this->executeRequest($sqlRequest, [':user'=>$user->getId()]);
+        $token      = $this->executeRequest($sqlRequest, [':user'=>$user->getId()]);
         $result     = $token->fetch();
         if (!$result) {
             throw new \Exception("aucun token enregistré", 1);
@@ -56,10 +56,8 @@ class TokenManager extends Manager
 
     public function create($tokenLength = 32, User $user)
     {
-        $tokenValue = bin2hex(openssl_random_pseudo_bytes($tokenLength));
-            
+        $tokenValue      = bin2hex(openssl_random_pseudo_bytes($tokenLength));
         $tokenGeneration = new \DateTime();
-        
         $tokenExpiration = clone $tokenGeneration;
         $tokenExpiration->modify('+ '.$this::TOKEN_VALIDITY_MINUTES.' minutes');
         $this->removeOld();
@@ -87,7 +85,7 @@ class TokenManager extends Manager
                             :value, 
                             :generation_date, 
                             :expiration_date);';
-        $result = $this->executeRequest($request, [
+        $result  = $this->executeRequest($request, [
             ':user'            => $tokenToAdd->getUser()->getId(),
             ':value'           => $tokenToAdd->getValue(),
             ':generation_date' => $tokenToAdd->getGenerationDate()->Format('Y-m-d H:i:s'),
@@ -121,14 +119,14 @@ class TokenManager extends Manager
     {
         
         $request = 'DELETE FROM token WHERE user = :user;';
-        $result = $this->executeRequest($request, [':user'=>$user->getId()]);
+        $result  = $this->executeRequest($request, [':user'=>$user->getId()]);
         return $result;
     }
 
     public function removeOld()
     {
         $request = 'DELETE FROM token WHERE expiration_date < :expDate;';
-        $result = $this->executeRequest($request, [':expDate'=>(new \DateTime())->format('Y-m-d H:i:s')]);
+        $result  = $this->executeRequest($request, [':expDate'=>(new \DateTime())->format('Y-m-d H:i:s')]);
         return $result;
     }
 }
