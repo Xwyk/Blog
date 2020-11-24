@@ -11,8 +11,8 @@ class FileNotFoundException extends \Exception
 
     public function __construct($path)
     {
-		$this->message .= $path;
-		$this->code    = 404;
+        $this->message .= $path;
+        $this->code     = 404;
         parent::__construct();
     }
 }

@@ -112,7 +112,6 @@ class CommentManager extends Manager
     public function getById(int $commentId)
     {
         $requestComments = $this::BASE_REQUEST.'WHERE comment.id = :id ;';
-        
         $comments        = $this->executeRequest($requestComments, [':id'=>$commentId]);
         $ret             = null;
         $resultRequest   = $comments->fetch();

@@ -28,7 +28,7 @@ class Router
     }
 
     private function add(string $path, $callable, string $name = null, string $method){
-        $route = new Route($path, $callable);
+        $route                   = new Route($path, $callable);
         $this->routes[$method][] = $route;
         if(is_string($callable) && $name === null){
             $name = $callable;

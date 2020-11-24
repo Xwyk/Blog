@@ -64,7 +64,7 @@ abstract class Controller
      */
     protected function setRedirection(string $redirection)
     {
-        $this->redirection=urlencode($redirection);
+        $this->redirection = urlencode($redirection);
     }
 
     /**

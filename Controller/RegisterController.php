@@ -8,7 +8,7 @@ use Blog\Model\Manager\UserManager;
 
 class RegisterController extends Controller
 {
-    public const VIEW_REGISTER  =    "register";
+    public const VIEW_REGISTER = "register";
     public function register()
     {
         try {
