@@ -8,7 +8,7 @@ use Blog\Exceptions\PostNotFoundException;
 
 class PostController extends Controller
 {
-    public const VIEW_POST     = "post";
+    public const VIEW_POS = "post";
 
     public function displayPostById(int $postId)
     {

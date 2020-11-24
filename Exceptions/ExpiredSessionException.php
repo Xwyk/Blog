@@ -8,7 +8,7 @@ namespace Blog\Exceptions;
 class ExpiredSessionException extends \Exception
 {
     public $message = "La session a expiré";
-    public $code	= 403; 
+    public $code    = 403; 
     public function __construct()
     {
         parent::__construct();

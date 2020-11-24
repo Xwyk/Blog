@@ -14,11 +14,11 @@ class UserAccountSecuredController extends SecuredController
     public const VIEW_USERACCOUNT = "userAccount";
     public function save()
     {
-        $oldPassword = $this->router->request->getPostValue('oldPassword');
-        $newPassword1 = $this->router->request->getPostValue('newPassword1');
-        $newPassword2 = $this->router->request->getPostValue('newPassword2');
+        $oldPassword   = $this->router->request->getPostValue('oldPassword');
+        $newPassword1  = $this->router->request->getPostValue('newPassword1');
+        $newPassword2  = $this->router->request->getPostValue('newPassword2');
         $connectedUser = (new UserManager($this->config))->getByMail($this->session->getAttribute('user')->getMailAddress());
-        $newPseudo = $this->router->request->getPostValue('inputPseudo');
+        $newPseudo     = $this->router->request->getPostValue('inputPseudo');
         $connectedUser->hydrate([
             'pseudo'   => $newPseudo
         ]);

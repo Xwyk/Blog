@@ -10,7 +10,7 @@ use Blog\Framework\Entity;
 
 class User extends Entity
 {
-    public const TYPE_USER = 1;
+    public const TYPE_USER  = 1;
     public const TYPE_ADMIN = 2 ;
 
     private $id;
@@ -22,7 +22,7 @@ class User extends Entity
     private $mailAddress;
     private $password;
     private $active = false;
-    private $type = self::TYPE_USER;
+    private $type   = self::TYPE_USER;
 
     /**
      * Construct object
@@ -30,7 +30,7 @@ class User extends Entity
      */
     public function __construct(array $data)
     {
-        $this->creationDate = new \DateTime();
+        $this->creationDate     = new \DateTime();
         $this->modificationDate = new \DateTime();
         $this->hydrate($data);
     }
@@ -150,7 +150,7 @@ class User extends Entity
      */
     protected function setCreationDate(string $newDate)
     {
-        $this->creationDate="";
+        $this->creationDate = "";
         if (!is_null($newDate)) {
             $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         }
@@ -162,7 +162,7 @@ class User extends Entity
      */
     protected function setModificationDate(string $newDate)
     {
-        $this->creationDate="";
+        $this->creationDate = "";
         if (!is_null($newDate)) {
             $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
         }

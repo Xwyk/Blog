@@ -17,7 +17,7 @@ class Request
     public function __construct(array $get, Configuration $config, array $post = [], array $file = [])
     {
         $this->getArray = new EnvironmentArray($get);
-        $this->config = $config;
+        $this->config   = $config;
         if (!empty($post)) {
             $this->postArray = new EnvironmentArray($post);
         }

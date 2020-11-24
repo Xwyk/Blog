@@ -7,8 +7,8 @@ namespace Blog\Exceptions;
  */
 class UserNotConnectedException extends \Exception
 {
-    public $message = "Utilisateur non connecté";
-    public $code 	= 401;
+	public $message = "Utilisateur non connecté";
+	public $code    = 401;
     public function __construct()
     {
         parent::__construct();

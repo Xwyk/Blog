@@ -7,8 +7,8 @@ namespace Blog\Exceptions;
  */
 class NotEnoughRightsException extends \Exception
 {
-    public $message = "Droits insuffisants pour accéder à la demande";
-    public $code 	= 403;
+	public $message = "Droits insuffisants pour accéder à la demande";
+	public $code    = 403;
     public function __construct($path = "")
     {
         $this->message .= " ".$path;

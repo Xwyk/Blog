@@ -53,11 +53,11 @@ class Token extends Entity
 
     public function setGenerationDate($newGenerationDate)
     {
-        $this->generationDate=$newGenerationDate;
+        $this->generationDate = $newGenerationDate;
     }
 
     public function setExpirationDate($newExpirationDate)
     {
-        $this->expirationDate=$newExpirationDate;
+        $this->expirationDate = $newExpirationDate;
     }
 }

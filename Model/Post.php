@@ -22,7 +22,7 @@ class Post extends Entity
 
     public function __construct(array $data)
     {
-        $this->comments=[];
+        $this->comments = [];
         $this->hydrate($data);
     }
 
@@ -155,7 +155,7 @@ class Post extends Entity
     protected function setCreationDate(string $newDate)
     {
         if ($newDate === null) {
-            $this->creationDate="";
+            $this->creationDate = "";
             return;
         }
         $this->creationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);
@@ -168,7 +168,7 @@ class Post extends Entity
     protected function setModificationDate(string $newDate)
     {
         if ($newDate===null) {
-            $this->creationDate="";
+            $this->creationDate = "";
             return;
         }
             $this->modificationDate = (new \DateTime())->createFromFormat('Y-m-d H:i:s', $newDate);

@@ -19,9 +19,9 @@ abstract class Entity
             // If db's attribute name contains '_', split name, and configure setter name to setXxx
             if (strpos($key, "_")) {
                 $keyName = explode("_", $key);
-                $method = 'set';
+                $method  = 'set';
                 for ($i=0; $i < count($keyName); $i++) {
-                    $method.=ucfirst($keyName[$i]);
+                    $method .= ucfirst($keyName[$i]);
                 }
             }
             // If value isn't null and method exists, call the setter

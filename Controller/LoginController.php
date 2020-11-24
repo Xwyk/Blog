@@ -7,7 +7,7 @@ use Blog\Model\Manager\UserManager;
 
 class LoginController extends Controller
 {
-    public const VIEW_LOGIN     =    "login";
+    public const VIEW_LOGIN = "login";
     
     public function display()
     {
@@ -19,9 +19,9 @@ class LoginController extends Controller
             $this->redirect($this->router->url('home_page'));
             return;
         }
-        $formUrl=$this->router->url('login_request');
+        $formUrl = $this->router->url('login_request');
         if ($redirect) {
-            $formUrl.='/?redirect='.$redirect;
+            $formUrl .= '/?redirect='.$redirect;
         }
         $this->render($this::VIEW_LOGIN, ['formUrl'=>$formUrl]);
         return;
