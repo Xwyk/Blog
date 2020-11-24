@@ -11,11 +11,11 @@ use Blog\Exceptions\PostNotFoundException;
  */
 class PostManager extends Manager
 {
-    public const COMMENTS_VALID = 1;
+    public const COMMENTS_VALID   = 1;
     public const COMMENTS_INVALID = 2 ;
-    public const COMMENTS_ALL = 3;
-
-    protected const BASE_REQUEST='SELECT post.id AS postId, 
+    public const COMMENTS_ALL     = 3;
+    
+    protected const BASE_REQUEST  = 'SELECT post.id AS postId, 
                                    post.chapo AS postChapo, 
                                    post.title AS postTitle, 
                                    post.content AS postContent, 
@@ -36,9 +36,8 @@ class PostManager extends Manager
 
     public function getAll()
     {
-        $request = $this::BASE_REQUEST;
-
-        $posts = $this->executeRequest($request);
+        $request    = $this::BASE_REQUEST;
+        $posts      = $this->executeRequest($request);
         $postsArray = [];
         while ($data = $posts->fetch()) {
             $postsArray[] = $this->createFromArray($data);
@@ -49,8 +48,8 @@ class PostManager extends Manager
     public function getById(int $postId, int $commentsValidity = PostManager::COMMENTS_VALID)
     {
         $requestPosts = $this::BASE_REQUEST.'WHERE post.id = :id ;';
-        $posts = $this->executeRequest($requestPosts, ['id'=>$postId]);
-        $resultPosts = $posts->fetch();
+        $posts        = $this->executeRequest($requestPosts, ['id'=>$postId]);
+        $resultPosts  = $posts->fetch();
         if (!$resultPosts) {
             throw new PostNotFoundException($postId);
         }
@@ -120,7 +119,7 @@ class PostManager extends Manager
         $request = 'DELETE blog.post.*
                     FROM blog.post 
                     WHERE blog.post.id = :id';
-        $result = $this->executeRequest($request, ['id'=>$post->getId()]);
+        $result  = $this->executeRequest($request, ['id'=>$post->getId()]);
         return $result;
     }
 
@@ -132,7 +131,7 @@ class PostManager extends Manager
                         content   = :content,
                         picture   = :picture
                     WHERE id = :id;';
-        $result = $this->executeRequest($request, [
+        $result  = $this->executeRequest($request, [
             'chapo'   => $post->getChapo(),
             'title'   => $post->getTitle(),
             'content' => $post->getContent(),
