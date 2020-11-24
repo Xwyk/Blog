@@ -18,7 +18,7 @@ abstract class Manager
      */
     public function __construct(Configuration $config)
     {
-        $this->config = $config;
+        $this->config   = $config;
         $this->database = $this->getDatabase();
     }
 
@@ -30,11 +30,11 @@ abstract class Manager
     {
         //If $this->database isn't set, set it
         if ($this->database === null) {
-            $host     = $this->config->getDbHost();
-            $port     = $this->config->getDbPort();
-            $dbname   = $this->config->getDbName();
-            $username = $this->config->getDbUsername();
-            $password = $this->config->getDbPassword();
+            $host           = $this->config->getDbHost();
+            $port           = $this->config->getDbPort();
+            $dbname         = $this->config->getDbName();
+            $username       = $this->config->getDbUsername();
+            $password       = $this->config->getDbPassword();
             $this->database = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname.';charset=utf8', $username, $password);
         }
         return $this->database;
