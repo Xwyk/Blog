@@ -10,10 +10,10 @@ class Route
     protected $path;
     protected $callable;
     protected $matches = [];
-    protected $params = [];
+    protected $params  = [];
 
     public function __construct(string $path, $callable){
-        $this->path = trim($path, '/');  // On retire les / inutils
+        $this->path     = trim($path, '/');  // On retire les / inutils
         $this->callable = $callable;
     }
 
@@ -22,8 +22,8 @@ class Route
     * get('/posts/:slug-:id') par exemple
     **/
     public function match($url){
-        $url = trim($url, '/');
-        $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
+        $url   = trim($url, '/');
+        $path  = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
         $regex = "#^$path$#i";
         if(!preg_match($regex, $url, $matches)){
             return false;
@@ -42,7 +42,7 @@ class Route
 
     public function call($view, $session, $config, $router){
         if(is_string($this->callable)){
-            $params = explode('#', $this->callable);
+            $params     = explode('#', $this->callable);
             $controller = "Blog\\Controller\\" . $params[0] . "Controller";
             $controller = new $controller($view, $session, $config, $router);
             return call_user_func_array([$controller, $params[1]], $this->matches);
