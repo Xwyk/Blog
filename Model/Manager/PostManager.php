@@ -12,9 +12,8 @@ use Blog\Exceptions\PostNotFoundException;
 class PostManager extends Manager
 {
     public const COMMENTS_VALID   = 1;
-    public const COMMENTS_INVALID = 2 ;
+    public const COMMENTS_INVALID = 2;
     public const COMMENTS_ALL     = 3;
-    
     protected const BASE_REQUEST  = 'SELECT post.id AS postId, 
                                    post.chapo AS postChapo, 
                                    post.title AS postTitle, 
